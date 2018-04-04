@@ -1,0 +1,276 @@
+<table class="table table-striped">
+
+    <tr>
+        <th><input type="checkbox" class=""></th>
+        <th>
+            Name
+            <div class="dropdown" style="display: inline-block" dropdown>
+                <span dropdownToggle [ngClass]="{
+                    'dropdown-toggle': true,
+                    'caret-sort': true,
+                    'caret-sort-active': isColumnSortedBy(['app_name'])
+                }">
+                    <span class="glyphicon glyphicon-arrow-down "></span>
+                </span>
+                <ul class="dropdown-menu" *dropdownMenu>
+                    <li><a [ngClass]="{'bold': isSortedBy('app_name')}" (click)="addSort('app_name', '')">Sort A-Z</a></li>
+                    <li><a [ngClass]="{'bold': isSortedBy('-app_name')}" (click)="addSort('app_name', '-')">Sort Z-A</a></li>
+                    <li><a (click)="resetSort(['app_name'])">Reset</a></li>
+                </ul>
+            </div>
+        </th>
+        <th>
+            Target
+            <div class="dropdown" style="display: inline-block" dropdown>
+
+                            <span dropdownToggle [ngClass]="{
+                                'dropdown-toggle': true,
+                                'caret-sort': true,
+                                'caret-sort-active': isColumnSortedBy(['env'])
+                            }">
+                                <span class="glyphicon glyphicon-arrow-down "></span>
+                            </span>
+                <ul class="dropdown-menu" *dropdownMenu>
+                    <li><a [ngClass]="{'bold': isSortedBy('env')}" (click)="addSort('env', '')">Sort A-Z</a></li>
+                    <li><a [ngClass]="{'bold': isSortedBy('-env')}" (click)="addSort('env', '-')">Sort Z-A</a></li>
+                    <li><a (click)="resetSort(['env'])">Reset</a></li>
+                    <li><a [ngClass]="{'bold': isFilteredBy('ALL')}" (click)="setFilter(null)">ALL</a></li>
+                    <li><a [ngClass]="{'bold': isFilteredBy('DEV')}" (click)="setFilter('DEV')">DEV</a></li>
+                    <li><a [ngClass]="{'bold': isFilteredBy('UAT')}" (click)="setFilter('UAT')">UAT</a></li>
+                    <li><a [ngClass]="{'bold': isFilteredBy('PROD')}" (click)="setFilter('PROD')">PROD</a></li>
+                </ul>
+            </div>
+        </th>
+        <th>
+            Build
+            <div class="dropdown" style="display: inline-block" dropdown>
+
+                            <span dropdownToggle [ngClass]="{
+                                'dropdown-toggle': true,
+                                'caret-sort': true,
+                                'caret-sort-active': isColumnSortedBy(['build_time'])
+                            }">
+                                <span class="glyphicon glyphicon-arrow-down "></span>
+                            </span>
+                <ul class="dropdown-menu" *dropdownMenu>
+                    <li><a [ngClass]="{'bold': isSortedBy('build_time')}" (click)="addSort('build_time', '')">Sort By Time Asc</a></li>
+                    <li><a [ngClass]="{'bold': isSortedBy('-build_time')}" (click)="addSort('build_time', '-')">Sort By Time Desc</a></li>
+                    <li><a (click)="resetSort(['build_time'])">Reset</a></li>
+                </ul>
+            </div>
+        </th>
+        <th>
+            Deploy
+            <div class="dropdown" style="display: inline-block" dropdown>
+
+                            <span dropdownToggle [ngClass]="{
+                                'dropdown-toggle': true,
+                                'caret-sort': true,
+                                'caret-sort-active': isColumnSortedBy(['deploy_time'])
+                            }">
+                                <span class="glyphicon glyphicon-arrow-down "></span>
+                            </span>
+                <ul class="dropdown-menu" *dropdownMenu>
+                    <li><a [ngClass]="{'bold': isSortedBy('deploy_time')}" (click)="addSort('deploy_time', '')">Sort By Time Asc</a></li>
+                    <li><a [ngClass]="{'bold': isSortedBy('-deploy_time')}" (click)="addSort('deploy_time', '-')">Sort By Time Desc</a></li>
+                    <li><a (click)="resetSort(['deploy_time'])">Reset</a></li>
+                </ul>
+            </div>
+        </th>
+        <th>
+            Monitor
+            <div class="dropdown" style="display: inline-block" dropdown>
+
+                            <span dropdownToggle [ngClass]="{
+                                'dropdown-toggle': true,
+                                'caret-sort': true,
+                                'caret-sort-active': isColumnSortedBy(['monitor_warnings_count', 'monitor_errors_count'])
+                            }">
+                                <span class="glyphicon glyphicon-arrow-down "></span>
+                            </span>
+                <ul class="dropdown-menu" *dropdownMenu>
+                    <li><a [ngClass]="{'bold': isSortedBy('monitor_warnings_count')}" (click)="addSort('monitor_warnings_count', '', ['monitor_warnings_count', 'monitor_errors_count'])">Sort By Warnings Asc</a></li>
+                    <li><a [ngClass]="{'bold': isSortedBy('-monitor_warnings_count')}" (click)="addSort('monitor_warnings_count', '-', ['monitor_warnings_count', 'monitor_errors_count'])">Sort By Warnings Desc</a></li>
+                    <li><a [ngClass]="{'bold': isSortedBy('monitor_errors_count')}" (click)="addSort('monitor_errors_count', '', ['monitor_warnings_count', 'monitor_errors_count'])">Sort By Errors Asc</a></li>
+                    <li><a [ngClass]="{'bold': isSortedBy('-monitor_errors_count')}" (click)="addSort('monitor_errors_count', '-', ['monitor_warnings_count', 'monitor_errors_count'])">Sort By Errors Desc</a></li>
+                    <li><a (click)="resetSort(['monitor_warnings_count', 'monitor_errors_count'])">Reset</a></li>
+                </ul>
+            </div>
+        </th>
+        <th>
+            Alerts
+            <div class="dropdown" style="display: inline-block" dropdown>
+
+                            <span dropdownToggle [ngClass]="{
+                                'dropdown-toggle': true,
+                                'caret-sort': true,
+                                'caret-sort-active': isColumnSortedBy(['warnings_count', 'errors_count'])
+                            }">
+                                <span class="glyphicon glyphicon-arrow-down "></span>
+                            </span>
+                <ul class="dropdown-menu" *dropdownMenu>
+                    <li><a [ngClass]="{'bold': isSortedBy('warnings_count')}" (click)="addSort('warnings_count', '', ['warnings_count', 'errors_count'])">Sort By Warnings Asc</a></li>
+                    <li><a [ngClass]="{'bold': isSortedBy('-warnings_count')}" (click)="addSort('warnings_count', '-', ['warnings_count', 'errors_count'])">Sort By Warnings Desc</a></li>
+                    <li><a [ngClass]="{'bold': isSortedBy('errors_count')}" (click)="addSort('errors_count', '', ['warnings_count', 'errors_count'])">Sort By Errors Asc</a></li>
+                    <li><a [ngClass]="{'bold': isSortedBy('-errors_count')}" (click)="addSort('errors_count', '-', ['warnings_count', 'errors_count'])">Sort By Errors Desc</a></li>
+                    <li><a (click)="resetSort(['warnings_count', 'errors_count'])">Reset</a></li>
+                </ul>
+            </div>
+        </th>
+    </tr>
+
+    <ng-container *ngIf="loader">
+        <tr>
+            <td colspan="7" align="center">
+                <span class="glyphicon glyphicon-refresh spinner"></span>
+            </td>
+        </tr>
+    </ng-container>
+
+    <ng-container *ngIf="!loader && !appList.data.length">
+        <tr>
+            <td colspan="7" align="center">
+                <span class="text-warning">No data to display</span>
+            </td>
+        </tr>
+    </ng-container>
+
+    <ng-container *ngFor="let app of appList.data">
+        <tr>
+            <td rowspan="5"><input type="checkbox" class=""></td>
+            <td rowspan="5">{{app.app_name}} {{app.deploy_version}}</td>
+            <td rowspan="5">
+                <div class="blue-label">{{app.env}}</div>
+            </td>
+            <td>
+                <span class="num uline" style="cursor: pointer" (click)="buildStreamView(app)">{{app.build_count}}</span> Build{{app.build_count>1?'s':''}} <br>
+                <span class="num">{{app.build_commit_count}}</span> Commit{{app.build_commit_count>1?'s':''}}
+            </td>
+            <td>
+                <span class="num uline" style="cursor: pointer" (click)="deploymentStreamView(app)">{{app.deploy_count}}</span> Deployment{{app.deploy_count>1?'s':''}} <br><br>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+        </tr>
+
+        <tr class="subheader">
+            <td colspan="4">
+                <fieldset>
+                    <legend>&nbsp;Current Status&nbsp;</legend>
+                </fieldset>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div>Version {{app.build_version}}.{{app.build_build_number}}</div>
+                <div style="cursor: pointer" (click)="openLog(app, 'build')" [ngClass]="{
+                                'uline':true,
+                                'red-label':app.build_status=='failed',
+                                'blue-label':app.build_status=='success',
+                                'orange-label':app.build_status=='running'
+                            }">{{app.build_status|uppercase}}
+                </div>
+                <div class="small">{{app.build_time+'Z'| amLocal | amDateFormat:'ll LTS'}}</div>
+            </td>
+            <td>
+                <div>Version {{app.deploy_version}}.{{app.deploy_build_number}}</div>
+                <div style="cursor: pointer" (click)="openLog(app, 'deploy')" [ngClass]="{
+                                'uline':true,
+                                'red-label':app.deploy_status=='failed',
+                                'blue-label':app.deploy_status=='success',
+                                'orange-label':app.deploy_status=='running'
+                            }">{{app.deploy_status|uppercase}}
+                </div>
+                <div class="small">{{app.deploy_time+'Z'| amLocal | amDateFormat:'ll LTS'}}</div>
+            </td>
+            <td>
+                <b class="uline" style="cursor: pointer" (click)="monitoringView(app)">{{app.monitor_deploy_count}}</b> instance{{app.monitor_deploy_count>1?'s':''}}
+                <div style="cursor: pointer" (click)="monitoringView(app)" [ngClass]="{'uline':true, 'red-label':app.monitor_status!='green', 'green-label':app.monitor_status=='green'}">{{app.monitor_status|uppercase}}</div>
+            </td>
+            <td></td>
+        </tr>
+
+        <tr class="subheader">
+            <td colspan="4">
+                <fieldset>
+                    <legend>&nbsp;Active Errors & Warnings&nbsp;</legend>
+                </fieldset>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="small">
+                    <span *ngIf="app.build_warnings_count == 0" class="text-success">0 warnings</span>
+                    <span *ngIf="app.build_warnings_count > 0" class="text-warning">
+                                    <span style="cursor: pointer; text-decoration: underline" (click)="openLog(app, 'build', 'warn')">{{app.build_warnings_count}}</span>
+                                    warning{{app.build_warnings_count==1?'':'s'}}
+                                </span>
+                    <br>
+                    <span *ngIf="app.build_errors_count == 0" class="text-success">0 errors</span>
+                    <span *ngIf="app.build_errors_count > 0" class="text-danger">
+                                    <span style="cursor: pointer; text-decoration: underline" (click)="openLog(app, 'build', 'error')">{{app.build_errors_count}}</span>
+                                    error{{app.build_errors_count==1?'':'s'}}
+                                </span>
+                </div>
+            </td>
+            <td>
+                <div class="small">
+                    <span *ngIf="app.deploy_warnings_count == 0" class="text-success">0 warnings</span>
+                    <span *ngIf="app.deploy_warnings_count > 0" class="text-warning">
+                                    <span style="cursor: pointer; text-decoration: underline" (click)="openLog(app, 'deploy', 'warn')">{{app.deploy_warnings_count}}</span>
+                                    warning{{app.deploy_warnings_count==1?'':'s'}}</span>
+                    <br>
+                    <span *ngIf="app.deploy_errors_count == 0" class="text-success">0 errors</span>
+                    <span *ngIf="app.deploy_errors_count > 0" class="text-danger">
+                                    <span style="cursor: pointer; text-decoration: underline" (click)="openLog(app, 'deploy', 'error')">{{app.deploy_errors_count}}</span>
+                                    error{{app.deploy_errors_count==1?'':'s'}}
+                                </span>
+                </div>
+            </td>
+            <td>
+                <div class="small">
+                                <span [ngClass]="{'text-success': app.monitor_warnings_count == 0, 'text-warning': app.monitor_warnings_count > 0}">
+                                    {{app.monitor_warnings_count}} warning{{app.monitor_warnings_count==1?'':'s'}}
+                                </span><br>
+                    <span [ngClass]="{'text-success': app.monitor_errors_count == 0, 'text-danger': app.monitor_errors_count > 0}">
+                                    {{app.monitor_errors_count}} error{{app.monitor_errors_count==1?'':'s'}}
+                                </span><br>
+                </div>
+            </td>
+            <td>
+                <div class="small">
+                                <span [ngClass]="{'text-success': app.warnings_count == 0, 'text-warning': app.warnings_count > 0}">
+                                    {{app.warnings_count}} warning{{app.warnings_count==1?'':'s'}}
+                                </span><br>
+                    <span [ngClass]="{'text-success': app.errors_count == 0, 'text-danger': app.errors_count > 0}">
+                                    {{app.errors_count}} error{{app.errors_count==1?'':'s'}}
+                                </span><br>
+                </div>
+            </td>
+        </tr>
+    </ng-container>
+</table>
+
+<nav aria-label="Page navigation" *ngIf="false">
+    <ul class="pagination">
+        <li>
+            <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li>
+            <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
