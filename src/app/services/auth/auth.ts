@@ -1,7 +1,12 @@
-/**
- * Created by LikarovskiyAV on 04.04.2018.
- */
-
+export interface UserInfo {
+  /**
+   * ID пользователя
+   */
+  userId: string,
+  firstName?: string,
+  secondName?: string,
+  lastName: string,
+}
 
 export interface Auth {
   /**
@@ -15,9 +20,9 @@ export interface Auth {
   login?: string,
 
   /**
-   * ID пользователя
+   * Инфа по пользователю
    */
-  userId?: string,
+  user?: UserInfo,
 
   /**
    * CSRF токен

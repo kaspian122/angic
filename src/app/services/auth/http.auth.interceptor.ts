@@ -25,7 +25,7 @@ export class HttpAuthInterceptor implements HttpInterceptor {
       () => {
       },
       event => {
-        if ((event instanceof HttpErrorResponse) && this.router.routerState.snapshot.url != "/login") {
+        if ((event instanceof HttpErrorResponse) && !(this.router.routerState.snapshot.url || "").startsWith("/login")) {
           if (event.status === UNAUTHORIZED) {
             window.location.replace('/login');
           } else if (event.status === FORBIDDEN) {

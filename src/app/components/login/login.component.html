@@ -1,6 +1,6 @@
 <h1>Debug login form</h1>
 <div *ngIf="auth && auth.status === 'AUTHENTICATED'">
-  You are logged in as {{auth.login}}
+  You are logged in as {{auth.login}} {{(auth.user.lastName)}} {{(auth.user.firstName)}} {{(auth.user.secondName)}}
   <button (click)="doLogout()">Logout</button>
 
 
