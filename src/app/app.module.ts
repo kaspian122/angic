@@ -13,6 +13,7 @@ import {AppConfig} from "./app.config";
 import {CookieService} from "ngx-cookie-service";
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {HttpAuthInterceptor} from "./services/auth/http.auth.interceptor";
+import {ForbiddenComponent} from "./components/forbidden/forbidden.component";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {HttpAuthInterceptor} from "./services/auth/http.auth.interceptor";
     AppComponent,
     LoginComponent,
     UserComponent,
-    MainComponent
+    MainComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,

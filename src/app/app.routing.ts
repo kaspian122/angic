@@ -3,6 +3,7 @@ import {AuthGuard} from "./services/auth/auth.guard";
 import {LoginComponent} from "./components/login/login.component";
 import {MainComponent} from "./components/main/main.component";
 import {UserComponent} from "./components/user/user.component";
+import {ForbiddenComponent} from "./components/forbidden/forbidden.component";
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'forbidden',
+    component: ForbiddenComponent
   }
 ];
 
