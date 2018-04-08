@@ -1,2 +1,15 @@
-User space - Layout
-<router-outlet></router-outlet>
+<div class="example-container">
+    <mat-toolbar color="primary" class="example-toolbar">
+        <!--<button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>-->
+        <a mat-button routerLink=".">Онлайн МКД</a>
+        <a mat-button routerLink=".">Закупки</a>
+        <a mat-button routerLink=".">Обслуживание</a>
+        <a mat-button routerLink=".">Форум</a>
+        <div style="-webkit-box-flex: 1;-ms-flex-positive: 1;flex-grow: 1;"></div>
+        <a mat-button routerLink=".">Выйти</a>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="0">
+        <router-outlet></router-outlet>
+    </mat-sidenav-container>
+</div>
