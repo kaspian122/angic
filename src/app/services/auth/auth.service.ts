@@ -100,15 +100,9 @@ export class AuthService {
     return this.http.request<Auth>(
       "POST",
       this.config.getEndpoint("logout"),
-      {
-        headers: new HttpHeaders()
-          .set(this.config.X_CSRF_TOKEN_HEADER_NAME, this.auth.csrfToken)
-      }
+      {headers: new HttpHeaders().set(this.config.X_CSRF_TOKEN_HEADER_NAME, this.auth.csrfToken)}
     )
       .toPromise<Auth>()
-      .then(it => {
-        this.auth = it;
-        return it;
-      });
+      .then(it => this.auth = it);
   }
 }
