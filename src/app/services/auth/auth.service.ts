@@ -58,12 +58,11 @@ export class AuthService {
       .set('password', password);
 
 
-    let response: Promise<Auth> = this.http.post<Auth>(this.config.getEndpoint("login"), body.toString(),
-      {
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-          .set(this.config.X_CSRF_TOKEN_HEADER_NAME, this.auth.csrfToken)
-      }).toPromise<Auth>();
+    let response: Promise<Auth> = this.http.post<Auth>(this.config.getEndpoint("login"), body.toString(), {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .set(this.config.X_CSRF_TOKEN_HEADER_NAME, this.auth.csrfToken)
+    }).toPromise<Auth>();
 
     return response
       .then(it => {
