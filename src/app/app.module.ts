@@ -23,6 +23,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 import { ProfileComponent } from './components/main/profile/profile.component';
 
 @NgModule({
@@ -48,6 +50,8 @@ import { ProfileComponent } from './components/main/profile/profile.component';
     MatDividerModule,
     MatButtonModule,
     MatSidenavModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [
     CookieService,

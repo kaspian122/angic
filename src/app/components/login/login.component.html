@@ -1,26 +1,38 @@
-<h1>Debug login form</h1>
 <div *ngIf="auth && auth.status === 'AUTHENTICATED'">
   You are logged in as {{auth.login}} {{(auth.user.lastName)}} {{(auth.user.firstName)}} {{(auth.user.secondName)}}
-  <button (click)="doLogout()">Logout</button>
-
-
-
-
+  <a mat-raised-button routerLink="/">Goto portal</a>
+  <button mat-raised-button (click)="doLogout()">Logout</button>
 </div>
 
-<div *ngIf="auth && auth.status === 'NOT_AUTHENTICATED'">
-  You are not logged in, login please
-  <form name="loginform">
-    <label for="login">Login</label> <input id='login' name="login" [(ngModel)]="login">
-    <label for="password">Password</label> <input id='password' name="password" [(ngModel)]="password">
-    <button (click)="doLogin()">Login</button>
 
-    <div style="color: red;" *ngIf="errorMessage">
-      {{errorMessage}}
-    </div>
 
-  </form>
-</div>
+
+
+
+
+
+
+<mat-card *ngIf="auth && auth.status === 'NOT_AUTHENTICATED'">
+
+  <mat-card-title>Вход</mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <form name="loginform">
+      <mat-form-field>
+        <input matInput id='login' name="login" [(ngModel)]="login" placeholder="Login">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password" id='password' name="password" [(ngModel)]="password" placeholder="Password">
+      </mat-form-field>
+      <button mat-raised-button (click)="doLogin()">Login</button>
+
+      <div style="color: red;" *ngIf="errorMessage">
+        {{errorMessage}}
+      </div>
+
+    </form>
+  </mat-card-content>
+</mat-card>
 
 <div *ngIf="!auth">
   Getting status
