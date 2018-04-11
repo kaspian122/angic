@@ -5,6 +5,7 @@ import {MainComponent} from "./components/main/main.component";
 import {UserComponent} from "./components/user/user.component";
 import {ForbiddenComponent} from "./components/forbidden/forbidden.component";
 import {ProfileComponent} from "./components/main/profile/profile.component";
+import {AdminComponent} from "./components/admin/admin.component";
 
 const routes: Routes = [
   {
@@ -22,6 +23,14 @@ const routes: Routes = [
             component: ProfileComponent,
           }
         ]
+      },
+      {
+        path: 'admin',
+        component: AdminComponent,
+        canActivate: [AuthGuard],
+        data: {
+          expectedRole: 'ROLE_ADMIN'
+        }
       }
     ]
   },

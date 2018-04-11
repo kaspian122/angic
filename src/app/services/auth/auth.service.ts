@@ -105,4 +105,9 @@ export class AuthService {
       .toPromise<Auth>()
       .then(it => this.auth = it);
   }
+
+  hasRole(role: string): boolean {
+    return true; // заглушка
+  }
+
 }
