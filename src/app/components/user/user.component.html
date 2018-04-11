@@ -6,7 +6,7 @@
         <a mat-button routerLink=".">Обслуживание</a>
         <a mat-button routerLink=".">Форум</a>
         <div style="-webkit-box-flex: 1;-ms-flex-positive: 1;flex-grow: 1;"></div>
-        <a mat-button routerLink=".">Выйти</a>
+        <a mat-button (click)="logOut()">Выйти</a>
     </mat-toolbar>
 
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="0">

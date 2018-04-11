@@ -63,6 +63,7 @@ import { ProfileComponent } from './components/main/profile/profile.component';
       useClass: HttpAuthInterceptor,
       multi: true
     },
+    LoginComponent
   ],
   bootstrap: [AppComponent]
 })

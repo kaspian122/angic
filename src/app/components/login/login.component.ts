@@ -44,7 +44,10 @@ export class LoginComponent implements OnInit {
 
   public doLogout() {
     this.authService.logout()
-      .then(it => this.auth = it)
+      .then(it => {
+        this.auth = it;
+        this.router.navigate(['login'])
+      })
   }
 
 
