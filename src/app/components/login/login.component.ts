@@ -3,6 +3,7 @@ import {AuthService} from "../../services/auth/auth.service";
 import {Auth} from "../../services/auth/auth";
 import {LoginFailedError} from "../../services/auth/login.failed.error";
 import {HttpClient} from "@angular/common/http";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private router: Router,
   ) {
   }
 
@@ -28,17 +30,23 @@ export class LoginComponent implements OnInit {
     this.errorMessage = null;
     this.authService.login(this.login, this.password)
       .then(
-        it => this.auth = it,
-        (err: LoginFailedError) => {
-          this.auth = err.auth;
-          this.errorMessage = err.error.message;
+        it => {
+          this.auth = it,
+            (err: LoginFailedError) => {
+              this.auth = err.auth;
+              this.errorMessage = err.error.message;
+            };
+          this.router.navigate([''])
         }
       )
   }
 
   public doLogout() {
     this.authService.logout()
-      .then(it => this.auth = it)
+      .then(it => {
+        this.auth = it;
+        this.router.navigate(['login'])
+      })
   }
 
 
