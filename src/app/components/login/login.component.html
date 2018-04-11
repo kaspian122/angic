@@ -16,12 +16,12 @@
       <mat-card-content>
         <form name="loginform">
           <mat-form-field>
-            <input matInput id='login' name="login" [(ngModel)]="login" placeholder="Login">
+            <input matInput id='login' name="login" [(ngModel)]="login" placeholder="Логин">
           </mat-form-field>
           <mat-form-field>
-            <input matInput type="password" id='password' name="password" [(ngModel)]="password" placeholder="Password">
+            <input matInput type="password" id='password' name="password" [(ngModel)]="password" placeholder="Пароль">
           </mat-form-field>
-          <button mat-button (click)="doLogin()">Login</button>
+          <button mat-button (click)="doLogin()">Войти</button>
 
           <div style="color: red;" *ngIf="errorMessage">
             {{errorMessage}}

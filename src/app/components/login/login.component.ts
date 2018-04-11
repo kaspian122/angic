@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit {
         },
         (err: LoginFailedError) => {
           this.auth = err.auth;
-          this.errorMessage = err.error.message;
+          // this.errorMessage = err.error.message;
+          this.errorMessage = "Неверный логин или пароль";
         }
       )
   }
