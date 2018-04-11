@@ -1,3 +1,11 @@
-<p>
-  admin works!
-</p>
+<mat-sidenav #snav [opened]="true" mode="side" [fixedInViewport]="false" fixedTopGap="56">
+  <mat-nav-list>
+    <a mat-list-item><mat-icon>account_circle</mat-icon>Раздел 1</a>
+    <mat-divider></mat-divider>
+    <a mat-list-item><mat-icon>whatshot</mat-icon>Раздел 2</a>
+  </mat-nav-list>
+</mat-sidenav>
+
+<div style="margin-left: 320px;">
+  <router-outlet></router-outlet>
+</div>

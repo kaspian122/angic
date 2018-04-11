@@ -107,7 +107,7 @@ export class AuthService {
   }
 
   hasRole(role: string): boolean {
-    return true; // заглушка
+    return this.auth.authorities.indexOf(role) !== -1;
   }
 
 }

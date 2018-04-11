@@ -11,7 +11,6 @@ const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
-    pathMatch: 'full',
     component: UserComponent,
     children: [
       {

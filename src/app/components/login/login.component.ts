@@ -2,7 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import {AuthService} from "../../services/auth/auth.service";
 import {Auth} from "../../services/auth/auth";
 import {LoginFailedError} from "../../services/auth/login.failed.error";
-import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 
 @Component({
@@ -44,14 +43,6 @@ export class LoginComponent implements OnInit {
   }
 
   public doLogout() {
-    this.authService.logout()
-      .then(it => {
-        this.auth = it;
-        this.router.navigate(['login'])
-      })
+    this.authService.logout().then(it => this.auth = it);
   }
-
-
-
-
 }

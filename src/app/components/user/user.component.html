@@ -1,11 +1,12 @@
 <div class="example-container">
     <mat-toolbar color="primary" class="example-toolbar">
         <!--<button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>-->
-        <a mat-button routerLink=".">Онлайн МКД</a>
+        <a mat-button routerLink="/">Онлайн МКД</a>
         <a mat-button routerLink=".">Закупки</a>
         <a mat-button routerLink=".">Обслуживание</a>
         <a mat-button routerLink=".">Форум</a>
         <div style="-webkit-box-flex: 1;-ms-flex-positive: 1;flex-grow: 1;"></div>
+        <a *ngIf="authService.hasRole('ROLE_ADMIN')" mat-button routerLink="/admin">Администратор</a>
         <a mat-button (click)="logOut()">Выйти</a>
     </mat-toolbar>
 
