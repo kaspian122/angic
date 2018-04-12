@@ -1,6 +1,6 @@
 <mat-sidenav #snav [opened]="true" mode="side" [fixedInViewport]="false" fixedTopGap="56">
   <mat-nav-list>
-    <a mat-list-item><mat-icon>account_circle</mat-icon>Раздел 1</a>
+    <a [routerLink]="['/admin']" mat-list-item><mat-icon>account_circle</mat-icon>Главная</a>
     <mat-divider></mat-divider>
     <a [routerLink]="['/admin/chairman']" mat-list-item><mat-icon>whatshot</mat-icon>Создание МКД</a>
   </mat-nav-list>

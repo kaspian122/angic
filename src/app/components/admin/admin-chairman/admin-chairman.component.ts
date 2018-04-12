@@ -11,7 +11,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class AdminChairmanComponent implements OnInit {
 
   mkdEnums: any;
-  chairmanForm: FormGroup;
+  chairmanForm: FormGroup = new FormGroup({});
 
   constructor(
     private dataService: DataService,
