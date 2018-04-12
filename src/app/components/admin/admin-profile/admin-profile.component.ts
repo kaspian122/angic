@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Mkd } from '../../../models/mkd';
+import { Auth } from '../../../services/auth/auth';
+import { DataService } from '../../../services/data/data.service';
 
 @Component({
   selector: 'app-admin-profile',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminProfileComponent implements OnInit {
 
-  constructor() { }
+  public mkd?: Mkd[] = [];
+
+  constructor(
+    private dataService: DataService,
+
+  ) { }
 
   ngOnInit() {
+    this.dataService.getMkdList()
+      .then(it => {
+        this.mkd = it;
+        console.log(this.mkd);
+      });
   }
 
 }
