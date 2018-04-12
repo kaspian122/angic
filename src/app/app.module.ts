@@ -6,7 +6,7 @@ import {LoginComponent} from './components/login/login.component';
 import {UserComponent} from "./components/user/user.component";
 import {MainComponent} from "./components/main/main.component";
 import {routing} from "./app.routing";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthGuard} from "./services/auth/auth.guard";
 import {AuthService} from "./services/auth/auth.service";
@@ -48,6 +48,7 @@ import { AdminChairmanComponent } from './components/admin/admin-chairman/admin-
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     routing,
     CovalentLayoutModule,
     MatListModule,

@@ -1,5 +1,37 @@
 <mat-card>
   <mat-card-title>Создание нового МКД</mat-card-title>
   <mat-divider></mat-divider>
-  <mat-card-content></mat-card-content>
+  <mat-card-content>
+
+
+    <section>
+
+      <form [formGroup]="chairmanForm">
+        <div formGroupName="mkd">
+          <h2>Адрес МКД</h2>
+          <mat-form-field>
+            <input matInput formControlName="address" placeholder="Адрес" />
+          </mat-form-field>
+
+          <h2>Сведения МКД</h2>
+          <mat-form-field>
+            <input matInput formControlName="area" placeholder="Площадь дома" />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="floorCount" placeholder="Кол-во этажей" />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="porchCount" placeholder="Кол-во подъездов" />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput formControlName="apartmentCount" placeholder="Кол-во квартир" />
+          </mat-form-field>
+        </div>
+      </form>
+
+    </section>
+
+
+
+  </mat-card-content>
 </mat-card>
