@@ -29,6 +29,7 @@ import { ProfileComponent } from './components/main/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
 import {DataService} from "./services/data/data.service";
+import { AdminChairmanComponent } from './components/admin/admin-chairman/admin-chairman.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {DataService} from "./services/data/data.service";
     ProfileComponent,
     AdminComponent,
     AdminProfileComponent,
+    AdminChairmanComponent
   ],
   imports: [
     BrowserModule,
