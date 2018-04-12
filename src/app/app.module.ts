@@ -28,6 +28,7 @@ import {MatInputModule} from '@angular/material/input';
 import { ProfileComponent } from './components/main/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
+import {DataService} from "./services/data/data.service";
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { AdminProfileComponent } from './components/admin/admin-profile/admin-pr
       useClass: HttpAuthInterceptor,
       multi: true
     },
-    LoginComponent
+    LoginComponent,
+    DataService,
   ],
   bootstrap: [AppComponent]
 })
