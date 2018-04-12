@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {MkdCreate} from "../../../models/mkd-create";
 import {DataService} from "../../../services/data/data.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
@@ -11,7 +10,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class AdminChairmanComponent implements OnInit {
 
   mkdEnums: any;
-  chairmanForm: FormGroup = new FormGroup({});
+  chairmanForm: FormGroup;
 
   constructor(
     private dataService: DataService,

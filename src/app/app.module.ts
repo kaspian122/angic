@@ -30,6 +30,8 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
 import {DataService} from "./services/data/data.service";
 import { AdminChairmanComponent } from './components/admin/admin-chairman/admin-chairman.component';
+import {MatSelectModule} from '@angular/material/select';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,9 @@ import { AdminChairmanComponent } from './components/admin/admin-chairman/admin-
     MatButtonModule,
     MatSidenavModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule,
+    MatGridListModule
   ],
   providers: [
     CookieService,
