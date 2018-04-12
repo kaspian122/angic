@@ -6,6 +6,7 @@ import {UserComponent} from "./components/user/user.component";
 import {ForbiddenComponent} from "./components/forbidden/forbidden.component";
 import {ProfileComponent} from "./components/main/profile/profile.component";
 import {AdminComponent} from "./components/admin/admin.component";
+import {AdminProfileComponent} from "./components/admin/admin-profile/admin-profile.component";
 
 const routes: Routes = [
   {
@@ -29,7 +30,13 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           expectedRole: 'ROLE_ADMIN'
-        }
+        },
+        children: [
+          {
+            path: '',
+            component: AdminProfileComponent,
+          }
+        ]
       }
     ]
   },
