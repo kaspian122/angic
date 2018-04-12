@@ -19,10 +19,16 @@ export class AdminProfileComponent implements OnInit {
 
   ngOnInit() {
     this.dataService.getMkdList()
-      .then(it => {
-        this.mkd = it;
-        console.log(this.mkd);
-      });
+      .then(
+        it => {
+          this.mkd = it;
+          return it;
+        },
+        err => {
+          this.mkd = null;
+          throw err;
+        }
+      );
   }
 
 }
