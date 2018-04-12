@@ -89,7 +89,6 @@ export class AuthService {
       )
   }
 
-
   /**
    * @return {Observable<Auth>}
    */
@@ -100,7 +99,7 @@ export class AuthService {
     return this.http.request<Auth>(
       "POST",
       this.config.getEndpoint("logout"),
-      {headers: new HttpHeaders().set(this.config.X_CSRF_TOKEN_HEADER_NAME, this.auth.csrfToken)}
+      {headers: this.headers()}
     )
       .toPromise<Auth>()
       .then(it => this.auth = it);
@@ -108,6 +107,10 @@ export class AuthService {
 
   hasRole(role: string): boolean {
     return this.auth.authorities.indexOf(role) !== -1;
+  }
+
+  headers() {
+    return new HttpHeaders().set(this.config.X_CSRF_TOKEN_HEADER_NAME, this.auth.csrfToken);
   }
 
 }
