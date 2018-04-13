@@ -25,10 +25,13 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatTableModule} from '@angular/material/table';
 import { ProfileComponent } from './components/main/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
 import {DataService} from "./services/data/data.service";
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
 import { AdminChairmanComponent } from './components/admin/admin-chairman/admin-chairman.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -63,7 +66,11 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatGridListModule
+    MatGridListModule,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [
     CookieService,

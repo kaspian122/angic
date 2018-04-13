@@ -1,3 +1,64 @@
-<p>
-  admin-profile works!
-</p>
+{{mkd}}
+<div class="example-container mat-elevation-z8" style="background-color: #fafafa;">
+
+  <div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <ng-container matColumnDef="id" >
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Адрес </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.address}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="apartmentCount">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Количество квартир  </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.apartmentCount}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="administrationType">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Тип  </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.administrationType}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="area">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Площадь </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.area}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="chairmanId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Председатель </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.chairmanId}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="floorCount">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Количество этажей </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.floorCount}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="porchCount">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Количество подъездов </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.porchCount}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [length]="100"
+                 [pageSize]="5"
+                 [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+
+  <button mat-raised-button >Добавить</button >
+</div>
