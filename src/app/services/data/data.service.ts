@@ -19,6 +19,11 @@ export class DataService {
     return response.toPromise<Mkd[]>();
   }
 
+  public getChairmanMkdList(): Promise<Mkd[]>{
+    let response: Observable<Mkd[]> = this.http.request<Mkd[]>("GET", this.config.getEndpoint("mkd"));
+    return response.toPromise<Mkd[]>();
+  }
+
   public getMkdEnums(): Observable<any> {
     return this.http.get(this.config.getEndpoint('mkd/enums'), {headers: this.authService.headers()});
   }
