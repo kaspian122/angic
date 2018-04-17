@@ -1,5 +1,4 @@
-<div class="example-container">
-    <div class="cont2">
+    <div class="main">
         <mat-toolbar color="primary" class="example-toolbar">
             <!--<button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>-->
             <a mat-button routerLink="/">Онлайн МКД</a>
@@ -11,8 +10,5 @@
             <a mat-button (click)="logOut()">Выйти</a>
         </mat-toolbar>
 
-        <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="0">
-            <router-outlet></router-outlet>
-        </mat-sidenav-container>
+        <router-outlet></router-outlet>
     </div>
-</div>
