@@ -38,7 +38,6 @@ export class DataService {
 
     this.http.post(this.config.getEndpoint("user/settings/mkd/default"), mkdId, {headers: headers}).subscribe(
       ()=> {
-
         this.authService.getAuth(true).then(
           auth => {
             this.auth = auth;
@@ -47,11 +46,8 @@ export class DataService {
             this.currentMkd.next(m);
           }
         );
-
-
       }
     );
-
   }
 
 

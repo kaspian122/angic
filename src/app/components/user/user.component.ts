@@ -14,7 +14,6 @@ export class UserComponent implements OnInit {
 
   public auth?: Auth = null;
   public mkd = [];
-  public currentMkd?: MkdOwnersInfo = null;
   currentMkdId: string;
 
   constructor(
@@ -25,12 +24,10 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
     this.dataService.currentMkd.subscribe(mkd => {
-      this.currentMkd = mkd;
       this.currentMkdId = mkd.mkdId;
     });
     this.authService.getAuth(true)
       .then(it => {
-
         this.auth = it;
         if(this.auth.mkdOwners){
           this.mkd = this.auth.mkdOwners;
