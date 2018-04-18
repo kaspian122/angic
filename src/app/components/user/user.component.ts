@@ -45,8 +45,15 @@ export class UserComponent implements OnInit {
   }
 
   public setCurrentMkd(mkdId: string) {
-    console.log(mkdId);
-    this.dataService.setCurrentMkd(mkdId);
+    this.dataService.setCurrentMkd(mkdId).subscribe(
+      // () => {
+      //   this.authService.getAuth(true).then(
+      //     it=> {
+      //       this.auth = it;
+      //     }
+      //   )
+      // }
+    );
   }
 
 }

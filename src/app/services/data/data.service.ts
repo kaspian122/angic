@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {AppConfig} from "../../app.config";
 import {Mkd} from "../../models/mkd";
 import {Observable} from "rxjs/Observable";
@@ -15,7 +15,7 @@ export class DataService {
   ) { }
 
   public getMkdList(): Promise<Mkd[]>{
-    let response: Observable<Mkd[]> = this.http.request<Mkd[]>("GET", this.config.getEndpoint("mkd"));
+    let response: Observable<Mkd[]> = this.http.request<Mkd[]>("GET", this.config.getEndpoint("mkd/"));
     return response.toPromise<Mkd[]>();
   }
 
@@ -24,9 +24,8 @@ export class DataService {
   }
 
   public setCurrentMkd(mkdId: string): Observable<any> {
-    const params = new HttpParams()
-      .set('Id', mkdId);
-    return this.http.post(this.config.getEndpoint("user/settings/mkd/default"), {body: params, headers: this.authService.headers()
-      .set('Content-Type', 'application/x-www-form-urlencoded')});
+    const headers = this.authService.headers();
+
+    return this.http.post(this.config.getEndpoint("user/settings/mkd/default"), mkdId.toString(), {headers: headers});
   }
 }
