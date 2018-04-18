@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth/auth.service";
 import {Router} from "@angular/router";
+import {Auth} from "../../services/auth/auth";
+import { Mkd } from '../../models/mkd';
+import {DataService} from "../../services/data/data.service";
 
 @Component({
   selector: 'app-user',
@@ -9,16 +12,48 @@ import {Router} from "@angular/router";
 })
 export class UserComponent implements OnInit {
 
+  public auth?: Auth = null;
+  public mkd = [];
+  public currentMkd = null;
+
   constructor(
     private router: Router,
     public authService: AuthService,
+    private dataService: DataService,
   ) { }
 
   ngOnInit() {
-    this.authService.getAuth(true);
+    this.authService.getAuth(true)
+      .then(it => {
+
+        this.auth = it;
+        if(this.auth.mkdOwners){
+          this.mkd = this.auth.mkdOwners;
+          for(var mkd of this.mkd){
+            if(mkd.byDefault){
+              this.currentMkd = mkd.mkdId;
+            }
+          }
+
+        }
+      });
+
   }
 
   public logOut(){
     this.authService.logout().then(() => {this.router.navigate(['login'])});
   }
+
+  public setCurrentMkd(mkdId: string) {
+    this.dataService.setCurrentMkd(mkdId).subscribe(
+      // () => {
+      //   this.authService.getAuth(true).then(
+      //     it=> {
+      //       this.auth = it;
+      //     }
+      //   )
+      // }
+    );
+  }
+
 }

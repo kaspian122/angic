@@ -23,7 +23,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.authService.getAuth()
-      .then(it => this.auth = it);
+      .then(it => {
+        this.auth = it;
+      });
   }
 
   public doLogin() {
@@ -32,7 +34,12 @@ export class LoginComponent implements OnInit {
       .then(
         it => {
           this.auth = it;
-          this.router.navigate(['/']);
+          if(this.authService.hasRole('ROLE_ADMIN')){
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/']);
+          }
+
         },
         (err: LoginFailedError) => {
           this.auth = err.auth;

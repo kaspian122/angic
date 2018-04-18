@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {AppConfig} from "../../app.config";
 import {Mkd} from "../../models/mkd";
 import {Observable} from "rxjs/Observable";
@@ -27,5 +27,11 @@ export class DataService {
 
   createMkd(mkdCreate: MkdCreate): Observable<any> {
     return this.http.post(this.config.getEndpoint('mkd/'), mkdCreate, {headers: this.authService.headers()});
+  }
+
+  public setCurrentMkd(mkdId: string): Observable<any> {
+    const headers = this.authService.headers();
+
+    return this.http.post(this.config.getEndpoint("user/settings/mkd/default"), mkdId.toString(), {headers: headers});
   }
 }

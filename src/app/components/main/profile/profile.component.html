@@ -1,15 +1,57 @@
-<!--<mat-card>-->
-  <!--<mat-card-title>Профиль</mat-card-title>-->
-  <!--<mat-divider></mat-divider>-->
-  <!--<mat-card-content>-->
-    <!--asdjf ksdfh ksd fksd fksd fksd fkjsdh fksdjhfkjsdhfksdjfhsd fsd fksdj fsd f ksdfjsdkfhksjdfhskdjf sf sdkjfhskdff-->
-    <!--asdjf ksdfh ksd fksd fksd fksd fkjsdh fksdjhfkjsdhfksdjfhsd fsd fksdj fsd f ksdfjsdkfhksjdfhskdjf sf sdkjfhskdff-->
-    <!--asdjf ksdfh ksd fksd fksd fksd fkjsdh fksdjhfkjsdhfksdjfhsd fsd fksdj fsd f ksdfjsdkfhksjdfhskdjf sf sdkjfhskdff-->
-    <!--asdjf ksdfh ksd fksd fksd fksd fkjsdh fksdjhfkjsdhfksdjfhsd fsd fksdj fsd f ksdfjsdkfhksjdfhskdjf sf sdkjfhskdff-->
-    <!--asdjf ksdfh ksd fksd fksd fksd fkjsdh fksdjhfkjsdhfksdjfhsd fsd fksdj fsd f ksdfjsdkfhksjdfhskdjf sf sdkjfhskdff-->
-    <!--asdjf ksdfh ksd fksd fksd fksd fkjsdh fksdjhfkjsdhfksdjfhsd fsd fksdj fsd f ksdfjsdkfhksjdfhskdjf sf sdkjfhskdff-->
-    <!--asdjf ksdfh ksd fksd fksd fksd fkjsdh fksdjhfkjsdhfksdjfhsd fsd fksdj fsd f ksdfjsdkfhksjdfhskdjf sf sdkjfhskdff-->
+<div *ngIf="auth">
+  <mat-card>
 
-  <!--</mat-card-content>-->
-<!--</mat-card>-->
-fdsfsdfsd
+    <mat-card-title>Здравствуйте, {{(auth.user.firstName)}} {{(auth.user.secondName)}}!</mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      Вы являетесь собственником квартиры по адресу Томская область, г.Томск, ул. Сибирская, д. 31, кв. 250, S кв. 59,6 кв.м. и владеете 5,4 % голоса от общего числа собственников в доме.
+
+      <div class="voting-info">
+      <mat-grid-list cols="1" rowHeight="6:1">
+        <mat-grid-tile>
+          <div>
+            с 01.05.2017 с 20:00 по 05.05.2018 года 20:00 в доме проходит голосование.<br>
+
+            <a href="">Перейти в раздел голосования</a><br>
+
+            До завершения осталось 3 дня
+          </div>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+
+      </div>
+      <div>
+      <mat-grid-list cols="2" rowHeight="6:1">
+        <mat-grid-tile>
+          <div>
+            Пожалуйста, примите участие в опросе
+            "О качестве обслуживания УК":
+            http://onlinemkd.ru/anketa/3/Id=100928433
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div>
+            У вас 1 открытая заявка.
+            Срок - осталось 3 дня.
+          </div>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+      </div>
+
+    </mat-card-content>
+
+    <mat-card-title>Новости дома</mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      24.03.2018 в 19:35
+      В "Плане работ" изменения: Новая задача "Установка столбиков безопасности"
+    </mat-card-content>
+    <mat-card-content>
+      19.02.2018 в 10:12
+      "Давайте организуем субботник" - добавлена новая тема в форуме
+    </mat-card-content>
+
+
+  </mat-card>
