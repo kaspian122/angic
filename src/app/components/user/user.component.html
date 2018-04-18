@@ -1,5 +1,4 @@
-<div class="example-container">
-  {{currentMkd|json}}
+<div class="main">
     <mat-toolbar color="primary" class="example-toolbar">
         <!--<button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>-->
         <a mat-button routerLink="/">Онлайн МКД</a>
@@ -24,9 +23,5 @@
         <a *ngIf="authService.hasRole('ROLE_ADMIN')" mat-button routerLink="/admin">Администратор</a>
         <a mat-button (click)="logOut()">Выйти</a>
     </mat-toolbar>
-    <div>
-        <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="0">
-            <router-outlet></router-outlet>
-        </mat-sidenav-container>
-    </div>
+    <router-outlet></router-outlet>
 </div>

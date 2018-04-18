@@ -6,6 +6,7 @@ import {Observable} from "rxjs/Observable";
 import {AuthService} from "../auth/auth.service";
 import {MkdOwnersInfo, Auth} from "../auth/auth";
 import {ReplaySubject} from "rxjs/ReplaySubject";
+import {MkdCreate} from "../../models/mkd-create";
 
 @Injectable()
 export class DataService {
@@ -25,6 +26,11 @@ export class DataService {
 
   public getMkdEnums(): Observable<any> {
     return this.http.get(this.config.getEndpoint('mkd/enums'), {headers: this.authService.headers()});
+  }
+
+
+  createMkd(mkdCreate: MkdCreate): Observable<any> {
+    return this.http.post(this.config.getEndpoint('mkd/'), mkdCreate, {headers: this.authService.headers()});
   }
 
   public setCurrentMkd(mkdId: string): void{
