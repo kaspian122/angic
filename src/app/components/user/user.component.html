@@ -10,7 +10,7 @@
         <a *ngIf="auth" mat-button> {{(auth.user.lastName)}} {{(auth.user.firstName)}} {{(auth.user.secondName)}}</a>
 
         <mat-form-field *ngIf="mkd.length > 1">
-          <mat-select [(ngModel)]="currentMkd.mkdId" (change)="setCurrentMkd()">
+          <mat-select [(ngModel)]="currentMkdId" (change)="setCurrentMkd()">
             <mat-option *ngFor="let mkdItem of mkd" [value]="mkdItem.mkdId">
               {{ mkdItem.adress }}
             </mat-option>

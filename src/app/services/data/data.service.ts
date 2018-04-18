@@ -30,19 +30,15 @@ export class DataService {
   public setCurrentMkd(mkdId: string): void{
     const headers = this.authService.headers();
 
-    this.http.post(this.config.getEndpoint("user/settings/mkd/default"), mkdId.toString(), {headers: headers}).subscribe(
+    this.http.post(this.config.getEndpoint("user/settings/mkd/default"), mkdId, {headers: headers}).subscribe(
       ()=> {
 
         this.authService.getAuth(true).then(
           auth => {
             this.auth = auth;
-            for (let mkd of this.auth.mkdOwners) {
-              console.log(mkd.mkdId, mkdId);
-
-              if(mkd.mkdId == mkdId){
-                this.currentMkd.next(mkd);
-              }
-            }
+            let m = this.auth.mkdOwners.find(e=>e.mkdId==mkdId);
+            console.log(m);
+            this.currentMkd.next(m);
           }
         );
 

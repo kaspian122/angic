@@ -28,7 +28,7 @@ export class MainComponent implements OnInit {
       .then(it => {
         this.auth = it;
         if(this.auth.mkdOwners) {
-          for (var mkd of this.auth.mkdOwners) {
+          for (let mkd of this.auth.mkdOwners) {
             if (mkd.byDefault && (mkd.authorities.indexOf('CHAIRMAN') !== -1 || mkd.authorities.indexOf('SYSTEM_ADMIN') !== -1 || mkd.authorities.indexOf('BOARD_MEMBER') !== -1)) {
               this.hasPrivileges = true;
               break;
