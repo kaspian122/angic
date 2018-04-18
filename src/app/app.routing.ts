@@ -26,7 +26,7 @@ const routes: Routes = [
             component: NewsComponent,
           },
           {
-            path: 'holder-list',
+            path: 'holders-list',
             component: HolderListComponent,
           }
         ]

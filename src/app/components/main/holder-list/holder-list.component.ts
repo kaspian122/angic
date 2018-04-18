@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../../../services/auth/auth.service";
+import {Auth} from "../../../services/auth/auth";
 
 @Component({
   selector: 'app-holder-list',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HolderListComponent implements OnInit {
 
-  constructor() { }
+  public auth?: Auth = null;
+
+  constructor(
+    private authService: AuthService,
+  ) { }
 
   ngOnInit() {
+    this.authService.getAuth()
+      .then(it => this.auth = it);
   }
 
 }
