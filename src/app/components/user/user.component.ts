@@ -15,6 +15,7 @@ export class UserComponent implements OnInit {
   public auth?: Auth = null;
   public mkd = [];
   public currentMkd?: MkdOwnersInfo = null;
+  currentMkdId: string;
 
   constructor(
     private router: Router,
@@ -23,7 +24,10 @@ export class UserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataService.currentMkd.subscribe(mkd => this.currentMkd = mkd);
+    this.dataService.currentMkd.subscribe(mkd => {
+      this.currentMkd = mkd;
+      this.currentMkdId = mkd.mkdId;
+    });
     this.authService.getAuth(true)
       .then(it => {
 
@@ -45,8 +49,8 @@ export class UserComponent implements OnInit {
   }
 
   public setCurrentMkd() {
-    console.log(this.currentMkd.mkdId);
-    this.dataService.setCurrentMkd(this.currentMkd.mkdId);
+    console.log(this.currentMkdId);
+    this.dataService.setCurrentMkd(this.currentMkdId);
   }
 
 }
