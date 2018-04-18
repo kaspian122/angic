@@ -7,7 +7,14 @@
         <a mat-button routerLink=".">Форум</a>
         <div style="-webkit-box-flex: 1;-ms-flex-positive: 1;flex-grow: 1;"></div>
         <a *ngIf="auth" mat-button> {{(auth.user.lastName)}} {{(auth.user.firstName)}} {{(auth.user.secondName)}}</a>
-        <!--<div *ngIf="mkd.length == 1" > {{mkd}}</div>-->
+        <mat-form-field>
+          <mat-select [(value)]="currentMkd" (change)="setCurrentMkd($event.value)">
+            <mat-option *ngFor="let mkdItem of mkd" [value]="mkdItem.mkdId">
+              {{ mkdItem.adress }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!--<div *ngIf="auth.mkdOwners == 1" > </div>-->
         <!--<div *ngIf="mkd.length > 1" > {{mkd}}</div>-->
         <a *ngIf="authService.hasRole('ROLE_ADMIN')" mat-button routerLink="/admin">Администратор</a>
         <a mat-button (click)="logOut()">Выйти</a>

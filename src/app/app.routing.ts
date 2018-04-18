@@ -8,6 +8,7 @@ import {ProfileComponent} from "./components/main/profile/profile.component";
 import {AdminComponent} from "./components/admin/admin.component";
 import {AdminProfileComponent} from "./components/admin/admin-profile/admin-profile.component";
 import {AdminChairmanComponent} from "./components/admin/admin-chairman/admin-chairman.component";
+import {NewsComponent} from "./components/main/news/news.component";
 
 const routes: Routes = [
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            component: ProfileComponent,
+            component: NewsComponent,
           }
         ]
       },

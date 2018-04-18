@@ -8,6 +8,13 @@ export interface UserInfo {
   lastName: string,
 }
 
+export interface MkdOwnersInfo {
+  address: string,
+  authorities: string[],
+  byDefault: boolean,
+  mkdId: string
+}
+
 export interface Auth {
   /**
    * Статус
@@ -34,5 +41,8 @@ export interface Auth {
    *
    * TODO use enum?
    */
-  authorities?: String[]
+  authorities?: String[],
+
+  mkdOwners: MkdOwnersInfo[]
+
 }

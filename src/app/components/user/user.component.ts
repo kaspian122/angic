@@ -13,7 +13,8 @@ import {DataService} from "../../services/data/data.service";
 export class UserComponent implements OnInit {
 
   public auth?: Auth = null;
-  public mkd?: Mkd[] = [];
+  public mkd = [];
+  public currentMkd = null;
 
   constructor(
     private router: Router,
@@ -22,24 +23,30 @@ export class UserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.getAuth()
-      .then(it => this.auth = it);
+    this.authService.getAuth(true)
+      .then(it => {
 
-    this.dataService.getChairmanMkdList()
-      .then(
-        it => {
-          this.mkd = it;
-          return it;
-        },
-        err => {
-          this.mkd = null;
-          throw err;
+        this.auth = it;
+        if(this.auth.mkdOwners){
+          this.mkd = this.auth.mkdOwners;
+          for(var mkd of this.mkd){
+            if(mkd.byDefault){
+              this.currentMkd = mkd.mkdId;
+            }
+          }
+
         }
-      );
+      });
+
   }
 
   public logOut(){
     this.authService.logout().then(() => {this.router.navigate(['login'])});
   }
-  
+
+  public setCurrentMkd(mkdId: string) {
+    console.log(mkdId);
+    this.dataService.setCurrentMkd(mkdId);
+  }
+
 }

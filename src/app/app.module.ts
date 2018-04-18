@@ -35,6 +35,7 @@ import {MatSortModule} from '@angular/material/sort';
 import { AdminChairmanComponent } from './components/admin/admin-chairman/admin-chairman.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { NewsComponent } from './components/main/news/news.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     ProfileComponent,
     AdminComponent,
     AdminProfileComponent,
-    AdminChairmanComponent
+    AdminChairmanComponent,
+    NewsComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +85,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
       multi: true
     },
     LoginComponent,
-    DataService,
+    DataService
   ],
   bootstrap: [AppComponent]
 })

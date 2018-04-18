@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams, HttpHeaders} from "@angular/common/http";
 import {AppConfig} from "../../app.config";
 import {Mkd} from "../../models/mkd";
 import {Observable} from "rxjs/Observable";
@@ -19,12 +19,14 @@ export class DataService {
     return response.toPromise<Mkd[]>();
   }
 
-  public getChairmanMkdList(): Promise<Mkd[]>{
-    let response: Observable<Mkd[]> = this.http.request<Mkd[]>("GET", this.config.getEndpoint("mkd"));
-    return response.toPromise<Mkd[]>();
-  }
-
   public getMkdEnums(): Observable<any> {
     return this.http.get(this.config.getEndpoint('mkd/enums'), {headers: this.authService.headers()});
+  }
+
+  public setCurrentMkd(mkdId: string): Observable<any> {
+    const params = new HttpParams()
+      .set('Id', mkdId);
+    return this.http.post(this.config.getEndpoint("user/settings/mkd/default"), {body: params, headers: this.authService.headers()
+      .set('Content-Type', 'application/x-www-form-urlencoded')});
   }
 }
