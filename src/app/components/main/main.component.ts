@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../../services/auth/auth.service";
-import {Auth} from "../../services/auth/auth";
+import {Auth, MkdOwnersInfo} from "../../services/auth/auth";
+import {DataService} from "../../services/data/data.service";
 
 @Component({
   selector: 'app-main',
@@ -11,13 +12,18 @@ export class MainComponent implements OnInit {
 
   public auth?: Auth = null;
   public hasPrivileges = false;
+  public currentMkd?: MkdOwnersInfo = null;
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private dataService: DataService
   ) { }
 
   ngOnInit() {
+    this.dataService.currentMkd.subscribe(
+      mkd => this.currentMkd = mkd
+    );
     this.authService.getAuth(true)
       .then(it => {
         this.auth = it;

@@ -1,4 +1,5 @@
 <div class="example-container">
+  {{currentMkd|json}}
     <mat-toolbar color="primary" class="example-toolbar">
         <!--<button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>-->
         <a mat-button routerLink="/">Онлайн МКД</a>
@@ -9,7 +10,7 @@
         <a *ngIf="auth" mat-button> {{(auth.user.lastName)}} {{(auth.user.firstName)}} {{(auth.user.secondName)}}</a>
 
         <mat-form-field *ngIf="mkd.length > 1">
-          <mat-select [(value)]="currentMkd" (change)="setCurrentMkd($event.value)">
+          <mat-select [(ngModel)]="currentMkd.mkdId" (change)="setCurrentMkd()">
             <mat-option *ngFor="let mkdItem of mkd" [value]="mkdItem.mkdId">
               {{ mkdItem.adress }}
             </mat-option>

@@ -36,6 +36,7 @@ import { AdminChairmanComponent } from './components/admin/admin-chairman/admin-
 import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { NewsComponent } from './components/main/news/news.component';
+import { HolderListComponent } from './components/main/holder-list/holder-list.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { NewsComponent } from './components/main/news/news.component';
     AdminComponent,
     AdminProfileComponent,
     AdminChairmanComponent,
-    NewsComponent
+    NewsComponent,
+    HolderListComponent
   ],
   imports: [
     BrowserModule,
