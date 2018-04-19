@@ -7,7 +7,26 @@
       </mat-form-field>
     </div>
 
-    <mat-table #table [dataSource]="dataSource">
+    <mat-card-title>Реестр собственников</mat-card-title>
+    <mat-divider></mat-divider>
+
+    <mat-card-content *ngIf="commonInfo">
+      <mat-grid-list cols="2" rowHeight="8:1">
+        <mat-grid-tile>
+          <div class="mkd-info-holders-list">
+            Адрес МКД: {{commonInfo.mkd.address}}
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="mkd-info-holders-list">
+            Площадь МКД: {{commonInfo.mkd.area}} м.кв.
+          </div>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+    </mat-card-content>
+
+      <mat-table #table [dataSource]="dataSource">
 
       <ng-container matColumnDef="apartmentNumber" >
         <mat-header-cell *matHeaderCellDef [ngClass]="'apartment-number'"> № пом </mat-header-cell>
@@ -46,12 +65,12 @@
 
       <ng-container matColumnDef="voting">
         <mat-header-cell *matHeaderCellDef [ngClass]="'voting'"> Кол-во голосов </mat-header-cell>
-        <mat-cell *matCellDef="let element">  </mat-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'voting'"> {{element.votingCount}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="percentage">
         <mat-header-cell *matHeaderCellDef [ngClass]="'percentage'"> Процент голосов </mat-header-cell>
-        <mat-cell *matCellDef="let element">  </mat-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'percentage'"> {{element.percentage}}% </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -59,6 +78,10 @@
     </mat-table>
 
     <br>
+
+      <mat-card-content *ngIf="commonInfo">
+        Подключено {{commonInfo.holdersAreaIn}} м.кв ({{commonInfo.holderAreaPercentageIn}}%)
+      </mat-card-content>
 
     <a routerLink="/admin/chairman" mat-raised-button >Добавить</a >
   </mat-card-content>

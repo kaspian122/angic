@@ -10,3 +10,8 @@
 .area {
     flex: 0 0 10%;
 }
+
+.mkd-info-holders-list {
+    float: left;
+    width: 100%;
+}

@@ -12,6 +12,8 @@ export class HolderListComponent implements OnInit {
 
     public holdersList?:MkdHoldersList = null;
     public holdersData = [];
+    public commonInfo;
+
     public dataSource = new MatTableDataSource();
     public displayedColumns = ['apartmentNumber', 'holderName', 'certificateNumber', 'certificateDate', 'area', 'holderShareAmount', 'totalShare', 'voting', 'percentage'];
 
@@ -32,7 +34,10 @@ export class HolderListComponent implements OnInit {
                     holdersList => {
                         this.holdersData = [];
                         this.holdersList = holdersList;
-                        for (let holder of this.holdersList.holders){
+                        let holdersAreaIn = 0;
+                        for (let holder of holdersList.holders){
+                            let votingCount = holder.apartment.area * holder.holder.shareAmount / holder.apartment.totalShare;
+                            holdersAreaIn += holder.apartment.area;
                             let holderRow = {
                                 apartmentId: holder.apartment.id,
                                 holderId: holder.holder.id,
@@ -45,10 +50,18 @@ export class HolderListComponent implements OnInit {
                                 certificateDate: holder.holder.certificateDate,
                                 area: holder.apartment.area,
                                 holderShareAmount: holder.holder.shareAmount,
-                                totalShare: holder.apartment.totalShare
+                                totalShare: holder.apartment.totalShare,
+                                votingCount: votingCount,
+                                percentage: parseFloat((votingCount * 100 / this.holdersList.mkd.area).toFixed(2)),
                             };
                             this.holdersData.push(holderRow);
                         }
+                        this.commonInfo = {
+                            mkd: holdersList.mkd,
+                            holdersAreaIn: holdersAreaIn,
+                            holderAreaPercentageIn: parseFloat((holdersAreaIn * 100 / holdersList.mkd.area).toFixed(2))
+                        };
+
                         this.dataSource = new MatTableDataSource(this.holdersData);
 
                     }

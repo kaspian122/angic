@@ -1,6 +1,7 @@
 import {Holder} from "./holder";
 import {Apartment} from "./apartment";
 import {User} from "./user";
+import {Mkd} from  "./mkd";
 
 export interface HoldersList{
     apartment: Apartment,
@@ -10,5 +11,6 @@ export interface HoldersList{
 
 export interface MkdHoldersList{
     holders?: HoldersList[],
-    managementInfo?: string
+    managementInfo?: string,
+    mkd?: Mkd
 }
