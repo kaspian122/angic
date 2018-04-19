@@ -7,6 +7,7 @@ import {AuthService} from "../auth/auth.service";
 import {MkdOwnersInfo, Auth} from "../auth/auth";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {MkdCreate} from "../../models/mkd-create";
+import {MkdHoldersList} from "../../models/mkd-holders-list";
 
 @Injectable()
 export class DataService {
@@ -42,12 +43,15 @@ export class DataService {
           auth => {
             this.auth = auth;
             let m = this.auth.mkdOwners.find(e=>e.mkdId==mkdId);
-            console.log(m);
             this.currentMkd.next(m);
           }
         );
       }
     );
+  }
+
+  public getHoldersList(mkdId: string): Observable<MkdHoldersList>{
+    return this.http.get(this.config.getEndpoint("/mkd/" + mkdId + "/holders"), {headers: this.authService.headers()});
   }
 
 

@@ -32,7 +32,7 @@ export class UserComponent implements OnInit {
         if(this.auth.mkdOwners){
           this.mkd = this.auth.mkdOwners;
           for(let mkd of this.mkd){
-            if(mkd.byDefault){
+            if(mkd.byDefault || this.mkd.length == 1 ){
               this.dataService.currentMkd.next(mkd);
             }
           }
@@ -46,7 +46,6 @@ export class UserComponent implements OnInit {
   }
 
   public setCurrentMkd() {
-    console.log(this.currentMkdId);
     this.dataService.setCurrentMkd(this.currentMkdId);
   }
 

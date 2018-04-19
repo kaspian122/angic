@@ -1,0 +1,12 @@
+.holder-share-amount, .total-share, .voting, .percentage{
+    flex: 0 0 7%;
+}
+.apartment-number, .certificate-date {
+    flex: 0 0 13%;
+}
+.holder-name, .certificate-number{
+    flex: 0 0 20%;
+}
+.area {
+    flex: 0 0 10%;
+}
