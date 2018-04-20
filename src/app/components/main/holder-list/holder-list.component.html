@@ -28,6 +28,24 @@
 
       <mat-table #table [dataSource]="dataSource">
 
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+
+        <mat-header-cell *matHeaderCellDef [ngClass]="'select'">
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'select'">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(element) : null"
+                        [checked]="selection.isSelected(element)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+
       <ng-container matColumnDef="apartmentNumber" >
         <mat-header-cell *matHeaderCellDef [ngClass]="'apartment-number'"> № пом </mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="'apartment-number'"> {{element.apartmentNumber}} </mat-cell>
@@ -84,5 +102,6 @@
       </mat-card-content>
 
     <a routerLink="/admin/chairman" mat-raised-button >Добавить</a >
+    <a routerLink="/admin/chairman" mat-raised-button (click)="openDeleteDialog()" >Удалить</a >
   </mat-card-content>
 </mat-card>

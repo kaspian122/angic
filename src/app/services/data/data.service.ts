@@ -54,5 +54,9 @@ export class DataService {
     return this.http.get(this.config.getEndpoint("/mkd/" + mkdId + "/holders"), {headers: this.authService.headers()});
   }
 
+  public deleteHolders(holderIds: string[]){
+    return this.http.request("DELETE", this.config.getEndpoint("/holder/"), {body: holderIds, headers: this.authService.headers()});
+
+  }
 
 }

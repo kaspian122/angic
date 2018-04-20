@@ -37,6 +37,9 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { NewsComponent } from './components/main/news/news.component';
 import { HolderListComponent } from './components/main/holder-list/holder-list.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
+import {MatDialogModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -50,7 +53,8 @@ import { HolderListComponent } from './components/main/holder-list/holder-list.c
     AdminProfileComponent,
     AdminChairmanComponent,
     NewsComponent,
-    HolderListComponent
+    HolderListComponent,
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +78,9 @@ import { HolderListComponent } from './components/main/holder-list/holder-list.c
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatCheckboxModule,
+    MatDialogModule
   ],
   providers: [
     CookieService,
@@ -89,6 +95,10 @@ import { HolderListComponent } from './components/main/holder-list/holder-list.c
     LoginComponent,
     DataService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+      DeleteDialogComponent
+  ]
+
 })
 export class AppModule { }
