@@ -59,4 +59,9 @@ export class DataService {
 
   }
 
+  public getExcelFileWithHolders(mkdId: string){
+
+    return this.http.get(this.config.getEndpoint("mkd/" + mkdId + "/holders/export"), {headers: this.authService.headers(), responseType: 'arraybuffer'});
+  }
+
 }

@@ -51,7 +51,7 @@ export class HolderListComponent implements OnInit {
         this.dataService.currentMkd.subscribe(
             mkd => {
                 this.currentMkd = mkd;
-                this.getHoldersList(this.currentMkd);
+                //this.getHoldersList(this.currentMkd);
             }
         )
     }
@@ -79,6 +79,31 @@ export class HolderListComponent implements OnInit {
             }
         });
     }
+
+    loadToExcel(){
+        this.dataService.getExcelFileWithHolders(this.currentMkd.mkdId).subscribe(
+             data=> this.downloadFile(data));
+    }
+
+    private downloadFile(data){
+
+        let contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+
+        let blob = new Blob([data], { type: contentType });
+        console.log(new DataView(data));
+        let fileName: string = 'Список собственников.csv';
+        var url= window.URL.createObjectURL(blob);
+        const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
+
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
 
     private getHoldersList(mkd){
         this.dataService.getHoldersList(mkd.mkdId).subscribe(
