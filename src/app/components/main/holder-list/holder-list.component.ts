@@ -90,13 +90,11 @@ export class HolderListComponent implements OnInit {
         let contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
         let blob = new Blob([data], { type: contentType });
-        console.log(new DataView(data));
-        let fileName: string = 'Список собственников.csv';
         var url= window.URL.createObjectURL(blob);
         const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
 
         a.href = url;
-        a.download = fileName;
+        a.download = 'Список собственников.csv';
         document.body.appendChild(a);
         a.click();
 
