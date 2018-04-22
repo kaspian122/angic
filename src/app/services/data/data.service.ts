@@ -8,6 +8,7 @@ import {MkdOwnersInfo, Auth} from "../auth/auth";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {MkdCreate} from "../../models/mkd-create";
 import {User} from "../../models/user";
+import {MkdHoldersList} from "../../models/mkd-holders-list";
 
 @Injectable()
 export class DataService {
@@ -43,7 +44,6 @@ export class DataService {
           auth => {
             this.auth = auth;
             let m = this.auth.mkdOwners.find(e=>e.mkdId==mkdId);
-            console.log(m);
             this.currentMkd.next(m);
           }
         );
@@ -55,5 +55,18 @@ export class DataService {
     return this.http.get<User>(this.config.getEndpoint("user/"+name));
   }
 
+  public getHoldersList(mkdId: string): Observable<MkdHoldersList>{
+    return this.http.get(this.config.getEndpoint("/mkd/" + mkdId + "/holders"), {headers: this.authService.headers()});
+  }
+
+  public deleteHolders(holderIds: string[]){
+    return this.http.request("DELETE", this.config.getEndpoint("/holder/"), {body: holderIds, headers: this.authService.headers()});
+
+  }
+
+  public getExcelFileWithHolders(mkdId: string){
+
+    return this.http.get(this.config.getEndpoint("mkd/" + mkdId + "/holders/export"), {headers: this.authService.headers(), responseType: 'arraybuffer'});
+  }
 
 }

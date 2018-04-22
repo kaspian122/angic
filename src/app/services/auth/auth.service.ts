@@ -113,4 +113,12 @@ export class AuthService {
     return new HttpHeaders().set(this.config.X_CSRF_TOKEN_HEADER_NAME, this.auth.csrfToken);
   }
 
+  checkRole(roles: string[], authorities: string[]):boolean {
+    for(let role of roles){
+      if(authorities.indexOf(role) !== -1) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

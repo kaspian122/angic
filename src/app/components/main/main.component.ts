@@ -22,21 +22,22 @@ export class MainComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataService.currentMkd.subscribe(
-      mkd => this.currentMkd = mkd
-    );
+
     this.authService.getAuth(true)
       .then(it => {
         this.auth = it;
         if(this.auth.mkdOwners) {
-          for (let mkd of this.auth.mkdOwners) {
-            if (mkd.byDefault && (mkd.authorities.indexOf('CHAIRMAN') !== -1 || mkd.authorities.indexOf('SYSTEM_ADMIN') !== -1 || mkd.authorities.indexOf('BOARD_MEMBER') !== -1)) {
-              this.hasPrivileges = true;
-              break;
-            }
+          let m = this.auth.mkdOwners[0];
+          if (this.auth.mkdOwners.length > 1) {
+            let m = this.auth.mkdOwners.find(e => e.byDefault == true);
           }
+          this.hasPrivileges = this.authService.checkRole(['CHAIRMAN', 'SYSTEM_ADMIN', 'BOARD_MEMBER'], m.authorities);
+
         }
       });
+    this.dataService.currentMkd.subscribe(
+      mkd => this.currentMkd = mkd
+    );
   }
 
   public callAllowedForAdmin () {
