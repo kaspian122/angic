@@ -78,7 +78,7 @@ export class DataService {
   }
 
   public getUserMkdInfo(mkdId: string): Observable<MkdNewsInfo> {
-    return this.http.get(this.config.getEndpoint(`/user/info/mkd/${mkdId}`), {headers: this.authService.headers()});
+    return this.http.get<MkdNewsInfo>(this.config.getEndpoint(`/user/info/mkd/${mkdId}`), {headers: this.authService.headers()});
   }
 
 }
