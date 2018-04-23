@@ -7,6 +7,7 @@ import {AuthService} from "../auth/auth.service";
 import {MkdOwnersInfo, Auth} from "../auth/auth";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {MkdCreate} from "../../models/mkd-create";
+import {User} from "../../models/user";
 import {MkdHoldersList} from "../../models/mkd-holders-list";
 import {MkdApartmentsList} from "../../models/mkd-apartments-list";
 
@@ -49,6 +50,10 @@ export class DataService {
         );
       }
     );
+  }
+
+  getUserByLogin(name: string): Observable<User> {
+    return this.http.get<User>(this.config.getEndpoint("user/"+name));
   }
 
   public getHoldersList(mkdId: string): Observable<MkdHoldersList>{
