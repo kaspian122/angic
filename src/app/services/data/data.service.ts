@@ -10,6 +10,7 @@ import {MkdCreate} from "../../models/mkd-create";
 import {User} from "../../models/user";
 import {MkdHoldersList} from "../../models/mkd-holders-list";
 import {MkdApartmentsList} from "../../models/mkd-apartments-list";
+import {MkdNewsInfo} from "../../models/mkd-news-info";
 
 @Injectable()
 export class DataService {
@@ -75,4 +76,9 @@ export class DataService {
   public deleteApartments(apartmentIds: string[]){
     return this.http.request("DELETE", this.config.getEndpoint("/apartment"), {body: apartmentIds, headers: this.authService.headers()});
   }
+
+  public getUserMkdInfo(mkdId: string): Observable<MkdNewsInfo> {
+    return this.http.get(this.config.getEndpoint(`/user/info/mkd/${mkdId}`), {headers: this.authService.headers()});
+  }
+
 }
