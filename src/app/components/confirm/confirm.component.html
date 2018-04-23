@@ -1,0 +1,23 @@
+<div class="containerlogin" *ngIf="key">
+  <div class="center-box">
+    <mat-card>
+      <mat-card-content>
+        <form name="confirmform" #regForm="ngForm" (ngSubmit)="onSubmit()">
+          <mat-form-field style="width: 100%">
+            <input matInput type="password" id='password' name="password" [(ngModel)]="password" placeholder="Пароль">
+          </mat-form-field>
+          <mat-form-field style="width: 100%">
+            <input matInput type="password" id='passwordConfirm' name="passwordConfirm" [(ngModel)]="passwordConfirm" placeholder="Подтверждение пароля">
+          </mat-form-field>
+          <button mat-button >Войти</button>
+
+          <div style="color: red;" *ngIf="errorMessage">
+            {{errorMessage}}
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+

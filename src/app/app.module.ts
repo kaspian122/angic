@@ -41,6 +41,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
 import {MatDialogModule} from '@angular/material';
 import { ApartmentListComponent } from './components/main/apartment-list/apartment-list.component';
+import { ConfirmComponent } from './components/confirm/confirm.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { ApartmentListComponent } from './components/main/apartment-list/apartme
     NewsComponent,
     HolderListComponent,
     DeleteDialogComponent,
-    ApartmentListComponent
+    ApartmentListComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,

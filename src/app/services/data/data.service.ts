@@ -11,6 +11,7 @@ import {User} from "../../models/user";
 import {MkdHoldersList} from "../../models/mkd-holders-list";
 import {MkdApartmentsList} from "../../models/mkd-apartments-list";
 import {MkdNewsInfo} from "../../models/mkd-news-info";
+import {SavePass} from "../../models/save-pass";
 
 @Injectable()
 export class DataService {
@@ -58,11 +59,11 @@ export class DataService {
   }
 
   public getHoldersList(mkdId: string): Observable<MkdHoldersList>{
-    return this.http.get(this.config.getEndpoint("/mkd/" + mkdId + "/holders"), {headers: this.authService.headers()});
+    return this.http.get(this.config.getEndpoint("mkd/" + mkdId + "/holders"), {headers: this.authService.headers()});
   }
 
   public deleteHolders(holderIds: string[]){
-    return this.http.request("DELETE", this.config.getEndpoint("/holder/"), {body: holderIds, headers: this.authService.headers()});
+    return this.http.request("DELETE", this.config.getEndpoint("holder/"), {body: holderIds, headers: this.authService.headers()});
   }
 
   public getExcelFileWithHolders(mkdId: string){
@@ -70,15 +71,19 @@ export class DataService {
   }
 
   public getApartmentsList(mkdId: string):Observable<MkdApartmentsList>{
-    return this.http.get(this.config.getEndpoint("/mkd/" + mkdId + "/apartments"), {headers: this.authService.headers()});
+    return this.http.get(this.config.getEndpoint("mkd/" + mkdId + "/apartments"), {headers: this.authService.headers()});
   }
 
   public deleteApartments(apartmentIds: string[]){
-    return this.http.request("DELETE", this.config.getEndpoint("/apartment"), {body: apartmentIds, headers: this.authService.headers()});
+    return this.http.request("DELETE", this.config.getEndpoint("apartment"), {body: apartmentIds, headers: this.authService.headers()});
   }
 
   public getUserMkdInfo(mkdId: string): Observable<MkdNewsInfo> {
-    return this.http.get<MkdNewsInfo>(this.config.getEndpoint(`/user/info/mkd/${mkdId}`), {headers: this.authService.headers()});
+    return this.http.get<MkdNewsInfo>(this.config.getEndpoint(`user/info/mkd/${mkdId}`), {headers: this.authService.headers()});
+  }
+
+  public registration(savePass: SavePass) {
+    return this.http.put(this.config.getEndpoint(`user/registration`), savePass, {headers: this.authService.headers()});
   }
 
 }

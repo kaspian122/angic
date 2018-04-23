@@ -9,6 +9,7 @@ import {AdminProfileComponent} from "./components/admin/admin-profile/admin-prof
 import {AdminChairmanComponent} from "./components/admin/admin-chairman/admin-chairman.component";
 import {NewsComponent} from "./components/main/news/news.component";
 import {ApartmentListComponent} from "./components/main/apartment-list/apartment-list.component";
+import {ConfirmComponent} from "./components/confirm/confirm.component";
 
 
 const routes: Routes = [
@@ -54,6 +55,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'confirm/:type/:key',
+    component: ConfirmComponent
   },
   {
     path: 'forbidden',
