@@ -14,6 +14,8 @@ export class ProfileComponent implements OnInit {
   public auth?: Auth = null;
   mkdInfo: MkdNewsInfo = null;
 
+  private apartmentsStr: string;
+
   constructor(
     private authService: AuthService,
     private dataService: DataService,
@@ -30,7 +32,10 @@ export class ProfileComponent implements OnInit {
   initInfo(): void {
     this.dataService.currentMkd.subscribe(mkd => {
       this.dataService.getUserMkdInfo(mkd.mkdId).subscribe(
-        info => this.mkdInfo = info
+        info => {
+          this.mkdInfo = info;
+          this.apartmentsStr = this.mkdInfo.apartments.map(it => `кв. ${it.number}(${it.area} кв.м.)`).join(", ");
+        }
       );
     });
   }

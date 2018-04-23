@@ -5,8 +5,7 @@
     <div *ngIf="mkdInfo">
       <mat-divider></mat-divider>
       <mat-card-content>
-        Вы являетесь собственником квартиры по адресу {{mkdInfo.address}},
-        <span *ngFor="let a of mkdInfo.apartments"> кв. {{a.number}}({{a.area}} кв.м.),</span>
+        Вы являетесь собственником квартиры по адресу {{mkdInfo.address}}, {{apartmentsStr}}
         и владеете {{mkdInfo.mkdPercent}}% голоса от общего числа собственников в доме.
       </mat-card-content>
       <mat-card-content>
