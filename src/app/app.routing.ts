@@ -8,7 +8,7 @@ import {AdminComponent} from "./components/admin/admin.component";
 import {AdminProfileComponent} from "./components/admin/admin-profile/admin-profile.component";
 import {AdminChairmanComponent} from "./components/admin/admin-chairman/admin-chairman.component";
 import {NewsComponent} from "./components/main/news/news.component";
-import {HolderListComponent} from "./components/main/holder-list/holder-list.component";
+import {ApartmentListComponent} from "./components/main/apartment-list/apartment-list.component";
 
 
 const routes: Routes = [
@@ -26,8 +26,8 @@ const routes: Routes = [
             component: NewsComponent,
           },
           {
-            path: 'holders-list',
-            component: HolderListComponent,
+            path: 'apartments-list',
+            component: ApartmentListComponent,
           }
         ]
       },

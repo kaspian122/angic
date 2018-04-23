@@ -51,7 +51,7 @@ export class HolderListComponent implements OnInit {
         this.dataService.currentMkd.subscribe(
             mkd => {
                 this.currentMkd = mkd;
-                //this.getHoldersList(this.currentMkd);
+                this.getHoldersList(this.currentMkd);
             }
         )
     }
@@ -94,7 +94,7 @@ export class HolderListComponent implements OnInit {
         const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
 
         a.href = url;
-        a.download = 'Список собственников.csv';
+        a.download = 'Список собственников.xlsx';
         document.body.appendChild(a);
         a.click();
 

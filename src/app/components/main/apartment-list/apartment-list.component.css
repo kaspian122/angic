@@ -1,0 +1,24 @@
+.floor, .total-share{
+    flex: 0 0 15%;
+}
+.apartment-number {
+    flex: 0 0 15%;
+}
+.ownership, .utilization{
+    flex: 0 0 20%;
+}
+.area {
+    flex: 0 0 10%;
+}
+.select {
+    flex: 0 0 5%;
+}
+
+.mkd-info-holders-list {
+    float: left;
+    width: 100%;
+}
+
+.mat-column-select {
+    overflow: visible;
+}

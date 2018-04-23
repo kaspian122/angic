@@ -40,6 +40,7 @@ import { HolderListComponent } from './components/main/holder-list/holder-list.c
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
 import {MatDialogModule} from '@angular/material';
+import { ApartmentListComponent } from './components/main/apartment-list/apartment-list.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import {MatDialogModule} from '@angular/material';
     AdminChairmanComponent,
     NewsComponent,
     HolderListComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    ApartmentListComponent
   ],
   imports: [
     BrowserModule,
