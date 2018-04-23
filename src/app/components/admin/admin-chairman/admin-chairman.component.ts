@@ -22,6 +22,8 @@ export class AdminChairmanComponent implements OnInit {
   user: User;
   oldPhone: string;
 
+  loader: boolean = false;
+
   mkdCreate: MkdCreate;
 
   constructor(
@@ -52,11 +54,18 @@ export class AdminChairmanComponent implements OnInit {
 
   onSubmit() {
     this.mkdCreate = this.chairmanForm.value;
-    this.mkdCreate.user.login = this.mkdCreate.user.phone;
 
+    if (this.user) {
+      this.mkdCreate.user = this.user;
+    } else {
+      this.mkdCreate.user.login = this.mkdCreate.user.phone;
+    }
+
+    this.loader = true;
     this.dataService.createMkd(this.mkdCreate).subscribe(
       data => {
-        console.log('Success:', data);
+        this.loader = false;
+        this.router.navigate(['/admin']);
       },
       (err: HttpErrorResponse) => {
         let errors = err.error.errors;
@@ -64,6 +73,7 @@ export class AdminChairmanComponent implements OnInit {
         Object.keys(errors).forEach(field=>{
           this.chairmanForm.get(field).setErrors({"server": errors[field][0]});
         });
+        this.loader = false;
       }
     );
   }
@@ -77,12 +87,12 @@ export class AdminChairmanComponent implements OnInit {
 
   initMkd() {
     return this.fb.group({
-      address: ['asdasdasd', Validators.required],
-      administrationType: ['AdministrationCompany', Validators.required],
-      apartmentCount: ['123', Validators.required],
-      area: ['123', Validators.required],
-      floorCount: ['2', Validators.required],
-      porchCount: ['2', Validators.required],
+      address: ['', Validators.required],
+      administrationType: ['', Validators.required],
+      apartmentCount: ['', Validators.required],
+      area: ['', Validators.required],
+      floorCount: ['', Validators.required],
+      porchCount: ['', Validators.required],
     });
   }
 
@@ -90,9 +100,9 @@ export class AdminChairmanComponent implements OnInit {
     return this.fb.group({
       phone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      firstName: [''],
-      lastName: [''],
-      secondName: [''],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      secondName: ['', Validators.required],
     });
   }
 

@@ -103,12 +103,20 @@
         </div>
 
         <div style="text-align: right">
-          <button mat-raised-button type="submit" #sbmt tabindex="12" [disabled]="chairmanForm.pristine || chairmanForm.status == 'INVALID'">Сохранить</button>
+          <button mat-raised-button
+                  type="submit" #sbmt
+                  tabindex="12"
+                  [disabled]="chairmanForm.pristine || chairmanForm.status == 'INVALID' || loader"
+
+          >
+            <mat-icon *ngIf="loader" class="spinner">cached</mat-icon>
+            Сохранить
+          </button>
         </div>
-        <a mat-raised-button (click)="log()">Test</a>
+        <!--<a mat-raised-button (click)="log()">Test</a>-->
       </form>
 
-      <pre style="font-size: 9px;">{{ chairmanForm.value | json }}</pre>
+      <!--<pre style="font-size: 9px;">{{ chairmanForm.value | json }}</pre>-->
     </section>
 
 
