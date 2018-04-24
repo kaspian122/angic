@@ -109,7 +109,7 @@ export class AuthService {
     try {
       return this.logout();
     } catch (e) {
-      return Promise.resolve({status: 'NOT_AUTHENTICATED', mkdOwners: []} as Auth)
+      return Promise.resolve({status: 'NOT_AUTHENTICATED', csrfToken: '', mkdOwners: []} as Auth)
         .then(it => this.auth = it);
     }
   }
