@@ -69,7 +69,6 @@ export class AdminChairmanComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         let errors = err.error.errors;
-        console.log(errors);
         Object.keys(errors).forEach(field=>{
           this.chairmanForm.get(field).setErrors({"server": errors[field][0]});
         });
@@ -104,9 +103,6 @@ export class AdminChairmanComponent implements OnInit {
       lastName: ['', Validators.required],
       secondName: ['', Validators.required],
     });
-  }
-
-  log() {
   }
 
   phoneBlur() {

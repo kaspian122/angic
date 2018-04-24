@@ -30,3 +30,15 @@ div.main {
        causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
     flex: 1;
 }
+
+#agree .mat-checkbox-inner-container {
+    margin-top: 3px !important;
+}
+
+#agree .mat-checkbox-label {
+    line-height: 12px !important;
+    font-size: 12px !important;
+    color: grey !important;
+}
+
+

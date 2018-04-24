@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import "rxjs/add/operator/switchMap";
 import {Observable} from "rxjs/Observable";
-import {SavePass} from "../../models/save-pass";
 import {DataService} from "../../services/data/data.service";
 import {AuthService} from "../../services/auth/auth.service";
 import {capitalize} from "@angular-devkit/core/src/utils/strings";
+import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-confirm',
@@ -13,50 +13,79 @@ import {capitalize} from "@angular-devkit/core/src/utils/strings";
   styleUrls: ['./confirm.component.css']
 })
 export class ConfirmComponent implements OnInit {
+  loader: boolean = false;
   password: string;
   passwordConfirm: string;
   key: string;
   type: string;
-  errorMessage: string = '';
+  form: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private dataService: DataService,
-    private authService: AuthService
+    private authService: AuthService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
+
+    this.form = this.fb.group({
+      password: ['', Validators.required],
+      passwordConfirm: ['', [Validators.required, this.compareWithPassword()]],
+      type: [''],
+      key: ['']
+    });
+
     this.route.paramMap.switchMap(p=>Observable.of(p)).subscribe(
       params => {
         this.authService.getAuth().then(
           () => {
-            this.key = params.get('key');
-            this.type = this.capitalize(params.get('type'));
+            this.form.get('key').setValue(params.get('key'));
+            this.form.get('type').setValue(capitalize(params.get('type')));
           }
         );
       }
     );
   }
 
-  capitalize(s: string) {
-    return s.charAt(0).toUpperCase() + s.slice(1);
+  compareWithPassword(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} => {
+      let pwd = control.root.get('password');
+      if (!pwd) return null;
+      return control.value == pwd.value ?  null : {compare: 'Пароль и подтверждение пароля не совпадают'};
+    };
   }
 
   onSubmit() {
-    let savePass: SavePass = {
-      key: this.key,
-      type: this.type,
-      password: this.password
-    };
-    this.dataService.registration(savePass).subscribe(
-      data => {
-        console.log('success', data);
+
+    this.loader = true;
+
+    this.dataService.registration(this.form.value).subscribe(
+      () => {
+        this.authService.getAuth(true).then(
+          ()=>{this.router.navigate(['/']);}
+        );
       },
       e => {
-        console.log('error', e);
-        // this.errorMessage
+        let errors = e.error.errors;
+        Object.keys(errors).forEach(field=>{
+          this.form.get(field).setErrors({"server": errors[field][0]});
+        });
+        this.loader = false;
       }
     )
+  }
+
+  f(name) {
+    return this.form.get(name);
+  }
+
+  e(name) {
+    let e = this.f(name).errors;
+    if (!e) return '';
+    if(e.compare) return e.compare;
+    if(e.required) return "Необходимо указать";
+    if(e.server) return e.server;
   }
 }

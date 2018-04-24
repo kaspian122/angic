@@ -1,23 +1,37 @@
-<div class="containerlogin" *ngIf="key">
-  <div class="center-box">
-    <mat-card>
-      <mat-card-content>
-        <form name="confirmform" #regForm="ngForm" (ngSubmit)="onSubmit()">
-          <mat-form-field style="width: 100%">
-            <input matInput type="password" id='password' name="password" [(ngModel)]="password" placeholder="Пароль">
-          </mat-form-field>
-          <mat-form-field style="width: 100%">
-            <input matInput type="password" id='passwordConfirm' name="passwordConfirm" [(ngModel)]="passwordConfirm" placeholder="Подтверждение пароля">
-          </mat-form-field>
-          <button mat-button >Войти</button>
+<div class="containerlogin" *ngIf="form">
+    <div class="center-box">
+        <mat-card>
+            <mat-card-content>
+                <form name="confirmform" #regForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" [formGroup]="form">
+                    <mat-form-field style="width: 100%">
+                        <input matInput type="password" name="password" formControlName="password" placeholder="Пароль">
+                        <mat-error *ngIf="f('password').invalid">{{e('password')}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field style="width: 100%">
+                        <input matInput type="password" name="passwordConfirm" formControlName="passwordConfirm" placeholder="Подтверждение пароля">
+                        <mat-error *ngIf="f('passwordConfirm').invalid">{{e('passwordConfirm')}}</mat-error>
+                        <mat-hint style="color: red" *ngIf="f('key').invalid">{{e('key')}}</mat-hint>
+                        <mat-hint style="color: red" *ngIf="f('type').invalid">{{e('type')}}</mat-hint>
+                    </mat-form-field>
 
-          <div style="color: red;" *ngIf="errorMessage">
-            {{errorMessage}}
-          </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </div>
+                    <p style="width: 100%">
+                        <mat-checkbox id="agree" #agree>
+                            Принимаю условие Пользовательского соглашения <br>
+                            и согласен на обработку персональных данных <br>
+                            в соответствии с Федеральным законом от 27.07.2006 N 152-ФЗ
+                        </mat-checkbox>
+                    </p>
+                    <p style="width: 100%; text-align: right">
+                        <a mat-button href="http://mkd.sibir.local">Отмена</a>
+                        <button mat-button [disabled]="form.pristine || form.status == 'INVALID' || loader ||!agree.checked">
+                            <mat-icon *ngIf="loader" class="spinner">cached</mat-icon>
+                            Войти
+                        </button>
+                    </p>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </div>
 
 
