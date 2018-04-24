@@ -105,6 +105,15 @@ export class AuthService {
       .then(it => this.auth = it);
   }
 
+  tryLogout(): Promise<Auth> {
+    try {
+      return this.logout();
+    } catch (e) {
+      return Promise.resolve({status: 'NOT_AUTHENTICATED', mkdOwners: []} as Auth)
+        .then(it => this.auth = it);
+    }
+  }
+
   hasRole(role: string): boolean {
     return this.auth.authorities.indexOf(role) !== -1;
   }

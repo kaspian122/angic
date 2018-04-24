@@ -39,7 +39,7 @@ export class ConfirmComponent implements OnInit {
 
     this.route.paramMap.switchMap(p=>Observable.of(p)).subscribe(
       params => {
-        this.authService.getAuth().then(
+        this.authService.tryLogout().then(
           () => {
             this.form.get('key').setValue(params.get('key'));
             this.form.get('type').setValue(capitalize(params.get('type')));
