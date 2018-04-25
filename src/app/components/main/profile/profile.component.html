@@ -4,10 +4,12 @@
     <mat-card-title>Здравствуйте, {{(auth.user.firstName)}} {{(auth.user.secondName)}}!</mat-card-title>
     <div *ngIf="mkdInfo">
       <mat-divider></mat-divider>
-      <mat-card-content>
-        Вы являетесь собственником квартиры по адресу {{mkdInfo.address}}, {{apartmentsStr}}
-        и владеете {{mkdInfo.mkdPercent}}% голоса от общего числа собственников в доме.
-      </mat-card-content>
+      <div *ngIf="mkdInfo.address">
+        <mat-card-content>
+          Вы являетесь собственником квартиры по адресу {{mkdInfo.address}}, {{apartmentsStr}}
+          и владеете {{mkdInfo.mkdPercent}}% голоса от общего числа собственников в доме.
+        </mat-card-content>
+      </div>
       <mat-card-content>
         <!--<div class="voting-info">-->
           <!--<mat-grid-list cols="1" rowHeight="6:1">-->
