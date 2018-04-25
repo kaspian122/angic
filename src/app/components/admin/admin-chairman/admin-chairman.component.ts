@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
 import {User} from "../../../models/user";
 import {MatButton} from "@angular/material";
+import {ErrorHandler} from "../../../services/error-handler";
 
 @Component({
   selector: 'app-admin-chairman',
@@ -68,10 +69,7 @@ export class AdminChairmanComponent implements OnInit {
         this.router.navigate(['/admin']);
       },
       (err: HttpErrorResponse) => {
-        let errors = err.error.errors;
-        Object.keys(errors).forEach(field=>{
-          this.chairmanForm.get(field).setErrors({"server": errors[field][0]});
-        });
+        ErrorHandler.handleFormError(err, this.chairmanForm);
         this.loader = false;
       }
     );

@@ -6,6 +6,7 @@ import {DataService} from "../../services/data/data.service";
 import {AuthService} from "../../services/auth/auth.service";
 import {capitalize} from "@angular-devkit/core/src/utils/strings";
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
+import {ErrorHandler} from "../../services/error-handler";
 
 @Component({
   selector: 'app-confirm',
@@ -77,10 +78,7 @@ export class ConfirmComponent implements OnInit {
         );
       },
       e => {
-        let errors = e.error.errors;
-        Object.keys(errors).forEach(field=>{
-          this.form.get(field).setErrors({"server": errors[field][0]});
-        });
+        ErrorHandler.handleFormError(e, this.form);
         this.loader = false;
       }
     )

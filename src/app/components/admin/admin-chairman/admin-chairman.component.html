@@ -28,7 +28,7 @@
             <mat-grid-tile colspan="2">
               <mat-form-field class="fullwidth">
                 <mat-select formControlName="administrationType" placeholder="Способ управления" tabindex="3">
-                  <mat-option *ngFor="let type of mkdEnums.AdministrationType" [value]="type.id">{{type.name}}</mat-option>
+                  <mat-option *ngFor="let type of mkdEnums.AdministrationType" [value]="type">{{type.name}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="f('mkd.administrationType').invalid">{{e('mkd.administrationType')}}</mat-error>
               </mat-form-field>
@@ -109,7 +109,7 @@
                   [disabled]="chairmanForm.pristine || chairmanForm.status == 'INVALID' || loader"
 
           >
-            <mat-icon *ngIf="loader" class="spinner">cached</mat-icon>
+            <mat-icon *ngIf="loader" class="spinner">autorenew</mat-icon>
             Сохранить
           </button>
         </div>
