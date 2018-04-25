@@ -6,9 +6,14 @@ export interface SimpleQuestionaryInfo {
   name: String
 }
 
-export interface MkdNewsInfo {
+export interface UserMkdApartmentsInfo {
   address: string,
   mkdPercent: number,
-  apartments: Apartment[],
+  apartments: Apartment[]
+}
+
+export interface MkdNewsInfo {
+  ownerInfo?: UserMkdApartmentsInfo,
+  powerOfAttorneyInfo?: UserMkdApartmentsInfo,
   questionary?: SimpleQuestionaryInfo
 }

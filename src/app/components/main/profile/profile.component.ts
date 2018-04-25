@@ -14,7 +14,8 @@ export class ProfileComponent implements OnInit {
   public auth?: Auth = null;
   mkdInfo: MkdNewsInfo = null;
 
-  private apartmentsStr: string;
+  private ownerApartmentsStr: string;
+  private powerOfAttorneyApartmentsStr: string;
 
   constructor(
     private authService: AuthService,
@@ -34,7 +35,8 @@ export class ProfileComponent implements OnInit {
       this.dataService.getUserMkdInfo(mkd.mkdId).subscribe(
         info => {
           this.mkdInfo = info;
-          this.apartmentsStr = this.mkdInfo.apartments.map(it => `кв. ${it.number}(${it.area} кв.м.)`).join(", ");
+          this.ownerApartmentsStr = this.mkdInfo.ownerInfo.apartments.map(it => `кв. ${it.number}(${it.area} кв.м.)`).join(", ");
+          this.powerOfAttorneyApartmentsStr = this.mkdInfo.ownerInfo.apartments.map(it => `кв. ${it.number}(${it.area} кв.м.)`).join(", ");
         }
       );
     });
