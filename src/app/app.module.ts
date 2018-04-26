@@ -42,6 +42,11 @@ import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.
 import {MatDialogModule} from '@angular/material';
 import { ApartmentListComponent } from './components/main/apartment-list/apartment-list.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
+import { QuestionaryComponent } from './components/main/questionary/questionary.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { QuestionaryActivityComponent } from './components/main/questionary/questionary-activity/questionary-activity.component';
+import { QuestionaryVoteComponent } from './components/main/questionary/questionary-vote/questionary-vote.component';
+import { QuestionaryResultComponent } from './components/main/questionary/questionary-result/questionary-result.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +63,11 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     HolderListComponent,
     DeleteDialogComponent,
     ApartmentListComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    QuestionaryComponent,
+    QuestionaryActivityComponent,
+    QuestionaryVoteComponent,
+    QuestionaryResultComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +93,8 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     MatPaginatorModule,
     MatSortModule,
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule
   ],
   providers: [
     CookieService,

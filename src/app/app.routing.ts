@@ -10,6 +10,9 @@ import {AdminChairmanComponent} from "./components/admin/admin-chairman/admin-ch
 import {NewsComponent} from "./components/main/news/news.component";
 import {ApartmentListComponent} from "./components/main/apartment-list/apartment-list.component";
 import {ConfirmComponent} from "./components/confirm/confirm.component";
+import {QuestionaryComponent} from './components/main/questionary/questionary.component';
+import {QuestionaryActivityComponent} from './components/main/questionary/questionary-activity/questionary-activity.component';
+import {QuestionaryVoteComponent} from './components/main/questionary/questionary-vote/questionary-vote.component';
 
 
 const routes: Routes = [
@@ -29,6 +32,10 @@ const routes: Routes = [
           {
             path: 'apartments-list',
             component: ApartmentListComponent,
+          },
+          {
+            path: 'questionary',
+            component: QuestionaryComponent
           }
         ]
       },

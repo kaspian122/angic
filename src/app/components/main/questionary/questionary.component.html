@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-title>{{(questionaryInfo.name)}}</mat-card-title>
+  <mat-divider></mat-divider>
+
+  <mat-tab-group>
+    <mat-tab label="Анкета">
+      <app-questionary-vote></app-questionary-vote>
+    </mat-tab>
+    <mat-tab label="Результаты">
+      <app-questionary-result></app-questionary-result>
+    </mat-tab>
+    <mat-tab label="Активность">
+      <app-questionary-activity></app-questionary-activity>
+    </mat-tab>
+  </mat-tab-group>
+
+</mat-card>
+<router-outlet></router-outlet>
+
