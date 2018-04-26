@@ -1,30 +1,33 @@
 <mat-card>
   <mat-card-content>
 
-    <div class="example-header">
-      <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-      </mat-form-field>
-    </div>
 
-    <mat-card-title>Реестр помещений</mat-card-title>
-    <mat-divider></mat-divider>
+    <mat-card-title>
+      Реестр собственников
+      <mat-divider></mat-divider>
+    </mat-card-title>
 
     <mat-card-content *ngIf="commonInfo">
-    <mat-grid-list cols="2" rowHeight="8:1">
-    <mat-grid-tile>
-    <div class="mkd-info-holders-list">
-    Адрес МКД: {{commonInfo.mkd.address}}
-    </div>
-    </mat-grid-tile>
-    <mat-grid-tile>
-    <div class="mkd-info-holders-list">
-    Площадь МКД: {{commonInfo.mkd.area}} м.кв.
-    </div>
-    </mat-grid-tile>
+      <mat-grid-list cols="2" rowHeight="8:1">
+        <mat-grid-tile>
+          <div class="mkd-info-holders-list">
+            Адрес МКД: {{commonInfo.mkd.address}}
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="mkd-info-holders-list">
+            Площадь МКД: {{commonInfo.mkd.area}} м.кв.
+          </div>
+        </mat-grid-tile>
 
-    </mat-grid-list>
+      </mat-grid-list>
     </mat-card-content>
+
+    <div class="example-header">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Поиск">
+      </mat-form-field>
+    </div>
 
     <mat-table #table [dataSource]="dataSource">
 
@@ -63,7 +66,7 @@
 
     <ng-container matColumnDef="ownership">
     <mat-header-cell *matHeaderCellDef [ngClass]="'ownership'"> Собственность  </mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngClass]="'ownership'"> {{element.ownership }} </mat-cell>
+    <mat-cell *matCellDef="let element" [ngClass]="'ownership'"> {{element.ownership.name }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="totalShare">
@@ -73,7 +76,7 @@
 
     <ng-container matColumnDef="utilization">
     <mat-header-cell *matHeaderCellDef [ngClass]="'utilization'"> Тип пом </mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngClass]="'utilization'"> {{element.utilization}} </mat-cell>
+    <mat-cell *matCellDef="let element" [ngClass]="'utilization'"> {{element.utilization.name}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
