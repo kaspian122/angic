@@ -53,7 +53,7 @@ export class ApartmentListComponent implements OnInit {
   }
 
 
-  openDeleteDialog(): void{
+  openDeleteDialog(): void {
     let dialogRef = this.dialog.open(DeleteDialogComponent, {
       height: '170px',
       width: '350px'

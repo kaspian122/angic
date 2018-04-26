@@ -11,8 +11,7 @@ import {NewsComponent} from "./components/main/news/news.component";
 import {ApartmentListComponent} from "./components/main/apartment-list/apartment-list.component";
 import {ConfirmComponent} from "./components/confirm/confirm.component";
 import {QuestionaryComponent} from './components/main/questionary/questionary.component';
-import {QuestionaryActivityComponent} from './components/main/questionary/questionary-activity/questionary-activity.component';
-import {QuestionaryVoteComponent} from './components/main/questionary/questionary-vote/questionary-vote.component';
+import {QuestionaryListComponent} from "./components/main/questionary-list/questionary-list.component";
 
 
 const routes: Routes = [
@@ -34,8 +33,12 @@ const routes: Routes = [
             component: ApartmentListComponent,
           },
           {
-            path: 'questionary',
+            path: 'questionary/:id',
             component: QuestionaryComponent
+          },
+          {
+            path: 'questionary-list',
+            component: QuestionaryListComponent,
           }
         ]
       },

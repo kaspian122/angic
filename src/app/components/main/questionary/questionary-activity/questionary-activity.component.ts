@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {QuestionaryActivity} from '../../../../models/questionary/questionary-activity';
 import {DataService} from '../../../../services/data/data.service';
 
@@ -13,13 +13,14 @@ import {DataService} from '../../../../services/data/data.service';
 export class QuestionaryActivityComponent implements OnInit {
 
   activity: QuestionaryActivity = null;
+  @Input() questionaryId: string;
 
   constructor(
     private dataService: DataService
   ) { }
 
   ngOnInit() {
-    this.dataService.getQuestionaryActivity('questionary1').subscribe(
+    this.dataService.getQuestionaryActivity(this.questionaryId).subscribe(
       activity => {
         this.activity = activity;
       }

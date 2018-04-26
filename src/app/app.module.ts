@@ -47,6 +47,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { QuestionaryActivityComponent } from './components/main/questionary/questionary-activity/questionary-activity.component';
 import { QuestionaryVoteComponent } from './components/main/questionary/questionary-vote/questionary-vote.component';
 import { QuestionaryResultComponent } from './components/main/questionary/questionary-result/questionary-result.component';
+import { QuestionaryListComponent } from './components/main/questionary-list/questionary-list.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { QuestionaryResultComponent } from './components/main/questionary/questi
     QuestionaryComponent,
     QuestionaryActivityComponent,
     QuestionaryVoteComponent,
-    QuestionaryResultComponent
+    QuestionaryResultComponent,
+    QuestionaryListComponent
   ],
   imports: [
     BrowserModule,

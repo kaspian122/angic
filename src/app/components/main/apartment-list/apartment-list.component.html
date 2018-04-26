@@ -3,7 +3,7 @@
 
     <div class="example-header">
       <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Поиск">
       </mat-form-field>
     </div>
 
@@ -63,7 +63,7 @@
 
     <ng-container matColumnDef="ownership">
     <mat-header-cell *matHeaderCellDef [ngClass]="'ownership'"> Собственность  </mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngClass]="'ownership'"> {{element.ownership }} </mat-cell>
+    <mat-cell *matCellDef="let element" [ngClass]="'ownership'"> {{element.ownership.name }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="totalShare">
@@ -73,7 +73,7 @@
 
     <ng-container matColumnDef="utilization">
     <mat-header-cell *matHeaderCellDef [ngClass]="'utilization'"> Тип пом </mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngClass]="'utilization'"> {{element.utilization}} </mat-cell>
+    <mat-cell *matCellDef="let element" [ngClass]="'utilization'"> {{element.utilization.name}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

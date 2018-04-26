@@ -1,0 +1,63 @@
+<mat-card>
+
+  <mat-card-content>
+
+    <mat-card-title>
+      Опросы
+      <mat-divider></mat-divider>
+    </mat-card-title>
+    <div class="example-header">
+      <mat-form-field>
+        <input matInput #inputField (keyup)="applyFilter(inputField.value)" placeholder="Поиск">
+      </mat-form-field>
+    </div>
+
+    <mat-table #table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="select" [ngClass]="'select'">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'select'">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(element) : null"
+                        [checked]="selection.isSelected(element)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'name'"> Название анкеты </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'name'"> {{element.name}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="state">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'state'"> Статус </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'state'"> {{element.state.name}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="responseCount">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'response-count'"> Кол-во ответов </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'response-count'"> {{element.responseCount}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="quorum">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'quorum'"> Кворум </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'quorum'"> 0% </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'date'"> Дата </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'date'"> {{element.date|date:'dd.MM.yyyy'}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="/questionary/{{row.id}}"></mat-row>
+    </mat-table>
+
+    <mat-card-actions>
+      <a routerLink="/admin/chairman" mat-raised-button>Добавить</a>
+      <a mat-raised-button (click)="openDeleteDialog()">Удалить</a>
+      <a mat-raised-button (click)="openArchiveDialog()">Перевести в архив</a>
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>

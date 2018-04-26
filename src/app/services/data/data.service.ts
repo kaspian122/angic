@@ -14,6 +14,7 @@ import {MkdNewsInfo} from "../../models/mkd-news-info";
 import {SavePass} from "../../models/save-pass";
 import {QuestionaryActivity} from '../../models/questionary/questionary-activity';
 import {QuestionaryInfo} from '../../models/questionary/questionary-info';
+import {QuestionarySummary} from "../../models/questionary/questionary-summary";
 
 @Injectable()
 export class DataService {
@@ -94,6 +95,14 @@ export class DataService {
 
   public registration(savePass: SavePass) {
     return this.http.put(this.config.getEndpoint(`user/registration`), savePass, {headers: this.authService.headers()});
+  }
+
+  public getQuestionariesList(mkdId: string): Observable<QuestionarySummary[]> {
+    return this.http.get<QuestionarySummary[]>(this.config.getEndpoint(`mkd/${mkdId}/questionaries`), {headers: this.authService.headers()});
+  }
+
+  public deleteQuestionaries(questionaryIds: string[]): any {
+    return this.http.request("DELETE", this.config.getEndpoint("questionary"), {body: questionaryIds, headers: this.authService.headers()});
   }
 
 }

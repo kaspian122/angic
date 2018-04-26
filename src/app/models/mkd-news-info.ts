@@ -1,10 +1,5 @@
 import {Apartment} from "./apartment";
-
-export interface SimpleQuestionaryInfo {
-  id: String,
-  stateName: String,
-  name: String
-}
+import {SimpleQuestionaryInfo} from "./questionary/simple-questionary-info";
 
 export interface UserMkdApartmentsInfo {
   address: string,
