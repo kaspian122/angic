@@ -5,16 +5,13 @@
   flex: 0 0 40%;
 }
 .state {
-  flex: 0 0 15%;
+  flex: 0 0 20%;
 }
 .response-count {
-  flex: 0 0 10%;
-}
-.quorum {
   flex: 0 0 15%;
 }
 .date {
-  flex: 0 0 15%;
+  flex: 0 0 20%;
 }
 .mat-row:hover {
   background-color: #bbdefb;

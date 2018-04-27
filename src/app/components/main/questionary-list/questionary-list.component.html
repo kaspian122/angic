@@ -6,11 +6,16 @@
       Опросы
       <mat-divider></mat-divider>
     </mat-card-title>
-    <div class="example-header">
+
+    <mat-grid-list cols="2">
       <mat-form-field>
-        <input matInput #inputField (keyup)="applyFilter(inputField.value)" placeholder="Поиск">
+        <input matInput #inputField (keyup)="showArchived.next(inputField.checked)" placeholder="Поиск">
       </mat-form-field>
-    </div>
+      <mat-checkbox style="float: right;" labelPosition="before" #checkBox [(ngModel)]="showArchived"
+                    [indeterminate]="false"
+                    (change)="getQuestionariesList()">Показывать архивные
+      </mat-checkbox>
+    </mat-grid-list>
 
     <mat-table #table [dataSource]="dataSource">
 
@@ -40,10 +45,6 @@
       <ng-container matColumnDef="responseCount">
         <mat-header-cell *matHeaderCellDef [ngClass]="'response-count'"> Кол-во ответов </mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="'response-count'"> {{element.responseCount}} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="quorum">
-        <mat-header-cell *matHeaderCellDef [ngClass]="'quorum'"> Кворум </mat-header-cell>
-        <mat-cell *matCellDef="let element" [ngClass]="'quorum'"> 0% </mat-cell>
       </ng-container>
       <ng-container matColumnDef="date">
         <mat-header-cell *matHeaderCellDef [ngClass]="'date'"> Дата </mat-header-cell>

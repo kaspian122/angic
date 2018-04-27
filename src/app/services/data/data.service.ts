@@ -15,6 +15,7 @@ import {SavePass} from "../../models/save-pass";
 import {QuestionaryActivity} from '../../models/questionary/questionary-activity';
 import {QuestionaryInfo} from '../../models/questionary/questionary-info';
 import {QuestionarySummary} from "../../models/questionary/questionary-summary";
+import {BatchExecutionResult} from "../../models/batch-execution-result";
 
 @Injectable()
 export class DataService {
@@ -97,12 +98,16 @@ export class DataService {
     return this.http.put(this.config.getEndpoint(`user/registration`), savePass, {headers: this.authService.headers()});
   }
 
-  public getQuestionariesList(mkdId: string): Observable<QuestionarySummary[]> {
-    return this.http.get<QuestionarySummary[]>(this.config.getEndpoint(`mkd/${mkdId}/questionaries`), {headers: this.authService.headers()});
+  public getQuestionariesList(mkdId: string, showArchived?: boolean): Observable<QuestionarySummary[]> {
+    return this.http.get<QuestionarySummary[]>(this.config.getEndpoint(`mkd/${mkdId}/questionaries`), {params: {archived: showArchived}, headers: this.authService.headers()});
   }
 
-  public deleteQuestionaries(questionaryIds: string[]): any {
+  public deleteQuestionaries(questionaryIds: string[]): Observable<BatchExecutionResult> {
     return this.http.request("DELETE", this.config.getEndpoint("questionary"), {body: questionaryIds, headers: this.authService.headers()});
+  }
+
+  public archiveQuestionaries(questionaryIds: string[]): Observable<BatchExecutionResult> {
+    return this.http.put<BatchExecutionResult>(this.config.getEndpoint("questionary/archive"), questionaryIds, {headers: this.authService.headers()});
   }
 
 }

@@ -48,6 +48,8 @@ import { QuestionaryActivityComponent } from './components/main/questionary/ques
 import { QuestionaryVoteComponent } from './components/main/questionary/questionary-vote/questionary-vote.component';
 import { QuestionaryResultComponent } from './components/main/questionary/questionary-result/questionary-result.component';
 import { QuestionaryListComponent } from './components/main/questionary-list/questionary-list.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SimpleDialogComponent } from './components/simple-dialog/simple-dialog.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,8 @@ import { QuestionaryListComponent } from './components/main/questionary-list/que
     QuestionaryActivityComponent,
     QuestionaryVoteComponent,
     QuestionaryResultComponent,
-    QuestionaryListComponent
+    QuestionaryListComponent,
+    SimpleDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +99,8 @@ import { QuestionaryListComponent } from './components/main/questionary-list/que
     MatSortModule,
     MatCheckboxModule,
     MatDialogModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSnackBarModule
   ],
   providers: [
     CookieService,
@@ -113,7 +117,7 @@ import { QuestionaryListComponent } from './components/main/questionary-list/que
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-      DeleteDialogComponent
+      DeleteDialogComponent, SimpleDialogComponent
   ]
 
 })
