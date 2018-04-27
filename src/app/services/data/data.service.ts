@@ -103,7 +103,7 @@ export class DataService {
   }
 
   public deleteQuestionaries(questionaryIds: string[]): Observable<BatchExecutionResult> {
-    return this.http.request("DELETE", this.config.getEndpoint("questionary"), {body: questionaryIds, headers: this.authService.headers()});
+    return this.http.request<BatchExecutionResult>("DELETE", this.config.getEndpoint("questionary"), {body: questionaryIds, headers: this.authService.headers()});
   }
 
   public archiveQuestionaries(questionaryIds: string[]): Observable<BatchExecutionResult> {

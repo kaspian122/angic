@@ -9,7 +9,7 @@
 
     <mat-grid-list cols="2">
       <mat-form-field>
-        <input matInput #inputField (keyup)="showArchived.next(inputField.checked)" placeholder="Поиск">
+        <input matInput #inputField (keyup)="applyFilter(inputField.value)" placeholder="Поиск">
       </mat-form-field>
       <mat-checkbox style="float: right;" labelPosition="before" #checkBox [(ngModel)]="showArchived"
                     [indeterminate]="false"
