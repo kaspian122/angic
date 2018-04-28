@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {DataService} from "../../services/data/data.service";
+import {UserService} from "../../services/user/user.service";
 import {AuthService} from "../../services/auth/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ErrorHandler} from "../../services/error-handler";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/timer";
-import {tap} from "rxjs/operators";
 import {Subscription} from "rxjs/Subscription";
 import "rxjs/add/operator/timeInterval";
 import "rxjs/add/operator/take";
@@ -29,7 +28,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private dataService: DataService,
+    private userService: UserService,
     private authService: AuthService,
     private fb: FormBuilder
   ) { }
@@ -57,7 +56,7 @@ export class RegisterComponent implements OnInit {
   }
 
   submitOne() {
-    this.dataService.sendSms(this.form.get('phone').value).subscribe(
+    this.userService.sendSms(this.form.get('phone').value).subscribe(
       (data) => {
         console.log(data);
         this.loader = false;
@@ -72,7 +71,7 @@ export class RegisterComponent implements OnInit {
 
   submitTwo() {
     const code = this.form.get('key').value;
-    this.dataService.checkCode(code, 'Phone').subscribe(
+    this.userService.checkCode(code, 'Phone').subscribe(
       () => {
         this.loader = false;
         this.router.navigate(['/confirm', 'phone', code]);
@@ -95,7 +94,7 @@ export class RegisterComponent implements OnInit {
 
   resendCode() {
     this.resendLoader = true;
-    this.dataService.sendSms(this.form.get('phone').value).subscribe(
+    this.userService.sendSms(this.form.get('phone').value).subscribe(
       (data) => {
         console.log(data);
         this.startTimer(data as number);
