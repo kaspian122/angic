@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth/auth.service";
 import {Router} from "@angular/router";
 import {Auth, MkdOwnersInfo} from "../../services/auth/auth";
-import { Mkd } from '../../models/mkd';
-import {DataService} from "../../services/data/data.service";
+import {MkdService} from '../../services/mkd/mkd.service';
 
 @Component({
   selector: 'app-user',
@@ -19,7 +18,7 @@ export class UserComponent implements OnInit {
   constructor(
     private router: Router,
     public authService: AuthService,
-    private dataService: DataService,
+    private dataService: MkdService,
   ) { }
 
   ngOnInit() {

@@ -5,7 +5,7 @@
       <mat-divider></mat-divider>
       <a mat-list-item routerLink="/apartments-list" routerLinkActive="active" *ngIf="hasPrivileges"><mat-icon>list</mat-icon>Реестр собственников</a>
       <mat-divider></mat-divider>
-      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>whatshot</mat-icon>Потребность</a>
+      <a mat-list-item routerLink="/questionary-list" routerLinkActive="active" *ngIf="hasPrivileges"><mat-icon>whatshot</mat-icon>Опросы</a>
       <mat-divider></mat-divider>
       <a mat-list-item *ngIf="hasPrivileges"><mat-icon>content_paste</mat-icon>План работ</a>
       <mat-divider></mat-divider>
@@ -22,11 +22,11 @@
       <mat-divider></mat-divider>
       <a mat-list-item *ngIf="hasPrivileges"><mat-icon>attachment</mat-icon>Номенклатура</a>
       <mat-divider></mat-divider>
-<a mat-list-item *ngIf="hasPrivileges"><mat-icon>forum</mat-icon>Объявления</a>
+      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>forum</mat-icon>Объявления</a>
     </mat-nav-list>
-    </mat-sidenav>
+  </mat-sidenav>
 
-    <mat-sidenav-content>
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
 </mat-sidenav-container>

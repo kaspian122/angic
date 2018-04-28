@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {DataService} from "../../../services/data/data.service";
-import {MkdHoldersList} from "../../../models/mkd-holders-list";
+import {MkdHoldersList} from "../../../models/holder/mkd-holders-list";
 import {MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatDialog} from '@angular/material';
 import {DeleteDialogComponent} from "../../delete-dialog/delete-dialog.component";
+import {HolderService} from '../../../services/holder/holder.service';
+import {MkdService} from '../../../services/mkd/mkd.service';
 
 @Component({
   selector: 'app-holder-list',
@@ -23,7 +24,8 @@ export class HolderListComponent implements OnInit {
     public selection = new SelectionModel(true, []);
 
     constructor(
-        private dataService: DataService,
+        private dataService: HolderService,
+        private mkdService: MkdService,
         private dialog: MatDialog
     ) { }
 
@@ -48,7 +50,7 @@ export class HolderListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.dataService.currentMkd.subscribe(
+        this.mkdService.currentMkd.subscribe(
             mkd => {
                 this.currentMkd = mkd;
                 this.getHoldersList(this.currentMkd);

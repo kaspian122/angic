@@ -3,7 +3,9 @@ import {MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatDialog} from '@angular/material';
 import {DeleteDialogComponent} from "../../delete-dialog/delete-dialog.component";
-import {DataService} from "../../../services/data/data.service";
+import {ApartmentService} from '../../../services/apartment/apartment.service';
+import {HolderService} from '../../../services/holder/holder.service';
+import {MkdService} from '../../../services/mkd/mkd.service';
 
 @Component({
   selector: 'app-apartment-list',
@@ -19,7 +21,9 @@ export class ApartmentListComponent implements OnInit {
   public selection = new SelectionModel(true, []);
 
   constructor(
-      private dataService: DataService,
+      private apartmentService: ApartmentService,
+      private dataService: MkdService,
+      private holderService: HolderService,
       private dialog: MatDialog
   ) { }
 
@@ -53,7 +57,7 @@ export class ApartmentListComponent implements OnInit {
   }
 
 
-  openDeleteDialog(): void{
+  openDeleteDialog(): void {
     let dialogRef = this.dialog.open(DeleteDialogComponent, {
       height: '170px',
       width: '350px'
@@ -66,7 +70,7 @@ export class ApartmentListComponent implements OnInit {
           apartmentIds.push(item.id);
         }
          if(apartmentIds.length > 0) {
-          this.dataService.deleteApartments(apartmentIds).subscribe(
+          this.apartmentService.deleteApartments(apartmentIds).subscribe(
               () => {
                 this.getApartmentsList(this.currentMkd);
               }
@@ -77,7 +81,7 @@ export class ApartmentListComponent implements OnInit {
   }
 
   loadToExcel(){
-    this.dataService.getExcelFileWithHolders(this.currentMkd.mkdId).subscribe(
+    this.holderService.getExcelFileWithHolders(this.currentMkd.mkdId).subscribe(
         data=> this.downloadFile(data));
   }
 
@@ -100,7 +104,7 @@ export class ApartmentListComponent implements OnInit {
 
 
   private getApartmentsList(mkd){
-    this.dataService.getApartmentsList(mkd.mkdId).subscribe(
+    this.apartmentService.getApartmentsList(mkd.mkdId).subscribe(
         apartmentsList => {
           let totalAreaIn = 0;
           for (let apartment of apartmentsList.apartments){

@@ -2,5 +2,5 @@
       "target": "http://mkd-portal.sibir.local/api",
       "pathRewrite": {"^/api" : ""},
       "secure": false
-     } 
+     }
 }

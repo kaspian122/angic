@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../../services/auth/auth.service";
 import {Auth, MkdOwnersInfo} from "../../services/auth/auth";
-import {DataService} from "../../services/data/data.service";
+import {UserService} from "../../services/user/user.service";
+import {MkdService} from '../../services/mkd/mkd.service';
 
 @Component({
   selector: 'app-main',
@@ -18,7 +19,8 @@ export class MainComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private dataService: DataService
+    private dataService: UserService,
+    private mkdService: MkdService
   ) { }
 
   ngOnInit() {
@@ -35,7 +37,7 @@ export class MainComponent implements OnInit {
 
         }
       });
-    this.dataService.currentMkd.subscribe(
+    this.mkdService.currentMkd.subscribe(
       mkd => this.currentMkd = mkd
     );
   }

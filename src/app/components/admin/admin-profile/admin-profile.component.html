@@ -3,13 +3,9 @@
   <!--<mat-divider></mat-divider>-->
   <mat-card-content>
 
-
-
-  <div class="example-header">
     <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Поиск">
     </mat-form-field>
-  </div>
 
   <mat-table #table [dataSource]="dataSource" matSort>
     <!--- Note that these columns can be defined in any order.

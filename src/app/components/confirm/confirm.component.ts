@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import "rxjs/add/operator/switchMap";
 import {Observable} from "rxjs/Observable";
-import {DataService} from "../../services/data/data.service";
+import {UserService} from "../../services/user/user.service";
 import {AuthService} from "../../services/auth/auth.service";
 import {capitalize} from "@angular-devkit/core/src/utils/strings";
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
@@ -21,7 +21,7 @@ export class ConfirmComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private dataService: DataService,
+    private dataService: UserService,
     private authService: AuthService,
     private fb: FormBuilder
   ) { }

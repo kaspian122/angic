@@ -1,12 +1,13 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {DataService} from "../../../services/data/data.service";
+import {UserService} from "../../../services/user/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MkdCreate} from "../../../models/mkd-create";
+import {MkdCreate} from "../../../models/mkd/mkd-create";
 import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
-import {User} from "../../../models/user";
+import {User} from "../../../models/user/user";
 import {MatButton} from "@angular/material";
 import {ErrorHandler} from "../../../services/error-handler";
+import {MkdService} from '../../../services/mkd/mkd.service';
 
 @Component({
   selector: 'app-admin-chairman',
@@ -28,13 +29,14 @@ export class AdminChairmanComponent implements OnInit {
   mkdCreate: MkdCreate;
 
   constructor(
-    private dataService: DataService,
+    private dataService: UserService,
+    private mkdService: MkdService,
     private fb: FormBuilder,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.dataService.getMkdEnums().subscribe(
+    this.mkdService.getMkdEnums().subscribe(
       data => {
         this.mkdEnums = data;
         this.initChairmanForm();
@@ -63,7 +65,7 @@ export class AdminChairmanComponent implements OnInit {
     }
 
     this.loader = true;
-    this.dataService.createMkd(this.mkdCreate).subscribe(
+    this.mkdService.createMkd(this.mkdCreate).subscribe(
       data => {
         this.loader = false;
         this.router.navigate(['/admin']);

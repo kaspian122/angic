@@ -1,0 +1,19 @@
+<mat-card *ngIf="questionaryRights">
+  <mat-card-title>{{(questionaryRights.name)}}</mat-card-title>
+  <mat-divider></mat-divider>
+
+  <mat-tab-group>
+    <mat-tab label="Анкета" *ngIf="questionaryRights.showVote">
+      <app-questionary-vote></app-questionary-vote>
+    </mat-tab>
+    <mat-tab label="Результаты" *ngIf="questionaryRights.showResult">
+      <app-questionary-result></app-questionary-result>
+    </mat-tab>
+    <mat-tab label="Активность" *ngIf="questionaryRights.showActivity">
+      <app-questionary-activity [questionaryId]="questionaryId"></app-questionary-activity>
+    </mat-tab>
+  </mat-tab-group>
+
+</mat-card>
+<router-outlet></router-outlet>
+
