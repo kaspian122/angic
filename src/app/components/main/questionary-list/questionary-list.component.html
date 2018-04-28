@@ -7,14 +7,22 @@
       <mat-divider></mat-divider>
     </mat-card-title>
 
-    <mat-grid-list cols="2">
-      <mat-form-field>
-        <input matInput #inputField (keyup)="applyFilter(inputField.value)" placeholder="Поиск">
-      </mat-form-field>
-      <mat-checkbox style="float: right;" labelPosition="before" #checkBox [(ngModel)]="showArchived"
-                    [indeterminate]="false"
-                    (change)="getQuestionariesList()">Показывать архивные
-      </mat-checkbox>
+    <mat-grid-list cols="2" rowHeight="6:1">
+      <mat-grid-tile>
+        <div style="left: 16px; position: absolute;">
+          <mat-form-field>
+            <input matInput #inputField (keyup)="applyFilter(inputField.value)" placeholder="Поиск">
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div style="right: 16px; position: absolute;">
+          <mat-checkbox labelPosition="before" #checkBox [(ngModel)]="showArchived"
+                        [indeterminate]="false"
+                        (change)="getQuestionariesList()">Показывать архивные
+          </mat-checkbox>
+        </div>
+      </mat-grid-tile>
     </mat-grid-list>
 
     <mat-table #table [dataSource]="dataSource">

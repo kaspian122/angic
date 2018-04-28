@@ -3,6 +3,7 @@ import {DataService} from '../../../services/data/data.service';
 import {QuestionaryInfo} from '../../../models/questionary/questionary-info';
 import {ActivatedRoute} from "@angular/router";
 import {QuestionaryRights} from "../../../models/questionary/questionary-rights";
+import {Observable} from "rxjs/Observable";
 
 /**
  * Анкета для голосования и просмотра
@@ -27,11 +28,14 @@ export class QuestionaryComponent implements OnInit {
   }
 
   getQuestionaryInfo(): void {
-    this.questionaryId = this.route.snapshot.paramMap.get('id');
-    this.dataService.getQuestionaryRights(this.questionaryId).subscribe(
-      questionaryRights => {
-        this.questionaryRights = questionaryRights;
+    this.route.paramMap.switchMap(p => Observable.of(p)).subscribe(params => {
+        this.questionaryId = params.get('id');
+        this.dataService.getQuestionaryRights(this.questionaryId).subscribe(questionaryRights => {
+            this.questionaryRights = questionaryRights;
+          }
+        );
       }
     );
   }
+
 }
