@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {QuestionarySummary} from "../../../models/questionary/questionary-summary";
-import {DataService} from "../../../services/data/data.service";
 import {MatDialog, MatSnackBar, MatTableDataSource} from "@angular/material";
 import {SelectionModel} from "@angular/cdk/collections";
 import {DeleteDialogComponent} from "../../delete-dialog/delete-dialog.component";
 import {BatchExecutionResult} from "../../../models/batch-execution-result";
 import {SimpleDialogComponent} from "../../simple-dialog/simple-dialog.component";
+import {QuestionaryService} from "../../../services/questionary/questionary.service";
+import {MkdService} from "../../../services/mkd/mkd.service";
 
 /**
  * Список анкет МКД
@@ -26,13 +27,14 @@ export class QuestionaryListComponent implements OnInit {
   showArchived: boolean = false;
 
   constructor(
-    private dataService: DataService,
+    private dataService: QuestionaryService,
+    private mkdService: MkdService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
-    this.dataService.currentMkd.subscribe(
+    this.mkdService.currentMkd.subscribe(
       mkd => {
         this.setCurrentMkdId(mkd.mkdId);
       }

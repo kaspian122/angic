@@ -1,5 +1,5 @@
 import {Apartment} from "../apartment/apartment";
-import {SimpleQuestionaryInfo} from "./questionary/simple-questionary-info";
+import {SimpleQuestionaryInfo} from "../questionary/simple-questionary-info";
 
 
 export interface UserMkdApartmentsInfo {

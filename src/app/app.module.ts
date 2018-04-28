@@ -127,7 +127,8 @@ import { QuestionaryListComponent } from './components/main/questionary-list/que
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-      DeleteDialogComponent, SimpleDialogComponent
+    DeleteDialogComponent,
+    SimpleDialogComponent
   ]
 
 })
