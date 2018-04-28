@@ -42,6 +42,7 @@ import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.
 import {MatDialogModule} from '@angular/material';
 import { ApartmentListComponent } from './components/main/apartment-list/apartment-list.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     HolderListComponent,
     DeleteDialogComponent,
     ApartmentListComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

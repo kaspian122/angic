@@ -24,7 +24,7 @@
                     <p style="width: 100%; text-align: right">
                         <a mat-button href="http://mkd.sibir.local">Отмена</a>
                         <button mat-button [disabled]="form.pristine || form.status == 'INVALID' || loader ||!agree.checked">
-                            <mat-icon *ngIf="loader" class="spinner">cached</mat-icon>
+                            <mat-icon *ngIf="loader" class="spinner">autorenew</mat-icon>
                             Войти
                         </button>
                     </p>

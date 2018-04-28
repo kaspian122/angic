@@ -1,0 +1,35 @@
+<div class="containerlogin" *ngIf="form">
+  <div class="center-box" style="width: 500px;">
+    <mat-card>
+      <mat-card-content>
+        <form name="registerform" #regForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" [formGroup]="form">
+          <mat-form-field style="width: 100%">
+            <input matInput type="text" name="phone" formControlName="phone" placeholder="Номер телефона">
+            <mat-error *ngIf="f('phone').invalid">{{e('phone')}}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="f('key')" style="width: 100%">
+            <input matInput type="text" name="key" formControlName="key" placeholder="Код">
+            <mat-error *ngIf="f('key').invalid">{{e('key')}}</mat-error>
+          </mat-form-field>
+
+          <p style="width: 100%; text-align: right">
+            <a mat-button href="http://mkd.sibir.local">Отмена</a>
+
+            <a *ngIf="f('key')" [disabled]="timeLeft > 0 || resendLoader" mat-button (click)="resendCode()">
+              Получить новый код
+              <ng-container *ngIf="timeLeft > 0" class="small">({{timeLeft}})</ng-container>
+            </a>
+
+            <button mat-button [disabled]="form.pristine || form.status == 'INVALID' || loader ">
+              <mat-icon *ngIf="loader" class="spinner">autorenew</mat-icon>
+              {{submitLabel}}
+            </button>
+          </p>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+

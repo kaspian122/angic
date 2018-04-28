@@ -86,4 +86,14 @@ export class DataService {
     return this.http.put(this.config.getEndpoint(`user/registration`), savePass, {headers: this.authService.headers()});
   }
 
+  public sendSms(phone: string) {
+    const param = new HttpParams().set('phone', phone).toString();
+    return this.http.post(this.config.getEndpoint('sendSms?'+param), null, {headers: this.authService.headers()});
+  }
+
+  public checkCode(code: string, type: string) {
+    const params = new HttpParams().set('key', code).set('type', type);
+    return this.http.get(this.config.getEndpoint('auth/check'), {params: params})
+  }
+
 }

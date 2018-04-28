@@ -10,6 +10,7 @@ import {AdminChairmanComponent} from "./components/admin/admin-chairman/admin-ch
 import {NewsComponent} from "./components/main/news/news.component";
 import {ApartmentListComponent} from "./components/main/apartment-list/apartment-list.component";
 import {ConfirmComponent} from "./components/confirm/confirm.component";
+import {RegisterComponent} from "./components/register/register.component";
 
 
 const routes: Routes = [
@@ -55,6 +56,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   },
   {
     path: 'confirm/:type/:key',

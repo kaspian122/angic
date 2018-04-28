@@ -14,11 +14,8 @@ import {ErrorHandler} from "../../services/error-handler";
   styleUrls: ['./confirm.component.css']
 })
 export class ConfirmComponent implements OnInit {
+
   loader: boolean = false;
-  password: string;
-  passwordConfirm: string;
-  key: string;
-  type: string;
   form: FormGroup;
 
   constructor(

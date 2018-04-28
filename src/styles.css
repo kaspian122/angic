@@ -16,6 +16,18 @@ div.main {
     right: 0;
 }
 
+.containerlogin {
+    display: flex;
+    height: 100%;
+    justify-content: center; /*centers items on the line (the x-axis by default)*/
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.center-box {
+    padding-bottom: 10vh;
+}
+
 .spinner {
     animation: spin 2s infinite linear;
 }
