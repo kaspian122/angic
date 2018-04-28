@@ -40,7 +40,7 @@
       </ng-container>
       <ng-container matColumnDef="state">
         <mat-header-cell *matHeaderCellDef [ngClass]="'state'"> Статус </mat-header-cell>
-        <mat-cell *matCellDef="let element" [ngClass]="'state'"> {{element.state.name}} </mat-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'state'"> {{element.state}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="responseCount">
         <mat-header-cell *matHeaderCellDef [ngClass]="'response-count'"> Кол-во ответов </mat-header-cell>

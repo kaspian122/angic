@@ -16,6 +16,7 @@ import {QuestionaryActivity} from '../../models/questionary/questionary-activity
 import {QuestionaryInfo} from '../../models/questionary/questionary-info';
 import {QuestionarySummary} from "../../models/questionary/questionary-summary";
 import {BatchExecutionResult} from "../../models/batch-execution-result";
+import {QuestionaryRights} from "../../models/questionary/questionary-rights";
 
 @Injectable()
 export class DataService {
@@ -92,6 +93,10 @@ export class DataService {
 
   public getQuestionaryActivity(questionaryId: string): Observable<QuestionaryActivity> {
     return this.http.get<QuestionaryActivity>(this.config.getEndpoint(`questionary/${questionaryId}/activity`), {headers: this.authService.headers()});
+  }
+
+  public getQuestionaryRights(questionaryId: string): Observable<QuestionaryRights> {
+    return this.http.get<QuestionaryRights>(this.config.getEndpoint(`questionary/${questionaryId}/rights`), {headers: this.authService.headers()});
   }
 
   public registration(savePass: SavePass) {

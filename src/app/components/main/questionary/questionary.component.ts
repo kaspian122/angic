@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DataService} from '../../../services/data/data.service';
 import {QuestionaryInfo} from '../../../models/questionary/questionary-info';
 import {ActivatedRoute} from "@angular/router";
+import {QuestionaryRights} from "../../../models/questionary/questionary-rights";
 
 /**
  * Анкета для голосования и просмотра
@@ -13,7 +14,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class QuestionaryComponent implements OnInit {
 
-  questionaryInfo: QuestionaryInfo = null;
+  questionaryRights: QuestionaryRights = null;
   questionaryId: string;
 
   constructor(
@@ -27,9 +28,9 @@ export class QuestionaryComponent implements OnInit {
 
   getQuestionaryInfo(): void {
     this.questionaryId = this.route.snapshot.paramMap.get('id');
-    this.dataService.getQuestionaryInfo(this.questionaryId).subscribe(
-      questionaryInfo => {
-        this.questionaryInfo = questionaryInfo;
+    this.dataService.getQuestionaryRights(this.questionaryId).subscribe(
+      questionaryRights => {
+        this.questionaryRights = questionaryRights;
       }
     );
   }
