@@ -1,0 +1,84 @@
+<mat-card>
+  <mat-card-title>
+    {{(title)}}
+  </mat-card-title>
+  <mat-divider></mat-divider>
+
+  <mat-card-content>
+    <section *ngIf="apartmentForm">
+      <form [formGroup]="apartmentForm" (ngSubmit)="onSubmit()">
+        <div formGroupName="apartment">
+
+          <mat-grid-list cols="3" gutterSize="20" rowHeight="4em">
+            <mat-grid-tile>
+              <mat-form-field class="fullwidth">
+                <input matInput formControlName="number" placeholder="№ кв." tabindex="1"/>
+                <mat-error *ngIf="f('apartment.number').invalid">{{e('apartment.number')}}</mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field class="fullwidth">
+                <input matInput formControlName="floor" placeholder="Этаж" tabindex="2"/>
+                <mat-error *ngIf="f('apartment.floor').invalid">{{e('apartment.floor')}}</mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field class="fullwidth">
+                <input matInput formControlName="porch" placeholder="Подъезд" tabindex="3"/>
+                <mat-error *ngIf="f('apartment.porch').invalid">{{e('apartment.porch')}}</mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field class="fullwidth">
+                <input matInput formControlName="area" placeholder="Площадь" tabindex="4"/>
+                <mat-error *ngIf="f('apartment.area').invalid">{{e('apartment.area')}}</mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="2">
+              <mat-form-field class="fullwidth">
+                <mat-select formControlName="utilization" placeholder="Назначение помещения" tabindex="5">
+                  <mat-option *ngFor="let utilization of mkdEnums.ApartmentUtilization" [value]="utilization">{{utilization.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="f('apartment.utilization').invalid">{{e('apartment.utilization')}}</mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="2">
+              <mat-form-field class="fullwidth">
+                <mat-select formControlName="ownership" placeholder="Сведения о праве собственности" tabindex="6">
+                  <mat-option *ngFor="let ownership of mkdEnums.OwnershipType" [value]="ownership">{{ownership.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="f('apartment.ownership').invalid">{{e('apartment.ownership')}}</mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field class="fullwidth">
+                <input matInput formControlName="totalShare" placeholder="Кол-во долей" tabindex="7"/>
+                <mat-error *ngIf="f('apartment.totalShare').invalid">{{e('apartment.totalShare')}}</mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+          </mat-grid-list>
+        </div>
+
+        <div style="text-align: right">
+          <button mat-raised-button
+                  type="submit" #sbmt
+                  tabindex="8"
+                  [disabled]="apartmentForm.pristine || apartmentForm.status == 'INVALID'"
+
+          >
+            <mat-icon *ngIf="savingForm" class="spinner">autorenew</mat-icon>
+            {{(btnTitle)}}
+          </button>
+        </div>
+      </form>
+
+    </section>
+  </mat-card-content>
+</mat-card>

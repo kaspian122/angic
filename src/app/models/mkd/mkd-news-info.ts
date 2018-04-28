@@ -1,4 +1,4 @@
-import {Apartment} from "./apartment";
+import {Apartment} from "../apartment/apartment";
 
 export interface SimpleQuestionaryInfo {
   id: String,

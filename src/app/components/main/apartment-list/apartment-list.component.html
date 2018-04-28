@@ -1,7 +1,6 @@
 <mat-card>
   <mat-card-content>
 
-
     <mat-card-title>
       Реестр собственников
       <mat-divider></mat-divider>
@@ -11,15 +10,14 @@
       <mat-grid-list cols="2" rowHeight="8:1">
         <mat-grid-tile>
           <div class="mkd-info-holders-list">
-            Адрес МКД: {{commonInfo.mkd.address}}
+            Площадь МКД: {{commonInfo.mkd.area}} м.кв.
           </div>
         </mat-grid-tile>
         <mat-grid-tile>
           <div class="mkd-info-holders-list">
-            Площадь МКД: {{commonInfo.mkd.area}} м.кв.
+            Подключено {{commonInfo.totalAreaIn}} м.кв ({{commonInfo.totalAreaPercentageIn}}%)
           </div>
         </mat-grid-tile>
-
       </mat-grid-list>
     </mat-card-content>
 
@@ -31,66 +29,61 @@
 
     <mat-table #table [dataSource]="dataSource">
 
-    <!-- Checkbox Column -->
-    <ng-container matColumnDef="select">
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
 
-    <mat-header-cell *matHeaderCellDef [ngClass]="'select'">
-    <mat-checkbox (change)="$event ? masterToggle() : null"
-      [checked]="selection.hasValue() && isAllSelected()"
-      [indeterminate]="selection.hasValue() && !isAllSelected()">
-    </mat-checkbox>
-    </mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngClass]="'select'">
-    <mat-checkbox (click)="$event.stopPropagation()"
-      (change)="$event ? selection.toggle(element) : null"
-      [checked]="selection.isSelected(element)">
-    </mat-checkbox>
-    </mat-cell>
-    </ng-container>
+        <mat-header-cell *matHeaderCellDef [ngClass]="'select'">
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'select'">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(element) : null"
+                        [checked]="selection.isSelected(element)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
 
+      <ng-container matColumnDef="number">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'apartment-number'"> № помещения</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'apartment-number'"> {{element.number}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="number" >
-    <mat-header-cell *matHeaderCellDef [ngClass]="'apartment-number'"> № пом </mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngClass]="'apartment-number'"> {{element.number}} </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="area">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'area'"> Площадь, м.кв.</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'area'"> {{element.area}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="area">
-    <mat-header-cell *matHeaderCellDef [ngClass]="'area'"> Площадь, м.кв. </mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngClass]="'area'"> {{element.area}} </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="floor">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'floor'"> Этаж</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'floor'"> {{element.floor}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="floor">
-    <mat-header-cell *matHeaderCellDef [ngClass]="'floor'"> Этаж  </mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngClass]="'floor'"> {{element.floor}} </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="ownership">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'ownership'"> Собственность</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'ownership'"> {{element.ownership.name }}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="ownership">
-    <mat-header-cell *matHeaderCellDef [ngClass]="'ownership'"> Собственность  </mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngClass]="'ownership'"> {{element.ownership.name }} </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="totalShare">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'total-share'"> Всего долей</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'total-share'"> {{element.totalShare}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="totalShare">
-    <mat-header-cell *matHeaderCellDef [ngClass]="'total-share'"> Всего долей </mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngClass]="'total-share'"> {{element.totalShare}} </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="utilization">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'utilization'"> Тип помещения</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'utilization'"> {{element.utilization.name}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="utilization">
-    <mat-header-cell *matHeaderCellDef [ngClass]="'utilization'"> Тип пом </mat-header-cell>
-    <mat-cell *matCellDef="let element" [ngClass]="'utilization'"> {{element.utilization.name}} </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="/apartment/{{row.id}}"></mat-row>
     </mat-table>
 
     <br>
 
-    <mat-card-content *ngIf="commonInfo">
-    Подключено {{commonInfo.totalAreaIn}} м.кв ({{commonInfo.totalAreaPercentageIn}}%)
-    </mat-card-content>
-
-    <a routerLink="/admin/chairman" mat-raised-button >Добавить</a >
-    <a routerLink="/admin/chairman" mat-raised-button (click)="openDeleteDialog()" >Удалить</a >
-    <a routerLink="/admin/chairman" mat-raised-button (click)="loadToExcel()" >Выгрузить в excel</a >
+    <a routerLink="/admin/chairman" mat-raised-button  routerLink="/apartment">Добавить</a>
+    <a routerLink="/admin/chairman" mat-raised-button (click)="openDeleteDialog()">Удалить</a>
+    <a routerLink="/admin/chairman" mat-raised-button (click)="loadToExcel()">Выгрузить в excel</a>
   </mat-card-content>
 </mat-card>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {QuestionaryActivity} from '../../../../models/questionary/questionary-activity';
-import {DataService} from '../../../../services/data/data.service';
+import {QuestionaryService} from '../../../../services/questionary/questionary.service';
 
 /**
  * Вкладка активности анкеты
@@ -15,7 +15,7 @@ export class QuestionaryActivityComponent implements OnInit {
   activity: QuestionaryActivity = null;
 
   constructor(
-    private dataService: DataService
+    private dataService: QuestionaryService
   ) { }
 
   ngOnInit() {

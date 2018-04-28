@@ -13,6 +13,7 @@ import {ConfirmComponent} from "./components/confirm/confirm.component";
 import {QuestionaryComponent} from './components/main/questionary/questionary.component';
 import {QuestionaryActivityComponent} from './components/main/questionary/questionary-activity/questionary-activity.component';
 import {QuestionaryVoteComponent} from './components/main/questionary/questionary-vote/questionary-vote.component';
+import {ApartmentComponent} from './components/main/apartment/apartment.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,14 @@ const routes: Routes = [
           {
             path: 'apartments-list',
             component: ApartmentListComponent,
+          },
+          {
+            path: 'apartment',
+            component: ApartmentComponent,
+          },
+          {
+            path: 'apartment/:id',
+            component: ApartmentComponent,
           },
           {
             path: 'questionary',
