@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Mkd } from '../../../models/mkd';
-import { DataService } from '../../../services/data/data.service';
+import { Mkd } from '../../../models/mkd/mkd';
 import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
+import {MkdService} from '../../../services/mkd/mkd.service';
 
 @Component({
   selector: 'app-admin-profile',
@@ -16,7 +16,7 @@ export class AdminProfileComponent implements OnInit {
   public dataSource = new MatTableDataSource<Mkd>(this.mkd);
 
   constructor(
-    private dataService: DataService,
+    private dataService: MkdService,
 
   ) { }
 
@@ -25,7 +25,7 @@ export class AdminProfileComponent implements OnInit {
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-  
+
   ngOnInit() {
 
     this.dataService.getMkdList()

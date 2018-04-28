@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../../services/auth/auth.service";
 import { Auth } from "../../../services/auth/auth";
-import {DataService} from '../../../services/data/data.service';
-import {MkdNewsInfo} from "../../../models/mkd-news-info";
+import {UserService} from '../../../services/user/user.service';
+import {MkdNewsInfo} from "../../../models/mkd/mkd-news-info";
+import {MkdService} from '../../../services/mkd/mkd.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +20,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private dataService: DataService,
+    private dataService: UserService,
+    private mkdService: MkdService,
   ) { }
 
   ngOnInit() {
@@ -31,7 +33,7 @@ export class ProfileComponent implements OnInit {
   }
 
   initInfo(): void {
-    this.dataService.currentMkd.subscribe(mkd => {
+    this.mkdService.currentMkd.subscribe(mkd => {
       this.dataService.getUserMkdInfo(mkd.mkdId).subscribe(
         info => {
           this.mkdInfo = info;

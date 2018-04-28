@@ -12,6 +12,7 @@ import {ApartmentListComponent} from "./components/main/apartment-list/apartment
 import {ConfirmComponent} from "./components/confirm/confirm.component";
 import {QuestionaryComponent} from './components/main/questionary/questionary.component';
 import {QuestionaryListComponent} from "./components/main/questionary-list/questionary-list.component";
+import {ApartmentComponent} from './components/main/apartment/apartment.component';
 
 
 const routes: Routes = [
@@ -31,6 +32,14 @@ const routes: Routes = [
           {
             path: 'apartments-list',
             component: ApartmentListComponent,
+          },
+          {
+            path: 'apartment',
+            component: ApartmentComponent,
+          },
+          {
+            path: 'apartment/:id',
+            component: ApartmentComponent,
           },
           {
             path: 'questionary/:id',

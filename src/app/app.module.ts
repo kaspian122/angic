@@ -29,7 +29,7 @@ import {MatTableModule} from '@angular/material/table';
 import { ProfileComponent } from './components/main/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
-import {DataService} from "./services/data/data.service";
+import {UserService} from "./services/user/user.service";
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import { AdminChairmanComponent } from './components/admin/admin-chairman/admin-chairman.component';
@@ -47,9 +47,14 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { QuestionaryActivityComponent } from './components/main/questionary/questionary-activity/questionary-activity.component';
 import { QuestionaryVoteComponent } from './components/main/questionary/questionary-vote/questionary-vote.component';
 import { QuestionaryResultComponent } from './components/main/questionary/questionary-result/questionary-result.component';
-import { QuestionaryListComponent } from './components/main/questionary-list/questionary-list.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ApartmentComponent } from './components/main/apartment/apartment.component';
+import {MkdService} from './services/mkd/mkd.service';
+import {HolderService} from './services/holder/holder.service';
+import {ApartmentService} from './services/apartment/apartment.service';
+import {QuestionaryService} from './services/questionary/questionary.service';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SimpleDialogComponent } from './components/simple-dialog/simple-dialog.component';
+import { QuestionaryListComponent } from './components/main/questionary-list/questionary-list.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +76,7 @@ import { SimpleDialogComponent } from './components/simple-dialog/simple-dialog.
     QuestionaryActivityComponent,
     QuestionaryVoteComponent,
     QuestionaryResultComponent,
+    ApartmentComponent,
     QuestionaryListComponent,
     SimpleDialogComponent
   ],
@@ -103,17 +109,21 @@ import { SimpleDialogComponent } from './components/simple-dialog/simple-dialog.
     MatSnackBarModule
   ],
   providers: [
-    CookieService,
-    AuthGuard,
-    AuthService,
-    AppConfig,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpAuthInterceptor,
       multi: true
     },
+    CookieService,
+    AuthGuard,
+    AuthService,
+    AppConfig,
     LoginComponent,
-    DataService
+    UserService,
+    MkdService,
+    HolderService,
+    ApartmentService,
+    QuestionaryService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

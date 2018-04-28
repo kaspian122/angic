@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {DataService} from '../../../services/data/data.service';
 import {QuestionaryInfo} from '../../../models/questionary/questionary-info';
 import {ActivatedRoute} from "@angular/router";
 import {QuestionaryRights} from "../../../models/questionary/questionary-rights";
 import {Observable} from "rxjs/Observable";
+import {QuestionaryService} from '../../../services/questionary/questionary.service';
 
 /**
  * Анкета для голосования и просмотра
@@ -20,7 +20,7 @@ export class QuestionaryComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataService
+    private dataService: QuestionaryService
   ) { }
 
   ngOnInit() {

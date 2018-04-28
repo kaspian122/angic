@@ -10,7 +10,11 @@ export class ErrorHandler {
         try {
           let errors = err.error.errors;
           Object.keys(errors).forEach(field=>{
-            group.get(field).setErrors({"server": errors[field][0]});
+            if(group.get(field) == null) {
+              alert(errors[field][0]);
+            } else {
+              group.get(field).setErrors({"server": errors[field][0]});
+            }
           });
         } catch (exception) {}
         break;
