@@ -7,6 +7,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ApartmentService} from '../../../services/apartment/apartment.service';
 import {MkdService} from '../../../services/mkd/mkd.service';
 import {MatSnackBar} from '@angular/material';
+import {Observable} from 'rxjs/Observable';
 
 /**
  * Квартира
@@ -63,32 +64,36 @@ export class ApartmentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataService.currentMkd.subscribe(
-      mkd => {
-        this.currentMkd = mkd;
-      }
-    );
+    this.route.paramMap.switchMap(p => Observable.of(p)).subscribe(
+      params => {
+        let apartmentId = params.get('id');
 
-    this.dataService.getMkdEnums().subscribe(
-      data => {
-        this.mkdEnums = data;
+        this.dataService.currentMkd.subscribe(
+          mkd => {
+            this.currentMkd = mkd;
+          }
+        );
 
-        let apartmentId = this.route.snapshot.paramMap.get('id');
+        this.dataService.getMkdEnums().subscribe(
+          data => {
+            this.mkdEnums = data;
 
-        if (apartmentId == null) {
-          this.title = "Создание квартиры";
-          this.btnTitle = "Создать";
-          this.initForm();
-        } else {
-          this.title = "Редактирование квартиры";
-          this.btnTitle = "Сохранить";
-          this.apartmentService.getApartmentInfo(this.route.snapshot.paramMap.get('id')).subscribe(
-            data => {
-              this.apartment = data;
+            if(apartmentId == null) {
+              this.title = 'Создание квартиры';
+              this.btnTitle = 'Создать';
               this.initForm();
+            } else {
+              this.title = 'Редактирование квартиры';
+              this.btnTitle = 'Сохранить';
+              this.apartmentService.getApartmentInfo(apartmentId).subscribe(
+                data => {
+                  this.apartment = data;
+                  this.initForm();
+                }
+              );
             }
-          );
-        }
+          }
+        );
       }
     );
   }
