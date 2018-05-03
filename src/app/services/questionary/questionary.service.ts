@@ -34,7 +34,7 @@ export class QuestionaryService {
 
   public getQuestionariesList(mkdId: string, showArchived?: boolean): Observable<QuestionarySummary[]> {
     return this.http.get<QuestionarySummary[]>(
-      this.config.getEndpoint(`mkd/${mkdId}/questionaries`), {params: {archived: showArchived}, headers: this.authService.headers()});
+      this.config.getEndpoint(`mkd/${mkdId}/questionaries`), {params: {archived: showArchived ? "1" : "0"}, headers: this.authService.headers()});
   }
 
   public deleteQuestionaries(questionaryIds: string[]): Observable<BatchExecutionResult> {
