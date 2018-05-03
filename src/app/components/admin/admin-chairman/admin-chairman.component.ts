@@ -19,7 +19,7 @@ export class AdminChairmanComponent implements OnInit {
   @ViewChild("sbmt") submit: MatButton;
 
   mkdEnums: any;
-  chairmanForm: FormGroup;
+  form: FormGroup;
 
   user: User;
   oldPhone: string;
@@ -45,7 +45,7 @@ export class AdminChairmanComponent implements OnInit {
   }
 
   f(name) {
-    return this.chairmanForm.get(name);
+    return this.form.get(name);
   }
 
   e(name) {
@@ -56,7 +56,7 @@ export class AdminChairmanComponent implements OnInit {
   }
 
   onSubmit() {
-    this.mkdCreate = this.chairmanForm.value;
+    this.mkdCreate = this.form.value;
 
     if (this.user) {
       this.mkdCreate.user = this.user;
@@ -71,14 +71,14 @@ export class AdminChairmanComponent implements OnInit {
         this.router.navigate(['/admin']);
       },
       (err: HttpErrorResponse) => {
-        ErrorHandler.handleFormError(err, this.chairmanForm);
+        ErrorHandler.handleFormError(err, this.form);
         this.loader = false;
       }
     );
   }
 
   initChairmanForm() {
-    this.chairmanForm = this.fb.group({
+    this.form = this.fb.group({
       'mkd': this.initMkd(),
       'user': this.initUser(),
     })
@@ -106,7 +106,7 @@ export class AdminChairmanComponent implements OnInit {
   }
 
   phoneBlur() {
-    const login = this.chairmanForm.get('user.phone').value;
+    const login = this.form.get('user.phone').value;
 
     if (!login) {
       this.unloadUser();
@@ -130,11 +130,11 @@ export class AdminChairmanComponent implements OnInit {
   preloadUser(data: User) {
     this.user = data;
 
-    this.chairmanForm.get('user.email').disable();
-    this.chairmanForm.get('user.firstName').disable();
-    this.chairmanForm.get('user.secondName').disable();
-    this.chairmanForm.get('user.lastName').disable();
-    this.chairmanForm.get('user').patchValue({
+    this.form.get('user.email').disable();
+    this.form.get('user.firstName').disable();
+    this.form.get('user.secondName').disable();
+    this.form.get('user.lastName').disable();
+    this.form.get('user').patchValue({
       phone: data.phone,
       email: data.email,
       firstName: data.firstName,
@@ -144,20 +144,20 @@ export class AdminChairmanComponent implements OnInit {
   }
 
   phoneKeyup() {
-    const newPhone = this.chairmanForm.get('user.phone').value;
+    const newPhone = this.form.get('user.phone').value;
     if (newPhone != this.oldPhone) this.unloadUser();
     this.oldPhone = newPhone;
   }
 
   unloadUser() {
     if (this.user) {
-      const login = this.chairmanForm.get('user.phone').value;
+      const login = this.form.get('user.phone').value;
       this.user = void 0;
-      this.chairmanForm.get('user.email').enable();
-      this.chairmanForm.get('user.firstName').enable();
-      this.chairmanForm.get('user.secondName').enable();
-      this.chairmanForm.get('user.lastName').enable();
-      this.chairmanForm.get('user').patchValue({
+      this.form.get('user.email').enable();
+      this.form.get('user.firstName').enable();
+      this.form.get('user.secondName').enable();
+      this.form.get('user.lastName').enable();
+      this.form.get('user').patchValue({
         phone: login,
         firstName: '',
         secondName: '',
@@ -165,7 +165,7 @@ export class AdminChairmanComponent implements OnInit {
         email: ''
       });
 
-      this.chairmanForm.get('user').markAsUntouched();
+      this.form.get('user').markAsUntouched();
 
 
     }

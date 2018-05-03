@@ -53,4 +53,8 @@ div.main {
     color: grey !important;
 }
 
+.tile-contents-top-left .mat-figure {
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+}
 

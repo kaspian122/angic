@@ -1,0 +1,74 @@
+<mat-card>
+  <mat-card-title>Создание новой анкеты</mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+
+
+    <section *ngIf="form">
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <mat-grid-list cols="1" rowHeight="4em">
+          <mat-grid-tile>
+            <mat-form-field class="fullwidth">
+              <input matInput formControlName="name" placeholder="Название анкеты" />
+              <!--<mat-error *ngIf="f('name').invalid">{{e('name')}}</mat-error>-->
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <div formArrayName="questions">
+          <div *ngFor="let question of questions.controls; let i=index" [formGroupName]="i">
+
+            <h3>Вопрос №{{i+1}}</h3>
+
+            <mat-form-field class="fullwidth">
+              <input type="text" matInput formControlName="name" placeholder="Вопрос">
+            </mat-form-field>
+
+            <mat-grid-list  cols="2" rowHeight="4em">
+
+              <mat-grid-tile rowspan="2" class="tile-contents-top-left">
+                <div style="padding: 15px;">
+                <div><mat-checkbox formControlName="required">Обязательный вопрос</mat-checkbox></div>
+                <div><mat-checkbox formControlName="countQuorum">Считать кворум</mat-checkbox></div>
+                </div>
+              </mat-grid-tile>
+
+              <mat-grid-tile>
+                <mat-form-field class="fullwidth">
+                  <mat-select formControlName="type" placeholder="Тип" >
+                    <mat-option [value]="'Single'">Выбор одного ответа</mat-option>
+                    <mat-option [value]="'Multiple'">Выбор нескольких ответов</mat-option>
+                    <mat-option [value]="'FreeForm'">Свободный ответ</mat-option>
+                    <mat-option [value]="'Score'">Рейтинг от 1 до 5</mat-option>
+                  </mat-select>
+                  <!--<mat-error *ngIf="f('question.'+i+'.type').invalid">{{e('question.'+i+'.type')}}</mat-error>-->
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </div>
+          <a mat-raised-button (click)="addQuestion()">Добавить вопрос №{{questions.controls.length+1}}</a>
+        </div>
+
+
+
+
+        <div style="text-align: right">
+          <button mat-raised-button
+                  type="submit" #sbmt
+                  [disabled]="form.pristine || form.status == 'INVALID' || loader"
+
+          >
+            <mat-icon *ngIf="loader" class="spinner">autorenew</mat-icon>
+            Сохранить
+          </button>
+        </div>
+        <!--<a mat-raised-button (click)="log()">Test</a>-->
+      </form>
+
+      <!--<pre style="font-size: 9px;">{{ chairmanForm.value | json }}</pre>-->
+    </section>
+
+  </mat-card-content>
+</mat-card>

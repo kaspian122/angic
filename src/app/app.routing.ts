@@ -14,6 +14,7 @@ import {QuestionaryComponent} from './components/main/questionary/questionary.co
 import {QuestionaryListComponent} from "./components/main/questionary-list/questionary-list.component";
 import {ApartmentComponent} from './components/main/apartment/apartment.component';
 import {RegisterComponent} from "./components/register/register.component";
+import {QuestionaryCreateComponent} from "./components/main/questionary-create/questionary-create.component";
 
 
 const routes: Routes = [
@@ -49,6 +50,10 @@ const routes: Routes = [
           {
             path: 'questionary-list',
             component: QuestionaryListComponent,
+          },
+          {
+            path: 'questionary-create',
+            component: QuestionaryCreateComponent,
           }
         ]
       },

@@ -4,9 +4,9 @@
   <mat-card-content>
 
 
-    <section *ngIf="chairmanForm && mkdEnums">
+    <section *ngIf="form && mkdEnums">
 
-      <form [formGroup]="chairmanForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div formGroupName="mkd">
           <h3>Сведения МКД</h3>
 
@@ -106,7 +106,7 @@
           <button mat-raised-button
                   type="submit" #sbmt
                   tabindex="12"
-                  [disabled]="chairmanForm.pristine || chairmanForm.status == 'INVALID' || loader"
+                  [disabled]="form.pristine || form.status == 'INVALID' || loader"
 
           >
             <mat-icon *ngIf="loader" class="spinner">autorenew</mat-icon>

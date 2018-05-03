@@ -56,6 +56,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SimpleDialogComponent } from './components/simple-dialog/simple-dialog.component';
 import { QuestionaryListComponent } from './components/main/questionary-list/questionary-list.component';
 import { RegisterComponent } from './components/register/register.component';
+import { QuestionaryCreateComponent } from './components/main/questionary-create/questionary-create.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { RegisterComponent } from './components/register/register.component';
     QuestionaryResultComponent,
     ApartmentComponent,
     QuestionaryListComponent,
-    SimpleDialogComponent
+    SimpleDialogComponent,
+    QuestionaryCreateComponent
   ],
   imports: [
     BrowserModule,
