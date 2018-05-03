@@ -19,7 +19,7 @@ export class HolderService {
   }
 
   public deleteHolders(holderIds: string[]){
-    return this.http.request("DELETE", this.config.getEndpoint("holder/"), {body: holderIds, headers: this.authService.headers()});
+    return this.http.request("DELETE", this.config.getEndpoint("holder"), {body: holderIds, headers: this.authService.headers()});
   }
 
   public getExcelFileWithHolders(mkdId: string){

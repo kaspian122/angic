@@ -28,11 +28,11 @@ export class ApartmentService {
   }
 
   public createApartment(apartment: Apartment): Observable<any> {
-    return this.http.post(this.config.getEndpoint('apartment/'), apartment, {headers: this.authService.headers()});
+    return this.http.post(this.config.getEndpoint('apartment'), apartment, {headers: this.authService.headers()});
   }
 
   public updateApartment(apartmentDto: Apartment): Observable<any> {
-    return this.http.put(this.config.getEndpoint('apartment/'), apartmentDto, {headers: this.authService.headers()});
+    return this.http.put(this.config.getEndpoint('apartment'), apartmentDto, {headers: this.authService.headers()});
   }
 
 }
