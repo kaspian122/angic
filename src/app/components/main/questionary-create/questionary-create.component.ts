@@ -45,16 +45,31 @@ export class QuestionaryCreateComponent implements OnInit {
     return this.form.get('questions') as FormArray;
   }
 
+  options(i: number) {
+    let c = this.questions.at(i).get('options') as FormArray;
+    console.log(c);
+    return c;
+  }
+
   addQuestion() {
     this.questions.push(this.fb.group({
       countQuorum: [false, Validators.required],
       required:    [false, Validators.required],
       name:        ['', Validators.required],
-      type:        ['FreeForm', Validators.required],
-      options:     this.fb.array([])
+      type:        ['Single', Validators.required],
+      options:     this.fb.array([
+        this.fb.group({option: '1111'}),
+        this.fb.group({option: '2222'}),
+        this.fb.group({option: '3333'}),
+        this.fb.group({option: ''}),
+        this.fb.group({option: ''})
+      ])
     }));
   }
 
+  deleteQuestion(i: number) {
+    this.questions.removeAt(i);
+  }
 
   addOption(questionNum: number) {
     let options = this.questions[questionNum].get('options') as FormArray;
