@@ -85,7 +85,7 @@ import { QuestionaryCreateComponent } from './components/main/questionary-create
     QuestionaryResultComponent,
     ApartmentComponent,
     QuestionaryListComponent,
-    HolderComponent
+    HolderComponent,
     SimpleDialogComponent,
     QuestionaryCreateComponent
   ],
