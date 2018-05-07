@@ -1,63 +1,45 @@
 import { Component, OnInit } from '@angular/core';
-import {MkdHoldersList} from "../../../models/holder/mkd-holders-list";
+import {HoldersList, MkdHoldersList} from "../../../models/holder/mkd-holders-list";
 import {MatTableDataSource} from '@angular/material';
-import {SelectionModel} from '@angular/cdk/collections';
 import {MatDialog} from '@angular/material';
 import {DeleteDialogComponent} from "../../delete-dialog/delete-dialog.component";
 import {HolderService} from '../../../services/holder/holder.service';
 import {MkdService} from '../../../services/mkd/mkd.service';
+import {TableComponent} from "../../../classes/table-component";
+import {Observable} from "rxjs/Observable";
+import {PaginationInfo} from "../../../models/pagination-info";
 
 @Component({
   selector: 'app-holder-list',
   templateUrl: './holder-list.component.html',
   styleUrls: ['./holder-list.component.css']
 })
-export class HolderListComponent implements OnInit {
+export class HolderListComponent extends TableComponent<HoldersList> implements OnInit {
 
     public holdersList?:MkdHoldersList = null;
     public holdersData = [];
     public commonInfo;
     public currentMkd;
 
-    public dataSource = new MatTableDataSource();
     public displayedColumns = ['select', 'apartmentNumber', 'holderName', 'certificateNumber', 'certificateDate', 'area', 'holderShareAmount', 'totalShare', 'voting', 'percentage'];
-    public selection = new SelectionModel(true, []);
 
     constructor(
         private dataService: HolderService,
         private mkdService: MkdService,
         private dialog: MatDialog
-    ) { }
-
-    applyFilter(filterValue: string) {
-        filterValue = filterValue.trim(); // Remove whitespace
-        filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-        this.dataSource.filter = filterValue;
-    }
-
-    /** Whether the number of selected elements matches the total number of rows. */
-    isAllSelected() {
-        const numSelected = this.selection.selected.length;
-        const numRows = this.dataSource.data.length;
-        return numSelected == numRows;
-    }
-
-    /** Selects all rows if they are not all selected; otherwise clear selection. */
-    masterToggle() {
-        this.isAllSelected() ?
-            this.selection.clear() :
-            this.dataSource.data.forEach(row => this.selection.select(row));
+    ) {
+      super();
     }
 
     ngOnInit() {
-        this.mkdService.currentMkd.subscribe(
-            mkd => {
-                this.currentMkd = mkd;
-                this.getHoldersList(this.currentMkd);
-            }
-        )
     }
 
+  refreshAfterInit() {
+    this.mkdService.currentMkd.subscribe(mkd => {
+      this.currentMkd = mkd;
+      this.refreshTable();
+    });
+  }
 
     openDeleteDialog(): void{
         let dialogRef = this.dialog.open(DeleteDialogComponent, {
@@ -66,15 +48,12 @@ export class HolderListComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            let holderIds = [];
             if (result){
-                for (let item of this.selection.selected){
-                    holderIds.push(item.holderId);
-                }
+                const holderIds = this.getSelectedIds();
                 if(holderIds.length > 0) {
                     this.dataService.deleteHolders(holderIds).subscribe(
                         () => {
-                            this.getHoldersList(this.currentMkd);
+                            this.refreshTable();
                         }
                     );
                 }
@@ -105,9 +84,12 @@ export class HolderListComponent implements OnInit {
     }
 
 
-    private getHoldersList(mkd){
-        this.dataService.getHoldersList(mkd.mkdId).subscribe(
-            holdersList => {
+    updateDataCollection(paginationInfo: PaginationInfo): void {
+        this.dataService.getHoldersList(this.currentMkd, paginationInfo).subscribe(
+            data => {
+                let holdersList = data[0];
+                this.totalLength = data[1];
+
                 this.holdersData = [];
                 this.holdersList = holdersList;
                 let holdersAreaIn = 0;
@@ -137,9 +119,7 @@ export class HolderListComponent implements OnInit {
                     holdersAreaIn: holdersAreaIn,
                     holderAreaPercentageIn: parseFloat((holdersAreaIn * 100 / holdersList.mkd.area).toFixed(2))
                 };
-
-                this.dataSource = new MatTableDataSource(this.holdersData);
-
+                this.dataCollection.next(this.holdersData);
             }
         );
     }

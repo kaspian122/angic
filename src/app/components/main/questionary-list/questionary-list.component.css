@@ -13,10 +13,10 @@
 .date {
   flex: 0 0 20%;
 }
-.mat-row:hover {
-  background-color: #bbdefb;
-  cursor: pointer;
-}
 .mat-column-select {
   overflow: visible;
+}
+.tile-left {
+  float: left;
+  width: 100%;
 }

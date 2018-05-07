@@ -5,6 +5,9 @@ import {MkdApartmentsList} from '../../models/apartment/mkd-apartments-list';
 import {Observable} from 'rxjs/Observable';
 import {AppConfig} from '../../app.config';
 import {AuthService} from '../auth/auth.service';
+import {PaginationInfo} from "../../models/pagination-info";
+import {ReplaySubject} from "rxjs/ReplaySubject";
+import {PaginationService} from "../pagination/pagination.service";
 
 @Injectable()
 export class ApartmentService {
@@ -12,11 +15,22 @@ export class ApartmentService {
   constructor(
     private http: HttpClient,
     private config: AppConfig,
-    private authService: AuthService
+    private authService: AuthService,
+    private paginationService: PaginationService
   ) { }
 
-  public getApartmentsList(mkdId: string):Observable<MkdApartmentsList> {
-    return this.http.get(this.config.getEndpoint("mkd/" + mkdId + "/apartments"), {headers: this.authService.headers()});
+  public getApartmentsList(mkdId: string, paginationInfo: PaginationInfo): Observable<[MkdApartmentsList, number]> {
+    let result = new ReplaySubject<[MkdApartmentsList, number]>();
+    let headers = this.paginationService.setPagination(this.authService.headers(), paginationInfo);
+
+    this.http.get<MkdApartmentsList>(
+      this.config.getEndpoint("mkd/" + mkdId + "/apartments"), {headers: headers, observe: 'response'}
+    ).subscribe(resp => {
+      let total = this.paginationService.getTotal(resp.headers);
+      let data = resp.body;
+      result.next([data, total]);
+    });
+    return result;
   }
 
   public getApartmentInfo(apartmentId: string): Observable<Apartment>{

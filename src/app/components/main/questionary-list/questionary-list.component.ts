@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {QuestionarySummary} from "../../../models/questionary/questionary-summary";
-import {MatDialog, MatSnackBar, MatTableDataSource} from "@angular/material";
-import {SelectionModel} from "@angular/cdk/collections";
+import {MatDialog, MatSnackBar} from "@angular/material";
 import {DeleteDialogComponent} from "../../delete-dialog/delete-dialog.component";
 import {BatchExecutionResult} from "../../../models/batch-execution-result";
 import {SimpleDialogComponent} from "../../simple-dialog/simple-dialog.component";
 import {QuestionaryService} from "../../../services/questionary/questionary.service";
 import {MkdService} from "../../../services/mkd/mkd.service";
+import {TableComponent} from "../../../classes/table-component";
+import {PaginationInfo} from "../../../models/pagination-info";
 
 /**
  * Список анкет МКД
@@ -16,13 +17,10 @@ import {MkdService} from "../../../services/mkd/mkd.service";
   templateUrl: './questionary-list.component.html',
   styleUrls: ['./questionary-list.component.css']
 })
-export class QuestionaryListComponent implements OnInit {
+export class QuestionaryListComponent extends TableComponent<QuestionarySummary> implements OnInit {
 
-  questionaries: QuestionarySummary[];
-  dataSource = new MatTableDataSource();
   currentMkdId: string;
   displayedColumns = ['select', 'name', 'state', 'responseCount', 'date'];
-  public selection = new SelectionModel(true, []);
 
   showArchived: boolean = false;
 
@@ -31,49 +29,26 @@ export class QuestionaryListComponent implements OnInit {
     private mkdService: MkdService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) { }
+  ) {
+    super(); }
 
   ngOnInit() {
-    this.mkdService.currentMkd.subscribe(
-      mkd => {
-        this.setCurrentMkdId(mkd.mkdId);
-      }
-    );
   }
 
-  setCurrentMkdId(mkdId): void {
-    this.currentMkdId = mkdId;
-    this.getQuestionariesList();
+  refreshAfterInit() {
+    this.mkdService.currentMkd.subscribe(mkd => {
+      this.currentMkdId = mkd.mkdId;
+      this.refreshTable();
+    });
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected == numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
-  getQuestionariesList(): void {
-    this.selection.clear();
-    this.dataService.getQuestionariesList(this.currentMkdId, this.showArchived).subscribe(
-      questionariesList => {
-        this.questionaries = questionariesList;
-        this.dataSource = new MatTableDataSource(this.questionaries);
-      }
-    );
-  }
-
-  applyFilter(filterValue: string): void {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+  updateDataCollection(paginationInfo: PaginationInfo): void {
+    this.dataService.getQuestionariesList(this.currentMkdId, this.showArchived, paginationInfo)
+      .subscribe(data => {
+          this.dataCollection.next(data[0]);
+          this.totalLength = data[1];
+        }
+      );
   }
 
   openDeleteDialog(): void {
@@ -84,12 +59,12 @@ export class QuestionaryListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
-        let questionaryIds = this.selection.selected.map(s => s.id);
+        let questionaryIds = this.getSelectedIds();
         if(questionaryIds.length > 0) {
           this.dataService.deleteQuestionaries(questionaryIds).subscribe(
             (data) => {
               this.showBatchResult("Удалено", data);
-              this.getQuestionariesList();
+              this.refreshTable();
             }
           );
         }
@@ -106,12 +81,12 @@ export class QuestionaryListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
-        let questionaryIds = this.selection.selected.map(s => s.id);
+        let questionaryIds = this.getSelectedIds();
         if(questionaryIds.length > 0) {
           this.dataService.archiveQuestionaries(questionaryIds).subscribe(
             (data) => {
               this.showBatchResult("Переведено в архив", data);
-              this.getQuestionariesList();
+              this.refreshTable();
             }
           );
         }

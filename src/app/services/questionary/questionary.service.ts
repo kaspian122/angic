@@ -8,6 +8,9 @@ import {Observable} from 'rxjs/Observable';
 import {QuestionaryRights} from "../../models/questionary/questionary-rights";
 import {QuestionarySummary} from "../../models/questionary/questionary-summary";
 import {BatchExecutionResult} from "../../models/batch-execution-result";
+import {PaginationService} from "../pagination/pagination.service";
+import {PaginationInfo} from "../../models/pagination-info";
+import {ReplaySubject} from "rxjs/ReplaySubject";
 
 @Injectable()
 export class QuestionaryService {
@@ -15,7 +18,8 @@ export class QuestionaryService {
   constructor(
     private http: HttpClient,
     private config: AppConfig,
-    private authService: AuthService
+    private authService: AuthService,
+    private paginationService: PaginationService
   ) {
   }
 
@@ -32,9 +36,18 @@ export class QuestionaryService {
   }
 
 
-  public getQuestionariesList(mkdId: string, showArchived?: boolean): Observable<QuestionarySummary[]> {
-    return this.http.get<QuestionarySummary[]>(
-      this.config.getEndpoint(`mkd/${mkdId}/questionaries`), {params: {archived: showArchived ? "1" : "0"}, headers: this.authService.headers()});
+  public getQuestionariesList(mkdId: string, showArchived: boolean, paginationInfo: PaginationInfo): Observable<[QuestionarySummary[]], number> {
+    let result = new ReplaySubject<[QuestionarySummary[], number]>();
+    let headers = this.paginationService.setPagination(this.authService.headers(), paginationInfo);
+
+    this.http.get<QuestionarySummary[]>(
+      this.config.getEndpoint(`mkd/${mkdId}/questionaries`), {params: {archived: showArchived ? "1" : "0"}, headers: headers, observe: 'response'}
+    ).subscribe(resp => {
+      let total = this.paginationService.getTotal(resp.headers);
+      let data = resp.body;
+      result.next([data, total]);
+    });
+    return result;
   }
 
   public deleteQuestionaries(questionaryIds: string[]): Observable<BatchExecutionResult> {

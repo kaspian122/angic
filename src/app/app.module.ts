@@ -30,7 +30,6 @@ import { ProfileComponent } from './components/main/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
 import {UserService} from "./services/user/user.service";
-import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import { AdminChairmanComponent } from './components/admin/admin-chairman/admin-chairman.component';
 import {MatSelectModule} from '@angular/material/select';
@@ -39,11 +38,11 @@ import { NewsComponent } from './components/main/news/news.component';
 import { HolderListComponent } from './components/main/holder-list/holder-list.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
-import {MatDialogModule} from '@angular/material';
+import { MatDialogModule, MatPaginatorModule, MatPaginatorIntl } from '@angular/material';
 import { ApartmentListComponent } from './components/main/apartment-list/apartment-list.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { QuestionaryComponent } from './components/main/questionary/questionary.component';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { QuestionaryActivityComponent } from './components/main/questionary/questionary-activity/questionary-activity.component';
 import { QuestionaryVoteComponent } from './components/main/questionary/questionary-vote/questionary-vote.component';
 import { QuestionaryResultComponent } from './components/main/questionary/questionary-result/questionary-result.component';
@@ -56,6 +55,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SimpleDialogComponent } from './components/simple-dialog/simple-dialog.component';
 import { QuestionaryListComponent } from './components/main/questionary-list/questionary-list.component';
 import { RegisterComponent } from './components/register/register.component';
+import { MatPaginatorIntlRu } from "./classes/mat-paginator-intl-ru";
+import {PaginationService} from "./services/pagination/pagination.service";
 
 @NgModule({
   declarations: [
@@ -117,6 +118,10 @@ import { RegisterComponent } from './components/register/register.component';
       useClass: HttpAuthInterceptor,
       multi: true
     },
+    {
+      provide: MatPaginatorIntl,
+      useClass: MatPaginatorIntlRu
+    },
     CookieService,
     AuthGuard,
     AuthService,
@@ -126,7 +131,8 @@ import { RegisterComponent } from './components/register/register.component';
     MkdService,
     HolderService,
     ApartmentService,
-    QuestionaryService
+    QuestionaryService,
+    PaginationService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

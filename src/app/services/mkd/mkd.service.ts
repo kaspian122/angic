@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import {AppConfig} from '../../app.config';
 import {AuthService} from '../auth/auth.service';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Mkd} from '../../models/mkd/mkd';
 import {MkdCreate} from '../../models/mkd/mkd-create';
 import {Auth, MkdOwnersInfo} from '../auth/auth';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
+import {PaginationInfo} from "../../models/pagination-info";
+import {PaginationService} from "../pagination/pagination.service";
 
 @Injectable()
 export class MkdService {
@@ -16,12 +18,22 @@ export class MkdService {
   constructor(
     private http: HttpClient,
     private config: AppConfig,
-    private authService: AuthService
+    private authService: AuthService,
+    private paginationService: PaginationService
   ) { }
 
-  public getMkdList(): Promise<Mkd[]>{
-    let response: Observable<Mkd[]> = this.http.request<Mkd[]>("GET", this.config.getEndpoint("mkd"));
-    return response.toPromise<Mkd[]>();
+  public getMkdList(paginationInfo: PaginationInfo): Observable<[Mkd[], number]> {
+    let result = new ReplaySubject<[Mkd[], number]>();
+    let headers = this.paginationService.setPagination(new HttpHeaders(), paginationInfo);
+
+    this.http.get<Mkd[]>(
+      this.config.getEndpoint("mkd"), {headers: headers, observe: 'response'}
+    ).subscribe(resp => {
+      let total = this.paginationService.getTotal(resp.headers);
+      let data = resp.body;
+      result.next([data, total]);
+    });
+    return result;
   }
 
   public getMkdEnums(): Observable<any> {
