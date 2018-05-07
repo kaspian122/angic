@@ -36,7 +36,7 @@ export class QuestionaryService {
   }
 
 
-  public getQuestionariesList(mkdId: string, showArchived: boolean, paginationInfo: PaginationInfo): Observable<[QuestionarySummary[]], number> {
+  public getQuestionariesList(mkdId: string, showArchived: boolean, paginationInfo: PaginationInfo): Observable<[QuestionarySummary[], number]> {
     let result = new ReplaySubject<[QuestionarySummary[], number]>();
     let headers = this.paginationService.setPagination(this.authService.headers(), paginationInfo);
 

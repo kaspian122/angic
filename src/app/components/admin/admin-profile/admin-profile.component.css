@@ -1,0 +1,21 @@
+.address {
+  flex: 0 0 25%;
+}
+.administrationType {
+  flex: 0 0 15%;
+}
+.apartmentCount {
+  flex: 0 0 10%;
+}
+.area {
+  flex: 0 0 10%;
+}
+.chairmanId {
+  flex: 0 0 20%;
+}
+.floorCount {
+  flex: 0 0 10%;
+}
+.porchCount {
+  flex: 0 0 10%;
+}

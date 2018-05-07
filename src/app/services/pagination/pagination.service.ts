@@ -22,12 +22,14 @@ export class PaginationService {
       headers = headers.set(this.SORT_FIELD, paginationInfo.sortField);
       headers = headers.set(this.SORT_TYPE, paginationInfo.sortType);
     }
+    if (paginationInfo.filter) {
+      headers = headers.set(this.FILTER, paginationInfo.filter)
+    }
     return headers;
-    // .set(this.FILTER, paginationInfo.filter)
   }
 
   public getTotal(headers: HttpHeaders): number {
-    return headers.get(this.TOTAL);
+    return +headers.get(this.TOTAL);
   }
 
 }

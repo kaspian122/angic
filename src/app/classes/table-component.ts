@@ -3,6 +3,8 @@ import {AfterViewInit, ViewChild} from "@angular/core";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {PaginationInfo} from "../models/pagination-info";
 import {SelectionComponent} from "./selection-component";
+import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
+import {Subject} from "rxjs/Subject";
 
 /**
  * Общий функционал для компонент с таблицами (пагинация, сортировка, фильтрация)
@@ -22,22 +24,33 @@ export abstract class TableComponent<T> extends SelectionComponent<T> implements
   protected selectedPageSize: number = 10;
   protected pageSizeOptions = [5, 10, 25, 100];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
   //Сортировка
   @ViewChild(MatSort) sort: MatSort;
+
   //Фильтрация
-  // protected filterValue: ReplaySubject<string>;
+  private searchTerms = new Subject<string>();
+  protected actualSearchTerm: string;
+
 
   ngAfterViewInit() {
     this.refreshAfterInit();
+    this.dataCollection.subscribe(
+      dataList => this.dataSource.data = dataList
+    );
     this.paginator.page.subscribe(() => {
       this.updateTable();
     });
     this.sort.sortChange.subscribe(() => {
-      this.paginator.firstPage();
-      this.updateTable();
+      this.refreshTable();
     });
-    this.dataCollection.subscribe(
-      dataList => this.dataSource.data = dataList
+    this.searchTerms.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap((term: string) => {
+        this.actualSearchTerm = term;
+        this.refreshTable();
+      })
     );
   }
 
@@ -48,6 +61,9 @@ export abstract class TableComponent<T> extends SelectionComponent<T> implements
     this.refreshTable();
   }
 
+  /**
+   * Обновляет таблицу со сбросом пагинации
+   */
   refreshTable(): void {
     this.paginator.firstPage();
     this.updateTable();
@@ -62,9 +78,9 @@ export abstract class TableComponent<T> extends SelectionComponent<T> implements
    * Применяет фильтр
    */
   applyFilter(filterValue: string) {
-    // filterValue = filterValue.trim();
-    // filterValue = filterValue.toLowerCase();
-    // this.updateTable();
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.searchTerms.next(filterValue);
   }
 
   /**
@@ -82,7 +98,9 @@ export abstract class TableComponent<T> extends SelectionComponent<T> implements
     let sortField = this.sort.active;
     let sortType = this.sort.direction;
 
-    this.updateDataCollection({rowFrom: from, rowTo: to, sortField: sortField, sortType: sortType});
+    let filter = this.actualSearchTerm;
+
+    this.updateDataCollection({rowFrom: from, rowTo: to, sortField: sortField, sortType: sortType, filter: filter});
   }
 
 }
