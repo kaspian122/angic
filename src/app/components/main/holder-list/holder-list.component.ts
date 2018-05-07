@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {MkdHoldersList} from "../../../models/holder/mkd-holders-list";
+import {Component, Input, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatDialog} from '@angular/material';
@@ -13,27 +12,19 @@ import {MkdService} from '../../../services/mkd/mkd.service';
   styleUrls: ['./holder-list.component.css']
 })
 export class HolderListComponent implements OnInit {
-
-    public holdersList?:MkdHoldersList = null;
-    public holdersData = [];
-    public commonInfo;
-    public currentMkd;
-
     public dataSource = new MatTableDataSource();
-    public displayedColumns = ['select', 'apartmentNumber', 'holderName', 'certificateNumber', 'certificateDate', 'area', 'holderShareAmount', 'totalShare', 'voting', 'percentage'];
+    public displayedColumns = [
+      'select', 'holderName', 'certificateNumber', 'certificateDate', 'shareAmount', 'areaMeters', 'percent'
+    ];
     public selection = new SelectionModel(true, []);
+
+    @Input() apartmentId: string;
 
     constructor(
         private dataService: HolderService,
         private mkdService: MkdService,
         private dialog: MatDialog
     ) { }
-
-    applyFilter(filterValue: string) {
-        filterValue = filterValue.trim(); // Remove whitespace
-        filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-        this.dataSource.filter = filterValue;
-    }
 
     /** Whether the number of selected elements matches the total number of rows. */
     isAllSelected() {
@@ -52,12 +43,10 @@ export class HolderListComponent implements OnInit {
     ngOnInit() {
         this.mkdService.currentMkd.subscribe(
             mkd => {
-                this.currentMkd = mkd;
-                this.getHoldersList(this.currentMkd);
+                this.getHoldersList();
             }
         )
     }
-
 
     openDeleteDialog(): void{
         let dialogRef = this.dialog.open(DeleteDialogComponent, {
@@ -66,15 +55,12 @@ export class HolderListComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            let holderIds = [];
             if (result){
-                for (let item of this.selection.selected){
-                    holderIds.push(item.holderId);
-                }
+                let holderIds = this.selection.selected.map(s => s.id);
                 if(holderIds.length > 0) {
                     this.dataService.deleteHolders(holderIds).subscribe(
                         () => {
-                            this.getHoldersList(this.currentMkd);
+                            this.getHoldersList();
                         }
                     );
                 }
@@ -82,64 +68,10 @@ export class HolderListComponent implements OnInit {
         });
     }
 
-    loadToExcel(){
-        this.dataService.getExcelFileWithHolders(this.currentMkd.mkdId).subscribe(
-             data=> this.downloadFile(data));
-    }
-
-    private downloadFile(data){
-
-        let contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-
-        let blob = new Blob([data], { type: contentType });
-        var url= window.URL.createObjectURL(blob);
-        const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
-
-        a.href = url;
-        a.download = 'Список собственников.xlsx';
-        document.body.appendChild(a);
-        a.click();
-
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }
-
-
-    private getHoldersList(mkd){
-        this.dataService.getHoldersList(mkd.mkdId).subscribe(
+    private getHoldersList(){
+        this.dataService.getHoldersByApartment(this.apartmentId).subscribe(
             holdersList => {
-                this.holdersData = [];
-                this.holdersList = holdersList;
-                let holdersAreaIn = 0;
-                for (let holder of holdersList.holders){
-                    let votingCount = holder.apartment.area * holder.holder.shareAmount / holder.apartment.totalShare;
-                    holdersAreaIn += holder.apartment.area;
-                    let holderRow = {
-                        apartmentId: holder.apartment.id,
-                        holderId: holder.holder.id,
-                        userId: holder.user.id,
-                        apartmentNumber: holder.apartment.number,
-                        holderFirstName: holder.user.firstName,
-                        holderLastName: holder.user.lastName,
-                        holderSecondName: holder.user.secondName,
-                        certificateNumber: holder.holder.certificateNumber,
-                        certificateDate: holder.holder.certificateDate,
-                        area: holder.apartment.area,
-                        holderShareAmount: holder.holder.shareAmount,
-                        totalShare: holder.apartment.totalShare,
-                        votingCount: votingCount,
-                        percentage: parseFloat((votingCount * 100 / this.holdersList.mkd.area).toFixed(2)),
-                    };
-                    this.holdersData.push(holderRow);
-                }
-                this.commonInfo = {
-                    mkd: holdersList.mkd,
-                    holdersAreaIn: holdersAreaIn,
-                    holderAreaPercentageIn: parseFloat((holdersAreaIn * 100 / holdersList.mkd.area).toFixed(2))
-                };
-
-                this.dataSource = new MatTableDataSource(this.holdersData);
-
+                this.dataSource = new MatTableDataSource(holdersList);
             }
         );
     }

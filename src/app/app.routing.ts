@@ -14,6 +14,7 @@ import {QuestionaryComponent} from './components/main/questionary/questionary.co
 import {QuestionaryListComponent} from "./components/main/questionary-list/questionary-list.component";
 import {ApartmentComponent} from './components/main/apartment/apartment.component';
 import {RegisterComponent} from "./components/register/register.component";
+import {HolderComponent} from './components/main/holder/holder.component';
 import {QuestionaryCreateComponent} from "./components/main/questionary-create/questionary-create.component";
 
 
@@ -42,6 +43,14 @@ const routes: Routes = [
           {
             path: 'apartment/:id',
             component: ApartmentComponent,
+          },
+          {
+            path: 'apartment/:apartmentId/holder',
+            component: HolderComponent,
+          },
+          {
+            path: 'holder/:id',
+            component: HolderComponent,
           },
           {
             path: 'questionary/:id',

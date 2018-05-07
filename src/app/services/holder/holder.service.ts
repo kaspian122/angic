@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import {AppConfig} from '../../app.config';
 import {AuthService} from '../auth/auth.service';
 import {HttpClient} from '@angular/common/http';
-import {MkdHoldersList} from '../../models/holder/mkd-holders-list';
 import {Observable} from 'rxjs/Observable';
+import {Holder} from '../../models/holder/holder';
+import {Apartment} from '../../models/apartment/apartment';
 
 @Injectable()
 export class HolderService {
@@ -14,8 +15,20 @@ export class HolderService {
     private authService: AuthService
   ) { }
 
-  public getHoldersList(mkdId: string): Observable<MkdHoldersList>{
-    return this.http.get(this.config.getEndpoint("mkd/" + mkdId + "/holders"), {headers: this.authService.headers()});
+  public getHoldersByApartment(apartmentId: string): Observable<Holder[]>{
+    return this.http.get<Holder[]>(this.config.getEndpoint(`apartment/${apartmentId}/holders`), {headers: this.authService.headers()});
+  }
+
+  public getHolderInfo(holderId: string): Observable<Holder>{
+    return this.http.get<Holder>(this.config.getEndpoint(`holder/${holderId}`), {headers: this.authService.headers()});
+  }
+
+  public createHolder(holder: Holder): Observable<any> {
+    return this.http.post(this.config.getEndpoint('holder/'), holder, {headers: this.authService.headers()});
+  }
+
+  public updateHolder(holder: Holder): Observable<any> {
+    return this.http.put(this.config.getEndpoint('holder/'), holder, {headers: this.authService.headers()});
   }
 
   public deleteHolders(holderIds: string[]){

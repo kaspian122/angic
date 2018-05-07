@@ -9,7 +9,7 @@
       <form [formGroup]="apartmentForm" (ngSubmit)="onSubmit()">
         <div formGroupName="apartment">
 
-          <mat-grid-list cols="3" gutterSize="20" rowHeight="4em">
+          <mat-grid-list cols="3" gutterSize="30" rowHeight="4em">
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
                 <input matInput formControlName="number" placeholder="№ кв." tabindex="1"/>
@@ -58,7 +58,7 @@
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="totalShare" placeholder="Кол-во долей" tabindex="7"/>
+                <input matInput formControlName="totalShare" placeholder="Всего долей" tabindex="7"/>
                 <mat-error *ngIf="f('apartment.totalShare').invalid">{{e('apartment.totalShare')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
@@ -78,6 +78,8 @@
           </button>
         </div>
       </form>
+
+      <app-holder-list [apartmentId]="apartment.id"></app-holder-list>
 
     </section>
   </mat-card-content>

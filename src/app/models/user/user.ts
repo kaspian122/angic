@@ -1,9 +1,12 @@
+/**
+ * Пользователь
+ */
 export interface User {
   id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
   login: string;
-  phone: string;
+  lastName: string;
+  firstName: string;
   secondName: string;
+  email: string;
+  phone: string;
 }

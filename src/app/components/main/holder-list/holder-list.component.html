@@ -1,106 +1,71 @@
-<mat-card>
-  <mat-card-content>
+<mat-card-content>
 
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Поиск">
-    </mat-form-field>
+  <h3>Собственники</h3>
 
-    <!--<mat-card-title>Реестр собственников</mat-card-title>-->
-    <!--<mat-divider></mat-divider>-->
+  <mat-table #table [dataSource]="dataSource">
 
-    <!--<mat-card-content *ngIf="commonInfo">-->
-      <!--<mat-grid-list cols="2" rowHeight="8:1">-->
-        <!--<mat-grid-tile>-->
-          <!--<div class="mkd-info-holders-list">-->
-            <!--Адрес МКД: {{commonInfo.mkd.address}}-->
-          <!--</div>-->
-        <!--</mat-grid-tile>-->
-        <!--<mat-grid-tile>-->
-          <!--<div class="mkd-info-holders-list">-->
-            <!--Площадь МКД: {{commonInfo.mkd.area}} м.кв.-->
-          <!--</div>-->
-        <!--</mat-grid-tile>-->
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef [ngClass]="'select'">
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngClass]="'select'">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(element) : null"
+                      [checked]="selection.isSelected(element)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
 
-      <!--</mat-grid-list>-->
-    <!--</mat-card-content>-->
+    <ng-container matColumnDef="holderName">
+      <mat-header-cell *matHeaderCellDef [ngClass]="'holder-name'"> ФИО </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngClass]="'holder-name'"> {{element.realHolderName}} </mat-cell>
+    </ng-container>
 
-      <!--<mat-table #table [dataSource]="dataSource">-->
+    <ng-container matColumnDef="certificateNumber">
+      <mat-header-cell *matHeaderCellDef [ngClass]="'certificate-number'"> Номер свидетельства </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngClass]="'certificate-number'"> {{element.certificateNumber}} </mat-cell>
+    </ng-container>
 
-      <!--&lt;!&ndash; Checkbox Column &ndash;&gt;-->
-      <!--<ng-container matColumnDef="select">-->
+    <ng-container matColumnDef="certificateDate">
+      <mat-header-cell *matHeaderCellDef [ngClass]="'certificate-date'"> Дата свидетельства </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngClass]="'certificate-date'"> {{element.certificateDate|date:'dd.MM.yyyy'}}
+      </mat-cell>
+    </ng-container>
 
-        <!--<mat-header-cell *matHeaderCellDef [ngClass]="'select'">-->
-          <!--<mat-checkbox (change)="$event ? masterToggle() : null"-->
-                        <!--[checked]="selection.hasValue() && isAllSelected()"-->
-                        <!--[indeterminate]="selection.hasValue() && !isAllSelected()">-->
-          <!--</mat-checkbox>-->
-        <!--</mat-header-cell>-->
-        <!--<mat-cell *matCellDef="let element" [ngClass]="'select'">-->
-          <!--<mat-checkbox (click)="$event.stopPropagation()"-->
-                        <!--(change)="$event ? selection.toggle(element) : null"-->
-                        <!--[checked]="selection.isSelected(element)">-->
-          <!--</mat-checkbox>-->
-        <!--</mat-cell>-->
-      <!--</ng-container>-->
+    <ng-container matColumnDef="shareAmount">
+      <mat-header-cell *matHeaderCellDef [ngClass]="'holder-share-amount'"> Часть доли </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngClass]="'holder-share-amount'"> {{element.shareAmount}} </mat-cell>
+    </ng-container>
 
+    <ng-container matColumnDef="participationMeeting">
+      <mat-header-cell *matHeaderCellDef [ngClass]="'holder-participationMeeting'"> Учавствует в ОСС </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngClass]="'holder-participationMeeting'"> {{element.participationMeeting ? 'Да' : 'Нет'}} </mat-cell>
+    </ng-container>
 
-      <!--<ng-container matColumnDef="apartmentNumber" >-->
-        <!--<mat-header-cell *matHeaderCellDef [ngClass]="'apartment-number'"> № пом </mat-header-cell>-->
-        <!--<mat-cell *matCellDef="let element" [ngClass]="'apartment-number'"> {{element.apartmentNumber}} </mat-cell>-->
-      <!--</ng-container>-->
+    <ng-container matColumnDef="councilman">
+      <mat-header-cell *matHeaderCellDef [ngClass]="'holder-councilman'"> Член совета </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngClass]="'holder-councilman'"> {{element.councilman ? 'Да' : 'Нет'}} </mat-cell>
+    </ng-container>
 
-      <!--<ng-container matColumnDef="holderName">-->
-        <!--<mat-header-cell *matHeaderCellDef [ngClass]="'holder-name'"> ФИО собственника помещения </mat-header-cell>-->
-        <!--<mat-cell *matCellDef="let element" [ngClass]="'holder-name'"> {{element.holderLastName}} {{element.holderFirstName}} {{element.holderSecondName}} </mat-cell>-->
-      <!--</ng-container>-->
+    <ng-container matColumnDef="areaMeters">
+      <mat-header-cell *matHeaderCellDef [ngClass]="'holder-areaMeters'"> Кол-во голосов </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngClass]="'holder-areaMeters'"> {{element.voteCount.areaMeters}} </mat-cell>
+    </ng-container>
 
-      <!--<ng-container matColumnDef="certificateNumber">-->
-        <!--<mat-header-cell *matHeaderCellDef [ngClass]="'certificate-number'"> Номер свидетельства  </mat-header-cell>-->
-        <!--<mat-cell *matCellDef="let element" [ngClass]="'certificate-number'"> {{element.certificateNumber}} </mat-cell>-->
-      <!--</ng-container>-->
+    <ng-container matColumnDef="percent">
+      <mat-header-cell *matHeaderCellDef [ngClass]="'holder-percent'"> Процент голосов </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngClass]="'holder-percent'"> {{element.voteCount.percent}} </mat-cell>
+    </ng-container>
 
-      <!--<ng-container matColumnDef="certificateDate">-->
-        <!--<mat-header-cell *matHeaderCellDef [ngClass]="'certificate-date'"> Дата свидетельства  </mat-header-cell>-->
-        <!--<mat-cell *matCellDef="let element" [ngClass]="'certificate-date'"> {{element.certificateDate|date:'dd.MM.yyyy' }} </mat-cell>-->
-      <!--</ng-container>-->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="/holder/{{row.id}}"></mat-row>
+  </mat-table>
 
-      <!--<ng-container matColumnDef="area">-->
-        <!--<mat-header-cell *matHeaderCellDef [ngClass]="'area'"> Площадь, м.кв. </mat-header-cell>-->
-        <!--<mat-cell *matCellDef="let element" [ngClass]="'area'"> {{element.area}} </mat-cell>-->
-      <!--</ng-container>-->
+  <br>
 
-      <!--<ng-container matColumnDef="holderShareAmount">-->
-        <!--<mat-header-cell *matHeaderCellDef [ngClass]="'holder-share-amount'"> Часть доли </mat-header-cell>-->
-        <!--<mat-cell *matCellDef="let element" [ngClass]="'holder-share-amount'"> {{element.holderShareAmount}} </mat-cell>-->
-      <!--</ng-container>-->
-
-      <!--<ng-container matColumnDef="totalShare">-->
-        <!--<mat-header-cell *matHeaderCellDef [ngClass]="'total-share'"> Всего долей </mat-header-cell>-->
-        <!--<mat-cell *matCellDef="let element" [ngClass]="'total-share'"> {{element.totalShare}} </mat-cell>-->
-      <!--</ng-container>-->
-
-      <!--<ng-container matColumnDef="voting">-->
-        <!--<mat-header-cell *matHeaderCellDef [ngClass]="'voting'"> Кол-во голосов </mat-header-cell>-->
-        <!--<mat-cell *matCellDef="let element" [ngClass]="'voting'"> {{element.votingCount}} </mat-cell>-->
-      <!--</ng-container>-->
-
-      <!--<ng-container matColumnDef="percentage">-->
-        <!--<mat-header-cell *matHeaderCellDef [ngClass]="'percentage'"> Процент голосов </mat-header-cell>-->
-        <!--<mat-cell *matCellDef="let element" [ngClass]="'percentage'"> {{element.percentage}}% </mat-cell>-->
-      <!--</ng-container>-->
-
-      <!--<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>-->
-      <!--<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>-->
-    <!--</mat-table>-->
-
-    <!--<br>-->
-
-      <!--<mat-card-content *ngIf="commonInfo">-->
-        <!--Подключено {{commonInfo.holdersAreaIn}} м.кв ({{commonInfo.holderAreaPercentageIn}}%)-->
-      <!--</mat-card-content>-->
-
-    <a routerLink="/admin/chairman" mat-raised-button >Добавить</a >
-    <a routerLink="/admin/chairman" mat-raised-button (click)="openDeleteDialog()" >Удалить</a >
-    <a routerLink="/admin/chairman" mat-raised-button (click)="loadToExcel()" >Выгрузить в excel</a >
-  </mat-card-content>
-</mat-card>
+  <a mat-raised-button routerLink="/apartment/{{apartmentId}}/holder">Добавить</a>
+  <a mat-raised-button (click)="openDeleteDialog()">Удалить</a>
+</mat-card-content>

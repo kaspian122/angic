@@ -39,7 +39,7 @@ import { NewsComponent } from './components/main/news/news.component';
 import { HolderListComponent } from './components/main/holder-list/holder-list.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
-import {MatDialogModule} from '@angular/material';
+import {MAT_DATE_LOCALE, MatDialogModule, MatNativeDateModule} from '@angular/material';
 import { ApartmentListComponent } from './components/main/apartment-list/apartment-list.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { QuestionaryComponent } from './components/main/questionary/questionary.component';
@@ -56,6 +56,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SimpleDialogComponent } from './components/simple-dialog/simple-dialog.component';
 import { QuestionaryListComponent } from './components/main/questionary-list/questionary-list.component';
 import { RegisterComponent } from './components/register/register.component';
+import { HolderComponent } from './components/main/holder/holder.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { QuestionaryCreateComponent } from './components/main/questionary-create/questionary-create.component';
 
 @NgModule({
@@ -82,6 +85,7 @@ import { QuestionaryCreateComponent } from './components/main/questionary-create
     QuestionaryResultComponent,
     ApartmentComponent,
     QuestionaryListComponent,
+    HolderComponent
     SimpleDialogComponent,
     QuestionaryCreateComponent
   ],
@@ -111,13 +115,19 @@ import { QuestionaryCreateComponent } from './components/main/questionary-create
     MatCheckboxModule,
     MatDialogModule,
     MatTabsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatExpansionModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpAuthInterceptor,
       multi: true
+    },
+    {
+      provide: MAT_DATE_LOCALE, useValue: 'ru-Ru'
     },
     CookieService,
     AuthGuard,
