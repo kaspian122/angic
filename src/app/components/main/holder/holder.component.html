@@ -1,0 +1,245 @@
+<mat-card>
+
+  <mat-card-title>
+    {{(title)}}
+  </mat-card-title>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-content>
+    <section *ngIf="holderForm">
+      <form [formGroup]="holderForm" (ngSubmit)="onSubmit()">
+        <h3>Пользователь</h3>
+
+        <div formGroupName="portalUser">
+          <mat-grid-list cols="2" gutterSize="30" rowHeight="4em">
+
+            <mat-grid-tile>
+              <mat-form-field class="fullwidth">
+                <span matPrefix>+7 &nbsp;</span>
+                <input matInput formControlName="phone" placeholder="Телефон" tabindex="1" (blur)="userPhoneBlur()"
+                       (keyup)="userPhoneKeyup()"/>
+                <mat-error *ngIf="f('portalUser.phone').invalid">{{e('portalUser.phone')}}</mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field class="fullwidth">
+                <input matInput formControlName="lastName" placeholder="Фамилия" tabindex="2"/>
+                <mat-error *ngIf="f('portalUser.lastName').invalid">{{e('portalUser.lastName')}}
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field class="fullwidth">
+                <input matInput formControlName="email" placeholder="Эл. почта" tabindex="3"/>
+                <mat-error *ngIf="f('portalUser.email').invalid">{{e('portalUser.email')}}</mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field class="fullwidth">
+                <input matInput formControlName="firstName" placeholder="Имя" tabindex="4"/>
+                <mat-error *ngIf="f('portalUser.firstName').invalid">{{e('portalUser.firstName')}}
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile></mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field class="fullwidth">
+                <input matInput formControlName="secondName" placeholder="Отчество" tabindex="5"/>
+                <mat-error *ngIf="f('portalUser.secondName').invalid">{{e('portalUser.secondName')}}
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+          </mat-grid-list>
+        </div>
+        <h3>Информация</h3>
+
+        <mat-grid-list cols="3" gutterSize="30" rowHeight="4em">
+
+          <mat-grid-tile>
+            <mat-form-field class="fullwidth">
+              <input matInput formControlName="certificateNumber" placeholder="№ свидетельства о праве соб-ти"
+                     tabindex="6"/>
+              <mat-error *ngIf="f('certificateNumber').invalid">{{e('certificateNumber')}}</mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field class="fullwidth">
+              <input matInput [matDatepicker]="picker" formControlName="certificateDate"
+                     placeholder="Дата свидетельства" tabindex="7"/>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="f('certificateDate').invalid">{{e('certificateDate')}}</mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field class="fullwidth">
+              <input matInput formControlName="shareAmount" placeholder="Часть доли" tabindex="8"/>
+              <mat-error *ngIf="f('shareAmount').invalid">{{e('shareAmount')}}</mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile colspan="3">
+            <mat-form-field class="fullwidth">
+              <input matInput formControlName="legalPerson" placeholder="Юридическое лицо" tabindex="9"/>
+              <mat-error *ngIf="f('legalPerson').invalid">{{e('legalPerson')}}</mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <section class="fullwidth">
+              <mat-checkbox formControlName="councilman">Член совета</mat-checkbox>
+            </section>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <section class="fullwidth">
+              <mat-checkbox formControlName="participationMeeting">Учавствует в ОСС</mat-checkbox>
+            </section>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <section class="fullwidth">
+              <mat-checkbox formControlName="receiveNewsByEmail">Получает новости на email</mat-checkbox>
+            </section>
+          </mat-grid-tile>
+
+          <mat-grid-tile colspan="3">
+            <mat-form-field class="fullwidth">
+              <input matInput formControlName="comment" placeholder="Комментарий" tabindex="10"/>
+              <mat-error *ngIf="f('comment').invalid">{{e('comment')}}</mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+        </mat-grid-list>
+
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Доверенное лицо
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div formGroupName="powerOfAttorney">
+              <mat-grid-list cols="3" gutterSize="30" rowHeight="4em">
+
+                <mat-grid-tile>
+                  <mat-form-field class="fullwidth">
+                    <input matInput formControlName="number" placeholder="Номер доверенности" tabindex="11"/>
+                    <mat-error *ngIf="f('powerOfAttorney.number').invalid">
+                      {{e('powerOfAttorney.number')}}
+                    </mat-error>
+                  </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                  <mat-form-field class="fullwidth">
+                    <input matInput [matDatepicker]="pickerBeginDate" formControlName="beginDate"
+                           placeholder="Дата начала действия" tabindex="12"/>
+                    <mat-datepicker-toggle matSuffix [for]="pickerBeginDate"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerBeginDate></mat-datepicker>
+                    <mat-error *ngIf="f('powerOfAttorney.beginDate').invalid">
+                      {{e('powerOfAttorney.beginDate')}}
+                    </mat-error>
+                  </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                  <mat-form-field class="fullwidth">
+                    <input matInput [matDatepicker]="pickerEndDate" formControlName="endDate"
+                           placeholder="Дата окончания действия" tabindex="13"/>
+                    <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerEndDate></mat-datepicker>
+                    <mat-error *ngIf="f('powerOfAttorney.endDate').invalid">
+                      {{e('powerOfAttorney.endDate')}}
+                    </mat-error>
+                  </mat-form-field>
+                </mat-grid-tile>
+
+              </mat-grid-list>
+
+              <div formGroupName="confidant">
+                <mat-grid-list cols="2" gutterSize="30" rowHeight="4em">
+
+                  <mat-grid-tile>
+                    <mat-form-field class="fullwidth">
+                      <span matPrefix>+7 &nbsp;</span>
+                      <input matInput formControlName="phone" placeholder="Телефон" tabindex="14"
+                             (blur)="poaPhoneBlur()" (keyup)="poaPhoneKeyup()"/>
+                      <mat-error *ngIf="f('powerOfAttorney.confidant.phone').invalid">
+                        {{e('powerOfAttorney.confidant.phone')}}
+                      </mat-error>
+                    </mat-form-field>
+                  </mat-grid-tile>
+
+                  <mat-grid-tile>
+                    <mat-form-field class="fullwidth">
+                      <input matInput formControlName="lastName" placeholder="Фамилия" tabindex="15"/>
+                      <mat-error *ngIf="f('powerOfAttorney.confidant.lastName').invalid">
+                        {{e('powerOfAttorney.confidant.lastName')}}
+                      </mat-error>
+                    </mat-form-field>
+                  </mat-grid-tile>
+
+                  <mat-grid-tile>
+                    <mat-form-field class="fullwidth">
+                      <input matInput formControlName="email" placeholder="Эл. почта" tabindex="16"/>
+                      <mat-error *ngIf="f('powerOfAttorney.confidant.email').invalid">
+                        {{e('powerOfAttorney.confidant.email')}}
+                      </mat-error>
+                    </mat-form-field>
+                  </mat-grid-tile>
+
+                  <mat-grid-tile>
+                    <mat-form-field class="fullwidth">
+                      <input matInput formControlName="firstName" placeholder="Имя" tabindex="17"/>
+                      <mat-error *ngIf="f('powerOfAttorney.confidant.firstName').invalid">
+                        {{e('powerOfAttorney.confidant.firstName')}}
+                      </mat-error>
+                    </mat-form-field>
+                  </mat-grid-tile>
+
+                  <mat-grid-tile></mat-grid-tile>
+
+                  <mat-grid-tile>
+                    <mat-form-field class="fullwidth">
+                      <input matInput formControlName="secondName" placeholder="Отчество" tabindex="18"/>
+                      <mat-error *ngIf="f('powerOfAttorney.confidant.secondName').invalid">
+                        {{e('powerOfAttorney.confidant.secondName')}}
+                      </mat-error>
+                    </mat-form-field>
+                  </mat-grid-tile>
+
+                </mat-grid-list>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <br>
+
+        <div style="text-align: right">
+          <a mat-raised-button routerLink="/apartment/{{apartmentId}}">Вернуться</a>
+          <button mat-raised-button
+                  type="submit" #sbmt
+                  tabindex="20"
+                  [disabled]="holderForm.pristine || holderForm.status == 'INVALID'"
+
+          >
+            <mat-icon *ngIf="savingForm" class="spinner">autorenew</mat-icon>
+            {{(btnTitle)}}
+          </button>
+        </div>
+      </form>
+    </section>
+  </mat-card-content>
+</mat-card>

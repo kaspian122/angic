@@ -86,11 +86,10 @@ export class ApartmentListComponent implements OnInit {
   }
 
   private downloadFile(data){
-
     let contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
     let blob = new Blob([data], { type: contentType });
-    var url= window.URL.createObjectURL(blob);
+    let url= window.URL.createObjectURL(blob);
     const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
 
     a.href = url;
@@ -103,21 +102,21 @@ export class ApartmentListComponent implements OnInit {
   }
 
 
-  private getApartmentsList(mkd){
+  private getApartmentsList(mkd) {
     this.apartmentService.getApartmentsList(mkd.mkdId).subscribe(
-        apartmentsList => {
-          let totalAreaIn = 0;
-          for (let apartment of apartmentsList.apartments){
-            totalAreaIn += apartment.area;
-           };
-          this.commonInfo = {
-            totalAreaIn: totalAreaIn,
-            mkd: apartmentsList.mkd,
-            totalAreaPercentageIn: parseFloat((totalAreaIn * 100 / apartmentsList.mkd.area).toFixed(2))
-          }
-          this.dataSource = new MatTableDataSource(apartmentsList.apartments);
-
+      apartmentsList => {
+        let totalAreaIn = 0;
+        for (let apartment of apartmentsList.apartments) {
+          totalAreaIn += apartment.area;
         }
+        this.commonInfo = {
+          totalAreaIn: totalAreaIn,
+          mkd: apartmentsList.mkd,
+          totalAreaPercentageIn: parseFloat((totalAreaIn * 100 / apartmentsList.mkd.area).toFixed(2))
+        };
+        this.dataSource = new MatTableDataSource(apartmentsList.apartments);
+
+      }
     );
   }
 

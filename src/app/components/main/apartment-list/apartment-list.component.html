@@ -2,7 +2,7 @@
   <mat-card-content>
 
     <mat-card-title>
-      Реестр собственников
+      Квартиры
       <mat-divider></mat-divider>
     </mat-card-title>
 
@@ -80,8 +80,8 @@
 
     <br>
 
-    <a routerLink="/admin/chairman" mat-raised-button  routerLink="/apartment">Добавить</a>
-    <a routerLink="/admin/chairman" mat-raised-button (click)="openDeleteDialog()">Удалить</a>
-    <a routerLink="/admin/chairman" mat-raised-button (click)="loadToExcel()">Выгрузить в excel</a>
+    <a mat-raised-button  routerLink="/apartment">Добавить</a>
+    <a mat-raised-button (click)="openDeleteDialog()">Удалить</a>
+    <a mat-raised-button (click)="loadToExcel()">Реестр собственников</a>
   </mat-card-content>
 </mat-card>
