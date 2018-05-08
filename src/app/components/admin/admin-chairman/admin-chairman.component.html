@@ -36,14 +36,14 @@
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="floorCount" placeholder="Кол-во этажей" tabindex="4"/>
+                <input matInput formControlName="floorCount" maxlength="2" placeholder="Кол-во этажей" tabindex="4"/>
                 <mat-error *ngIf="f('mkd.floorCount').invalid">{{e('mkd.floorCount')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="porchCount" placeholder="Кол-во подъездов" tabindex="5"/>
+                <input matInput formControlName="porchCount" maxlength="2" placeholder="Кол-во подъездов" tabindex="5"/>
                 <mat-error *ngIf="f('mkd.porchCount').invalid">{{e('mkd.porchCount')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
@@ -65,7 +65,8 @@
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="phone" placeholder="Телефон" tabindex="7" (blur)="phoneBlur()" (keyup)="phoneKeyup()" />
+                <span matPrefix>+7 &nbsp;</span>
+                <input matInput formControlName="phone" type="tel" placeholder="Телефон" tabindex="7" (blur)="phoneBlur()" (keyup)="phoneKeyup()"/>
                 <mat-error *ngIf="f('user.phone').invalid">{{e('user.phone')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
@@ -110,7 +111,7 @@
 
           >
             <mat-icon *ngIf="loader" class="spinner">autorenew</mat-icon>
-            Сохранить
+            Создать
           </button>
         </div>
         <!--<a mat-raised-button (click)="log()">Test</a>-->

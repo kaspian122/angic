@@ -1,21 +1,24 @@
 .address {
-  flex: 0 0 25%;
+  flex: 0 0 20%;
 }
 .administrationType {
-  flex: 0 0 15%;
+  flex: 0 0 11%;
 }
 .apartmentCount {
-  flex: 0 0 10%;
+  flex: 0 0 12%;
 }
 .area {
   flex: 0 0 10%;
 }
 .chairmanId {
-  flex: 0 0 20%;
+  flex: 0 0 13%;
 }
 .floorCount {
-  flex: 0 0 10%;
+  flex: 0 0 12%;
 }
 .porchCount {
+  flex: 0 0 12%;
+}
+.loadDate {
   flex: 0 0 10%;
 }

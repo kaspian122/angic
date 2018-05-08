@@ -51,7 +51,8 @@ export class AdminChairmanComponent implements OnInit {
   e(name) {
     let e = this.f(name).errors;
     if(e.required) return "Необходимо указать";
-    if(e.email) return "Невалидный email адрес";
+    if(e.email) return "Некорректный адрес эл. почты";
+    if(e.pattern) return "Некорректные символы";
     if(e.server) return e.server;
   }
 
@@ -88,16 +89,16 @@ export class AdminChairmanComponent implements OnInit {
     return this.fb.group({
       address: ['', Validators.required],
       administrationType: ['', Validators.required],
-      apartmentCount: ['', Validators.required],
+      apartmentCount: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       area: ['', Validators.required],
-      floorCount: ['', Validators.required],
-      porchCount: ['', Validators.required],
+      floorCount: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      porchCount: ['', [Validators.required, Validators.pattern('[0-9]*')]],
     });
   }
 
   initUser() {
     return this.fb.group({
-      phone: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       email: ['', [Validators.required, Validators.email]],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],

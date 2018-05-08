@@ -46,6 +46,11 @@
         <mat-cell *matCellDef="let element" [ngClass]="'porchCount'"> {{element.porchCount}}</mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="loadDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'loadDate'"> Дата создания</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'loadDate'"> {{element.loadDate | date:'dd.MM.yyyy'}}</mat-cell>
+      </ng-container>
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>

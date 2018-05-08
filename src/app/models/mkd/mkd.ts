@@ -7,4 +7,5 @@ export interface Mkd {
   chairmanId: string;
   floorCount: number;
   porchCount: number;
+  loadDate: string;
 }
