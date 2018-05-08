@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {AuthService} from "../../services/auth/auth.service";
 import {Auth} from "../../services/auth/auth";
 import {LoginFailedError} from "../../services/auth/login.failed.error";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -15,9 +15,12 @@ export class LoginComponent implements OnInit {
   public auth?: Auth = null;
   public errorMessage?: string = null;
 
+  public returnUrl = null;
+
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -25,6 +28,7 @@ export class LoginComponent implements OnInit {
     this.authService.getAuth()
       .then(it => {
         this.auth = it;
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || null;
       });
   }
 
@@ -34,10 +38,14 @@ export class LoginComponent implements OnInit {
       .then(
         it => {
           this.auth = it;
-          if(this.authService.hasRole('ROLE_ADMIN')){
-            this.router.navigate(['/admin']);
+          if (this.returnUrl) {
+            this.router.navigate([this.returnUrl]);
           } else {
-            this.router.navigate(['/']);
+            if(this.authService.hasRole('ROLE_ADMIN')){
+              this.router.navigate(['/admin']);
+            } else {
+              this.router.navigate(['/']);
+            }
           }
 
         },

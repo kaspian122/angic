@@ -24,7 +24,6 @@ export class QuestionaryCreateComponent implements OnInit {
     console.log('init');
     this.mkdService.currentMkd.subscribe(
       mkd => {
-        console.log('got current mkd');
         this.currentMkd = mkd;
         this.initForm();
       }
@@ -32,13 +31,11 @@ export class QuestionaryCreateComponent implements OnInit {
   }
 
   initForm() {
-    console.log('init form');
     this.form = this.fb.group({
       mkdId: [this.currentMkd.mkdId],
       name: ['', Validators.required],
       questions: this.fb.array([]),
     });
-    console.log('init form end');
   }
 
   get questions() {
@@ -47,7 +44,6 @@ export class QuestionaryCreateComponent implements OnInit {
 
   options(i: number) {
     let c = this.questions.at(i).get('options') as FormArray;
-    console.log(c);
     return c;
   }
 
@@ -57,13 +53,7 @@ export class QuestionaryCreateComponent implements OnInit {
       required:    [false, Validators.required],
       name:        ['', Validators.required],
       type:        ['Single', Validators.required],
-      options:     this.fb.array([
-        this.fb.group({option: '1111'}),
-        this.fb.group({option: '2222'}),
-        this.fb.group({option: '3333'}),
-        this.fb.group({option: ''}),
-        this.fb.group({option: ''})
-      ])
+      options:     this.fb.array([])
     }));
   }
 
@@ -72,10 +62,14 @@ export class QuestionaryCreateComponent implements OnInit {
   }
 
   addOption(questionNum: number) {
-    let options = this.questions[questionNum].get('options') as FormArray;
+    let options = this.questions.at(questionNum).get('options') as FormArray;
     options.push(this.fb.group({
-      option: ['']
+      option: ['', Validators.required]
     }));
+  }
+
+  deleteOption(q: number, o: number) {
+    this.options(q).removeAt(o);
   }
 
   f(name) {
