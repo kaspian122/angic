@@ -35,4 +35,11 @@ export abstract class SelectionComponent<T> {
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
+  /**
+   * Обновляет таблицу(переопределить для обновления dataSource при наследовании прям от SelectionComponent)
+   */
+  protected updateTable(): void {
+    this.selection.clear();
+  }
+
 }

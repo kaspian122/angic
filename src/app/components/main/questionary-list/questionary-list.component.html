@@ -27,8 +27,8 @@
 
     <mat-table #table [dataSource]="dataSource" matSort>
 
-      <ng-container matColumnDef="select" [ngClass]="'select'">
-        <mat-header-cell *matHeaderCellDef>
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'select'">
           <mat-checkbox (change)="$event ? masterToggle() : null"
                         [checked]="selection.hasValue() && isAllSelected()"
                         [indeterminate]="selection.hasValue() && !isAllSelected()">

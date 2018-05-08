@@ -66,6 +66,8 @@
 
   <br>
 
-  <a mat-raised-button routerLink="/apartment/{{apartmentId}}/holder">Добавить</a>
-  <a mat-raised-button (click)="openDeleteDialog()">Удалить</a>
+  <mat-card-actions>
+    <a mat-raised-button routerLink="/apartment/{{apartmentId}}/holder">Добавить</a>
+    <a mat-raised-button (click)="openDeleteDialog()">Удалить</a>
+  </mat-card-actions>
 </mat-card-content>

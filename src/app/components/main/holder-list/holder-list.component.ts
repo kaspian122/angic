@@ -1,20 +1,17 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MatTableDataSource} from '@angular/material';
-import {HoldersList, MkdHoldersList} from "../../../models/holder/mkd-holders-list";
 import {MatDialog} from '@angular/material';
 import {DeleteDialogComponent} from "../../delete-dialog/delete-dialog.component";
 import {HolderService} from '../../../services/holder/holder.service';
-import {MkdService} from '../../../services/mkd/mkd.service';
-import {TableComponent} from "../../../classes/table-component";
-import {Observable} from "rxjs/Observable";
-import {PaginationInfo} from "../../../models/pagination-info";
+import {SelectionComponent} from "../../../classes/selection-component";
+import {Holder} from "../../../models/holder/holder";
 
 @Component({
   selector: 'app-holder-list',
   templateUrl: './holder-list.component.html',
   styleUrls: ['./holder-list.component.css']
 })
-export class HolderListComponent extends TableComponent<HoldersList> implements OnInit {
+export class HolderListComponent extends SelectionComponent<Holder> implements OnInit {
+
     public displayedColumns = [
       'select', 'holderName', 'certificateNumber', 'certificateDate', 'shareAmount', 'areaMeters', 'percent'
     ];
@@ -23,21 +20,14 @@ export class HolderListComponent extends TableComponent<HoldersList> implements 
 
     constructor(
         private dataService: HolderService,
-        private mkdService: MkdService,
         private dialog: MatDialog
     ) {
       super();
     }
 
     ngOnInit() {
+      this.updateTable();
     }
-
-  refreshAfterInit() {
-    this.mkdService.currentMkd.subscribe(mkd => {
-      this.currentMkd = mkd;
-      this.refreshTable();
-    });
-  }
 
     openDeleteDialog(): void{
         let dialogRef = this.dialog.open(DeleteDialogComponent, {
@@ -51,7 +41,7 @@ export class HolderListComponent extends TableComponent<HoldersList> implements 
                 if(holderIds.length > 0) {
                     this.dataService.deleteHolders(holderIds).subscribe(
                         () => {
-                            this.refreshTable();
+                            this.updateTable();
                         }
                     );
                 }
@@ -59,11 +49,11 @@ export class HolderListComponent extends TableComponent<HoldersList> implements 
         });
     }
 
-    private getHoldersList(){
+    updateTable(): void {
+        super.updateTable();
         this.dataService.getHoldersByApartment(this.apartmentId).subscribe(
-            holdersList => {
-                this.dataSource = new MatTableDataSource(holdersList);
-            }
+            dataList => this.dataSource.data = dataList
         );
     }
+
 }

@@ -5,6 +5,7 @@ import {PaginationInfo} from "../models/pagination-info";
 import {SelectionComponent} from "./selection-component";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 import {Subject} from "rxjs/Subject";
+import {of} from "rxjs/observable/of";
 
 /**
  * Общий функционал для компонент с таблицами (пагинация, сортировка, фильтрация)
@@ -20,7 +21,7 @@ export abstract class TableComponent<T> extends SelectionComponent<T> implements
   protected dataCollection: ReplaySubject<T[]> = new ReplaySubject<T[]>();
 
   // Пагинация
-  protected totalLength: number = 20;
+  protected totalLength: number = 0;
   protected selectedPageSize: number = 10;
   protected pageSizeOptions = [5, 10, 25, 100];
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -44,9 +45,11 @@ export abstract class TableComponent<T> extends SelectionComponent<T> implements
     this.sort.sortChange.subscribe(() => {
       this.refreshTable();
     });
-    this.searchTerms.subscribe(term => {
-      debounceTime(500);
-      distinctUntilChanged();
+    this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(term => of(term))
+    ).subscribe(term => {
       this.actualSearchTerm = term;
       this.refreshTable();
     });
@@ -84,13 +87,13 @@ export abstract class TableComponent<T> extends SelectionComponent<T> implements
   /**
    * Обновляет таблицу
    */
-  private updateTable(): void {
-    this.selection.clear();
+  protected updateTable(): void {
+    super.updateTable();
     let pageIndex = this.paginator.pageIndex;
     let pageSize = this.paginator.pageSize;
 
     let from = pageIndex * pageSize;
-    let to = pageIndex * pageSize + pageSize;
+    let to = (pageIndex * pageSize + pageSize) - 1;
 
     let sortField = this.sort.active;
     let sortType = this.sort.direction;
