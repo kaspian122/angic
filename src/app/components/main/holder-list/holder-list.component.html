@@ -2,7 +2,7 @@
   <mat-card-content>
 
     <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Поиск">
+      <input matInput #inputField (keyup)="applyFilter(inputField.value)" placeholder="Поиск">
     </mat-form-field>
 
     <!--<mat-card-title>Реестр собственников</mat-card-title>-->

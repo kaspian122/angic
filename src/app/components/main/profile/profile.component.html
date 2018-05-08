@@ -37,8 +37,7 @@
             <mat-grid-tile>
               <div>
                 Пожалуйста, примите участие в опросе
-                "{{mkdInfo.questionary.name}}":
-                http://onlinemkd.ru/anketa/3/Id={{mkdInfo.questionary.id}}
+                <a routerLink="/questionary/{{mkdInfo.questionary.id}}">"{{mkdInfo.questionary.name}}"</a>
               </div>
             </mat-grid-tile>
 

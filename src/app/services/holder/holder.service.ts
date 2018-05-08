@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {AppConfig} from '../../app.config';
 import {AuthService} from '../auth/auth.service';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {MkdHoldersList} from '../../models/holder/mkd-holders-list';
 import {Observable} from 'rxjs/Observable';
 import {PaginationInfo} from "../../models/pagination-info";
@@ -20,10 +20,14 @@ export class HolderService {
 
   public getHoldersList(mkdId: string, paginationInfo: PaginationInfo): Observable<[MkdHoldersList, number]> {
     let result = new ReplaySubject<[MkdHoldersList, number]>();
-    let headers = this.paginationService.setPagination(this.authService.headers(), paginationInfo);
+    let headers = this.authService.headers();
+    headers = this.paginationService.setHeaderValues(headers, paginationInfo);
+
+    let params = new HttpParams();
+    params = this.paginationService.setRequestParams(params, paginationInfo);
 
     this.http.get<MkdHoldersList>(
-      this.config.getEndpoint("mkd/" + mkdId + "/holders"), {headers: headers, observe: 'response'}
+      this.config.getEndpoint("mkd/" + mkdId + "/holders"), {params: params, headers: headers, observe: 'response'}
     ).subscribe(resp => {
       let total = this.paginationService.getTotal(resp.headers);
       let data = resp.body;

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AppConfig} from '../../app.config';
 import {AuthService} from '../auth/auth.service';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {QuestionaryActivity} from '../../models/questionary/questionary-activity';
 import {QuestionaryInfo} from '../../models/questionary/questionary-info';
 import {Observable} from 'rxjs/Observable';
@@ -38,10 +38,15 @@ export class QuestionaryService {
 
   public getQuestionariesList(mkdId: string, showArchived: boolean, paginationInfo: PaginationInfo): Observable<[QuestionarySummary[], number]> {
     let result = new ReplaySubject<[QuestionarySummary[], number]>();
-    let headers = this.paginationService.setPagination(this.authService.headers(), paginationInfo);
+
+    let headers = this.authService.headers();
+    headers = this.paginationService.setHeaderValues(headers, paginationInfo);
+
+    let params = new HttpParams().set('archived', showArchived ? '1' : '0');
+    params = this.paginationService.setRequestParams(params, paginationInfo);
 
     this.http.get<QuestionarySummary[]>(
-      this.config.getEndpoint(`mkd/${mkdId}/questionaries`), {params: {archived: showArchived ? "1" : "0"}, headers: headers, observe: 'response'}
+      this.config.getEndpoint(`mkd/${mkdId}/questionaries`), {params: params, headers: headers, observe: 'response'}
     ).subscribe(resp => {
       let total = this.paginationService.getTotal(resp.headers);
       let data = resp.body;

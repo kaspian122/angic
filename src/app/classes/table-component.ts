@@ -44,14 +44,12 @@ export abstract class TableComponent<T> extends SelectionComponent<T> implements
     this.sort.sortChange.subscribe(() => {
       this.refreshTable();
     });
-    this.searchTerms.pipe(
-      debounceTime(500),
-      distinctUntilChanged(),
-      switchMap((term: string) => {
-        this.actualSearchTerm = term;
-        this.refreshTable();
-      })
-    );
+    this.searchTerms.subscribe(term => {
+      debounceTime(500);
+      distinctUntilChanged();
+      this.actualSearchTerm = term;
+      this.refreshTable();
+    });
   }
 
   /**
@@ -93,7 +91,6 @@ export abstract class TableComponent<T> extends SelectionComponent<T> implements
 
     let from = pageIndex * pageSize;
     let to = pageIndex * pageSize + pageSize;
-    to = to > this.totalLength ? this.totalLength - 1 : to - 1;
 
     let sortField = this.sort.active;
     let sortType = this.sort.direction;
