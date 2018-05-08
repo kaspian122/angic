@@ -82,11 +82,10 @@ export class ApartmentListComponent extends TableComponent<Apartment> implements
   }
 
   private downloadFile(data){
-
     let contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
     let blob = new Blob([data], { type: contentType });
-    var url= window.URL.createObjectURL(blob);
+    let url= window.URL.createObjectURL(blob);
     const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
 
     a.href = url;

@@ -38,7 +38,7 @@ import { NewsComponent } from './components/main/news/news.component';
 import { HolderListComponent } from './components/main/holder-list/holder-list.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
-import { MatDialogModule, MatPaginatorModule, MatPaginatorIntl } from '@angular/material';
+import {MAT_DATE_LOCALE, MatDialogModule, MatNativeDateModule, MatPaginatorModule, MatPaginatorIntl} from '@angular/material';
 import { ApartmentListComponent } from './components/main/apartment-list/apartment-list.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { QuestionaryComponent } from './components/main/questionary/questionary.component';
@@ -55,6 +55,10 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SimpleDialogComponent } from './components/simple-dialog/simple-dialog.component';
 import { QuestionaryListComponent } from './components/main/questionary-list/questionary-list.component';
 import { RegisterComponent } from './components/register/register.component';
+import { HolderComponent } from './components/main/holder/holder.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { QuestionaryCreateComponent } from './components/main/questionary-create/questionary-create.component';
 import { MatPaginatorIntlRu } from "./classes/mat-paginator-intl-ru";
 import {PaginationService} from "./services/pagination/pagination.service";
 
@@ -82,7 +86,9 @@ import {PaginationService} from "./services/pagination/pagination.service";
     QuestionaryResultComponent,
     ApartmentComponent,
     QuestionaryListComponent,
-    SimpleDialogComponent
+    HolderComponent,
+    SimpleDialogComponent,
+    QuestionaryCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -110,13 +116,19 @@ import {PaginationService} from "./services/pagination/pagination.service";
     MatCheckboxModule,
     MatDialogModule,
     MatTabsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatExpansionModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpAuthInterceptor,
       multi: true
+    },
+    {
+      provide: MAT_DATE_LOCALE, useValue: 'ru-Ru'
     },
     {
       provide: MatPaginatorIntl,

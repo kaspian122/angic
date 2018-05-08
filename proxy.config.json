@@ -1,5 +1,5 @@
 {   "/api": {
-      "target": "http://mkd-portal.sibir.local/api",
+      "target": "http://localhost:8080/",
       "pathRewrite": {"^/api" : ""},
       "secure": false
      }

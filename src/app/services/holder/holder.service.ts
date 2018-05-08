@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import {AppConfig} from '../../app.config';
 import {AuthService} from '../auth/auth.service';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {MkdHoldersList} from '../../models/holder/mkd-holders-list';
 import {Observable} from 'rxjs/Observable';
+import {Holder} from '../../models/holder/holder';
+import {Apartment} from '../../models/apartment/apartment';
 import {PaginationInfo} from "../../models/pagination-info";
 import {PaginationService} from "../pagination/pagination.service";
 import {ReplaySubject} from "rxjs/ReplaySubject";
@@ -18,22 +19,20 @@ export class HolderService {
     private paginationService: PaginationService
   ) { }
 
-  public getHoldersList(mkdId: string, paginationInfo: PaginationInfo): Observable<[MkdHoldersList, number]> {
-    let result = new ReplaySubject<[MkdHoldersList, number]>();
-    let headers = this.authService.headers();
-    headers = this.paginationService.setHeaderValues(headers, paginationInfo);
+  public getHoldersByApartment(apartmentId: string): Observable<Holder[]>{
+    return this.http.get<Holder[]>(this.config.getEndpoint(`apartment/${apartmentId}/holders`), {headers: this.authService.headers()});
+  }
 
-    let params = new HttpParams();
-    params = this.paginationService.setRequestParams(params, paginationInfo);
+  public getHolderInfo(holderId: string): Observable<Holder>{
+    return this.http.get<Holder>(this.config.getEndpoint(`holder/${holderId}`), {headers: this.authService.headers()});
+  }
 
-    this.http.get<MkdHoldersList>(
-      this.config.getEndpoint("mkd/" + mkdId + "/holders"), {params: params, headers: headers, observe: 'response'}
-    ).subscribe(resp => {
-      let total = this.paginationService.getTotal(resp.headers);
-      let data = resp.body;
-      result.next([data, total]);
-    });
-    return result;
+  public createHolder(holder: Holder): Observable<any> {
+    return this.http.post(this.config.getEndpoint('holder/'), holder, {headers: this.authService.headers()});
+  }
+
+  public updateHolder(holder: Holder): Observable<any> {
+    return this.http.put(this.config.getEndpoint('holder/'), holder, {headers: this.authService.headers()});
   }
 
   public deleteHolders(holderIds: string[]){
