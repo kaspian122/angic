@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {QuestionaryInfo} from '../../../models/questionary/questionary-info';
 import {ActivatedRoute} from "@angular/router";
 import {QuestionaryRights} from "../../../models/questionary/questionary-rights";
 import {Observable} from "rxjs/Observable";

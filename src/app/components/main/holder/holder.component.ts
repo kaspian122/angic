@@ -224,8 +224,8 @@ export class HolderComponent implements OnInit {
         comment: ['', ''],
         councilman: [false, ''],
         chairman: [false, ''],
-        participationMeeting: [false, ''],
-        receiveNewsByEmail: [false, ''],
+        participationMeeting: [true, ''],
+        receiveNewsByEmail: [true, ''],
         legalPerson: ['', ''],
         'portalUser': this.initUser(null),
         'powerOfAttorney': this.initPowerOfAttorney(null)
