@@ -1,5 +1,3 @@
-import {SimpleObject} from '../simple-object';
-
 /**
  * Сводная информация по ОСС для таблицы
  */
@@ -43,6 +41,11 @@ export interface SimpleMeetingInfo {
    * Дата окончания
    */
   endDate: string;
+
+  /**
+   * Инициатор
+   */
+  initiator: string,
 
   /**
    * Коммент админа

@@ -69,6 +69,7 @@ import { MeetingNotParticipationComponent } from './components/main/meeting/meet
 import { MeetingInfoComponent } from './components/main/meeting/meeting-info/meeting-info.component';
 import {MeetingService} from './services/meeting/meeting.service';
 import {MatChipsModule} from '@angular/material/chips';
+import { MeetingListComponent } from './components/main/meeting-list/meeting-list.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MeetingResultComponent,
     MeetingVoteComponent,
     MeetingNotParticipationComponent,
-    MeetingInfoComponent
+    MeetingInfoComponent,
+    MeetingListComponent
   ],
   imports: [
     BrowserModule,

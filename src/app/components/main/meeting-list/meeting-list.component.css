@@ -1,20 +1,26 @@
+.mat-column-select {
+  overflow: visible;
+}
 .select {
   flex: 0 0 5%;
 }
-.name {
-  flex: 0 0 40%;
-}
 .state {
-  flex: 0 0 20%;
-}
-.response-count {
   flex: 0 0 15%;
 }
-.date {
+.kind {
+  flex: 0 0 15%;
+}
+.initiator {
   flex: 0 0 20%;
 }
-.mat-column-select {
-  overflow: visible;
+.beginDate {
+  flex: 0 0 15%;
+}
+.endDate {
+  flex: 0 0 15%;
+}
+.loadDate {
+  flex: 0 0 15%;
 }
 .tile-left {
   float: left;
