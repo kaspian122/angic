@@ -1,23 +1,41 @@
 <mat-sidenav-container class="example-sidenav-container">
   <mat-sidenav #snav [opened]="true" [mode]="'side'" [fixedInViewport]="false" fixedTopGap="56">
     <mat-nav-list>
-      <a mat-list-item routerLink="/" routerLinkActive="active"><mat-icon>account_circle</mat-icon>Новости</a>
-      <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/apartments-list" routerLinkActive="active" *ngIf="hasPrivileges"><mat-icon>list</mat-icon>Квартиры</a>
-      <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/questionary-list" routerLinkActive="active"><mat-icon>whatshot</mat-icon>Опросы</a>
-      <mat-divider></mat-divider>
-      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>content_paste</mat-icon>План работ</a>
-      <mat-divider></mat-divider>
-      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>account_balance</mat-icon>Бюджет дома</a>
-      <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/meeting/meeting1" routerLinkActive="active"><mat-icon>group</mat-icon>Общее собрание</a>
-      <mat-divider></mat-divider>
-      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>checkbox</mat-icon>Заявки</a>
-      <mat-divider></mat-divider>
-      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>attachment</mat-icon>Номенклатура</a>
-      <mat-divider></mat-divider>
-      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>forum</mat-icon>Объявления</a>
+      <a mat-list-item routerLink="/" routerLinkActive="active"><mat-icon>account_circle</mat-icon>
+        Новости
+        <mat-divider></mat-divider>
+      </a>
+      <a mat-list-item routerLink="/apartments-list" routerLinkActive="active" *ngIf="hasPrivileges"><mat-icon>list</mat-icon>
+        Квартиры
+        <mat-divider></mat-divider>
+      </a>
+      <a mat-list-item routerLink="/questionary-list" routerLinkActive="active"><mat-icon>whatshot</mat-icon>
+        Опросы
+        <mat-divider></mat-divider>
+      </a>
+      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>content_paste</mat-icon>
+        План работ
+        <mat-divider></mat-divider>
+      </a>
+      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>account_balance</mat-icon>
+        Бюджет дома
+        <mat-divider></mat-divider>
+      </a>
+      <a mat-list-item routerLink="/meeting/meeting1" routerLinkActive="active"><mat-icon>group</mat-icon>
+        Общее собрание
+        <mat-divider></mat-divider>
+      </a>
+      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>checkbox</mat-icon>
+        Заявки
+        <mat-divider></mat-divider>
+      </a>
+      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>attachment</mat-icon>
+        Номенклатура
+        <mat-divider></mat-divider>
+      </a>
+      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>forum</mat-icon>
+        Объявления
+      </a>
     </mat-nav-list>
   </mat-sidenav>
 
