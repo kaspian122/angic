@@ -70,4 +70,8 @@ export class MeetingService {
     return this.http.put(this.config.getEndpoint('meeting/state/correct'), meeting, {headers: this.authService.headers()});
   }
 
+  public getMeetingEnums(): Observable<any> {
+    return this.http.get(this.config.getEndpoint('meeting/enums'), {headers: this.authService.headers()});
+  }
+
 }
