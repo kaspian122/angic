@@ -16,6 +16,7 @@ import {ApartmentComponent} from './components/main/apartment/apartment.componen
 import {RegisterComponent} from "./components/register/register.component";
 import {HolderComponent} from './components/main/holder/holder.component';
 import {QuestionaryCreateComponent} from "./components/main/questionary-create/questionary-create.component";
+import {MeetingComponent} from './components/main/meeting/meeting.component';
 
 
 const routes: Routes = [
@@ -63,6 +64,10 @@ const routes: Routes = [
           {
             path: 'questionary-create',
             component: QuestionaryCreateComponent,
+          },
+          {
+            path: 'meeting/:id',
+            component: MeetingComponent,
           }
         ]
       },
