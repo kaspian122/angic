@@ -5,7 +5,7 @@ export interface QuestionaryCreate {
   /**
    * ID анкеты
    */
-  id: string,
+  id?: string,
 
   /**
    * MKD Id

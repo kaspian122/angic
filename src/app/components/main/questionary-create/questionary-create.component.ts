@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MkdService} from "../../../services/mkd/mkd.service";
 import {MkdOwnersInfo} from "../../../services/auth/auth";
+import {QuestionaryCreate} from "../../../models/questionary/questionary-create";
+import {QuestionEdit} from "../../../models/questionary/question/question-edit";
+import {QuestionaryService} from "../../../services/questionary/questionary.service";
+import {QuestionaryInfo} from "../../../models/questionary/questionary-info";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-questionary-create',
@@ -17,7 +22,9 @@ export class QuestionaryCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private mkdService: MkdService
+    private mkdService: MkdService,
+    private questionaryService: QuestionaryService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -35,6 +42,7 @@ export class QuestionaryCreateComponent implements OnInit {
       mkdId: [this.currentMkd.mkdId],
       name: ['', Validators.required],
       questions: this.fb.array([]),
+      sendMail: [false, Validators.required]
     });
   }
 
@@ -43,8 +51,7 @@ export class QuestionaryCreateComponent implements OnInit {
   }
 
   options(i: number) {
-    let c = this.questions.at(i).get('options') as FormArray;
-    return c;
+    return this.questions.at(i).get('options') as FormArray;
   }
 
   addQuestion() {
@@ -70,6 +77,45 @@ export class QuestionaryCreateComponent implements OnInit {
 
   deleteOption(q: number, o: number) {
     this.options(q).removeAt(o);
+  }
+
+  onSubmit() {
+    const saveForm: QuestionaryCreate = this.prepareSaveForm();
+    this.questionaryService.createQuestionary(saveForm).subscribe(
+      (info: QuestionaryInfo) => {
+        this.router.navigate(['/questionary-list']);
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
+  }
+
+  prepareSaveForm(): QuestionaryCreate {
+    const form = this.form.value;
+    return {
+      name: form.name,
+      sendMail: form.sendMail,
+      mkdId: form.mkdId,
+      questions: form.questions.map(q=>this.prepareQuestion(q)) as QuestionEdit[]
+    } as QuestionaryCreate;
+  }
+
+  prepareQuestion(q: any): QuestionEdit {
+    return {
+      name: q.name,
+      countQuorum: q.countQuorum,
+      required: q.required,
+      type: q.type,
+      options: q.options.map(o=>o.option)
+    } as QuestionEdit;
+  }
+
+  fileSelect($event) {
+    const files: FileList = $event.srcElement.files;
+    Array.from(files).forEach(file => {
+
+    });
   }
 
   f(name) {

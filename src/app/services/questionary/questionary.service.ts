@@ -8,6 +8,7 @@ import {Observable} from 'rxjs/Observable';
 import {QuestionaryRights} from "../../models/questionary/questionary-rights";
 import {QuestionarySummary} from "../../models/questionary/questionary-summary";
 import {BatchExecutionResult} from "../../models/batch-execution-result";
+import {QuestionaryCreate} from "../../models/questionary/questionary-create";
 import {PaginationService} from "../pagination/pagination.service";
 import {PaginationInfo} from "../../models/pagination-info";
 import {ReplaySubject} from "rxjs/ReplaySubject";
@@ -62,6 +63,10 @@ export class QuestionaryService {
 
   public archiveQuestionaries(questionaryIds: string[]): Observable<BatchExecutionResult> {
     return this.http.put<BatchExecutionResult>(this.config.getEndpoint("questionary/archive"), questionaryIds, {headers: this.authService.headers()});
+  }
+
+  public createQuestionary(questionary: QuestionaryCreate) {
+    return this.http.post(this.config.getEndpoint("questionary"), questionary, {headers: this.authService.headers()});
   }
 
 }

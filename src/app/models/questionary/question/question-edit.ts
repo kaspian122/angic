@@ -3,7 +3,7 @@ export interface QuestionEdit {
   /**
    * ID
    */
-  id: string,
+  id?: string,
 
   /**
    * Название

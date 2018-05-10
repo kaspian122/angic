@@ -62,3 +62,7 @@ div.main {
     justify-content: flex-start !important;
 }
 
+a {
+    text-decoration: none;
+    color: #0e3f66;
+}
