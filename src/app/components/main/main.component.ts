@@ -28,13 +28,12 @@ export class MainComponent implements OnInit {
     this.authService.getAuth(true)
       .then(it => {
         this.auth = it;
-        if(this.auth.mkdOwners) {
+        if(this.auth.mkdOwners && this.auth.mkdOwners.length > 0) {
           let m = this.auth.mkdOwners[0];
           if (this.auth.mkdOwners.length > 1) {
             let m = this.auth.mkdOwners.find(e => e.byDefault == true);
           }
           this.hasPrivileges = this.authService.checkRole(['CHAIRMAN', 'SYSTEM_ADMIN', 'BOARD_MEMBER'], m.authorities);
-
         }
       });
     this.mkdService.currentMkd.subscribe(

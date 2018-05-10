@@ -6,7 +6,17 @@
       <mat-divider></mat-divider>
     </mat-card-title>
 
-    <mat-grid-list cols="2" rowHeight="8:1" *ngIf="commonInfo">
+    <mat-grid-list cols="4" rowHeight="8:1" *ngIf="commonInfo">
+      <mat-grid-tile>
+        <div class="mkd-info-holders-list">
+          Этажей: {{commonInfo.mkd.floorCount}}.
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="mkd-info-holders-list">
+          Подъездов: {{commonInfo.mkd.porchCount}}.
+        </div>
+      </mat-grid-tile>
       <mat-grid-tile>
         <div class="mkd-info-holders-list">
           Площадь МКД: {{commonInfo.mkd.area}} м.кв.

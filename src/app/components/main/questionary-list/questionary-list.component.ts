@@ -8,6 +8,7 @@ import {QuestionaryService} from "../../../services/questionary/questionary.serv
 import {MkdService} from "../../../services/mkd/mkd.service";
 import {TableComponent} from "../../../classes/table-component";
 import {PaginationInfo} from "../../../models/pagination-info";
+import {AuthService} from "../../../services/auth/auth.service";
 
 /**
  * Список анкет МКД
@@ -23,10 +24,12 @@ export class QuestionaryListComponent extends TableComponent<QuestionarySummary>
   displayedColumns = ['select', 'name', 'state', 'responseCount', 'date'];
 
   showArchived: boolean = false;
+  createAllowed: boolean = false;
 
   constructor(
     private dataService: QuestionaryService,
     private mkdService: MkdService,
+    private authService: AuthService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
@@ -37,6 +40,7 @@ export class QuestionaryListComponent extends TableComponent<QuestionarySummary>
 
   refreshAfterInit() {
     this.mkdService.currentMkd.subscribe(mkd => {
+      this.createAllowed = this.authService.checkRole(['CHAIRMAN', 'BOARD_MEMBER'], mkd.authorities);
       this.currentMkdId = mkd.mkdId;
       this.refreshTable();
     });

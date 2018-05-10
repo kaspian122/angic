@@ -22,10 +22,15 @@ export class HttpAuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).do(
-      () => {
-      },
+      () => {},
       event => {
         if ((event instanceof HttpErrorResponse) && !(this.router.routerState.snapshot.url || "").startsWith("/login")) {
+
+          if (event.url.endsWith("/logout")) {
+            window.location.replace('/login');
+            return;
+          }
+
           if (event.status === UNAUTHORIZED) {
             window.location.replace('/login');
           } else if (event.status === FORBIDDEN) {

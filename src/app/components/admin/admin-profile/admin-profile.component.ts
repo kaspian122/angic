@@ -11,7 +11,7 @@ import {PaginationInfo} from "../../../models/pagination-info";
 })
 export class AdminProfileComponent extends TableComponent<Mkd> implements OnInit {
 
-  public displayedColumns = ['address', 'administrationType', 'apartmentCount', 'area', 'chairmanId', 'floorCount', 'porchCount', 'loadDate'];
+  public displayedColumns = ['address', 'administrationType', 'apartmentCount', 'area', 'chairman', 'admin', 'floorCount', 'porchCount', 'loadDate'];
 
   constructor(
     private dataService: MkdService,
