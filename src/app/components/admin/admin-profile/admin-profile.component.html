@@ -14,42 +14,47 @@
             The actual rendered columns are set as a property on the row definition" -->
 
       <ng-container matColumnDef="address">
-        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'address'"> Адрес</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'address'">Адрес</mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="'address'"> {{element.address}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="administrationType">
-        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'administrationType'"> Тип</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'administrationType'">Тип</mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="'administrationType'"> {{element.administrationType?.name}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="apartmentCount">
-        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'apartmentCount'"> Количество квартир</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'apartmentCount'">Кол-во квартир</mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="'apartmentCount'"> {{element.apartmentCount}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="area">
-        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'area'"> Площадь</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'area'">Площадь</mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="'area'"> {{element.area}}</mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="chairmanId">
-        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'chairmanId'"> Председатель</mat-header-cell>
-        <mat-cell *matCellDef="let element" [ngClass]="'chairmanId'"> {{element.chairmanId}}</mat-cell>
+      <ng-container matColumnDef="chairman">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'chairman'">Председатель</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'chairman'"> {{element.chairman?.name}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="admin">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'admin'">Администратор</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'admin'"> {{element.admin.name}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="floorCount">
-        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'floorCount'"> Количество этажей</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'floorCount'">Кол-во этажей</mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="'floorCount'"> {{element.floorCount}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="porchCount">
-        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'porchCount'"> Количество подъездов</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'porchCount'">Кол-во подъездов</mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="'porchCount'"> {{element.porchCount}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="loadDate">
-        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'loadDate'"> Дата создания</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'loadDate'">Дата создания</mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="'loadDate'"> {{element.loadDate | date:'dd.MM.yyyy'}}</mat-cell>
       </ng-container>
 
