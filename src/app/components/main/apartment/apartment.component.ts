@@ -122,7 +122,8 @@ export class ApartmentComponent implements OnInit {
       this.apartmentService.createApartment(formDataApartment).subscribe(
         data => {
           this.savingForm = false;
-          this.openSnackBar('Квартира создана', '')
+          this.openSnackBar('Квартира создана', '');
+          this.router.navigate([`/apartment/${data.id}`]);
         },
         (err: HttpErrorResponse) => {
           ErrorHandler.handleFormError(err, this.apartmentForm);
