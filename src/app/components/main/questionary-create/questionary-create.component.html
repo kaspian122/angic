@@ -3,7 +3,6 @@
     <mat-divider></mat-divider>
     <mat-card-content>
 
-
         <section *ngIf="form">
 
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -12,15 +11,23 @@
                     <mat-grid-tile>
                         <mat-form-field class="fullwidth">
                             <input matInput formControlName="name" placeholder="Название анкеты"/>
-                            <!--<mat-error *ngIf="f('name').invalid">{{e('name')}}</mat-error>-->
+                            <mat-error *ngIf="f('name').invalid">{{e('name')}}</mat-error>
                         </mat-form-field>
                     </mat-grid-tile>
+                    <mat-grid-tile class="tile-contents-top-left overflow">
+                        <div style="padding: 15px 0;">
+                            <mat-checkbox formControlName="sendMail">Отправлять письма собственникам при публикации анкеты</mat-checkbox>
+                        </div>
+                    </mat-grid-tile>
                 </mat-grid-list>
+
+                <a mat-button (click)="inputFile.click()">Import file</a>
+                <input (change)="fileSelect($event)" #inputFile type="file" [style.display]="'none'">
 
                 <div formArrayName="questions">
                     <div *ngFor="let question of questions.controls; let i=index" [formGroupName]="i">
 
-                        <mat-card style="padding: 20px;">
+                        <mat-card style="padding: 20px; background-color: #fafafa">
 
                             <h3 style="float:left;">Вопрос №{{i+1}}</h3>
                             <mat-icon style="float: right; cursor:pointer;" (click)="deleteQuestion(i)">clear</mat-icon>
