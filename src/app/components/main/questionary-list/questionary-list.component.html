@@ -70,7 +70,7 @@
     </mat-paginator>
 
     <mat-card-actions>
-      <a routerLink="/admin/chairman" mat-raised-button>Добавить</a>
+      <a *ngIf="createAllowed" routerLink="/admin/chairman" mat-raised-button>Добавить</a>
       <a mat-raised-button (click)="openDeleteDialog()">Удалить</a>
       <a mat-raised-button (click)="openArchiveDialog()">Перевести в архив</a>
     </mat-card-actions>

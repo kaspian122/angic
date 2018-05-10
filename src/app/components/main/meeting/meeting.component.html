@@ -1,0 +1,35 @@
+<mat-card *ngIf="meetingRights">
+
+  <mat-card-title>{{(meetingInfo.name)}}</mat-card-title>
+  <mat-divider></mat-divider>
+
+  <app-meeting-info [info]="meetingInfo"></app-meeting-info>
+
+  <mat-divider></mat-divider>
+
+  <mat-tab-group>
+    <mat-tab label="Не участвуют в ОСС" *ngIf="meetingRights.showNotParticipationMeeting">
+      <app-meeting-not-participation></app-meeting-not-participation>
+    </mat-tab>
+    <mat-tab label="Собрание" *ngIf="meetingRights.showVote">
+      <app-meeting-vote></app-meeting-vote>
+    </mat-tab>
+    <mat-tab label="Результаты" *ngIf="meetingRights.showResult">
+      <app-meeting-result></app-meeting-result>
+    </mat-tab>
+    <mat-tab label="Активность" *ngIf="meetingRights.showActivity">
+      <app-meeting-activity [meetingId]="meetingId"></app-meeting-activity>
+    </mat-tab>
+  </mat-tab-group>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-actions>
+    <a mat-raised-button *ngIf="meetingRights.showReadyBtn" (click)="goToProcess()">Запустить</a>
+    <a mat-raised-button *ngIf="meetingRights.showCorrectBtn" (click)="goToCorrect()">На доработку</a>
+    <a mat-raised-button *ngIf="meetingRights.showStartZipBtn" (click)="loadToZip()">Выгрузить пакет документов</a>
+    <a mat-raised-button *ngIf="meetingRights.editVote">Сохранить</a>
+  </mat-card-actions>
+
+</mat-card>
+<router-outlet></router-outlet>

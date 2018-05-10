@@ -79,7 +79,7 @@
         </div>
       </form>
 
-      <app-holder-list [apartmentId]="apartment.id"></app-holder-list>
+      <app-holder-list *ngIf="apartment" [apartmentId]="apartment.id"></app-holder-list>
 
     </section>
   </mat-card-content>

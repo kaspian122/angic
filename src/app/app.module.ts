@@ -61,6 +61,14 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { QuestionaryCreateComponent } from './components/main/questionary-create/questionary-create.component';
 import { MatPaginatorIntlRu } from "./classes/mat-paginator-intl-ru";
 import {PaginationService} from "./services/pagination/pagination.service";
+import { MeetingComponent } from './components/main/meeting/meeting.component';
+import { MeetingActivityComponent } from './components/main/meeting/meeting-activity/meeting-activity.component';
+import { MeetingResultComponent } from './components/main/meeting/meeting-result/meeting-result.component';
+import { MeetingVoteComponent } from './components/main/meeting/meeting-vote/meeting-vote.component';
+import { MeetingNotParticipationComponent } from './components/main/meeting/meeting-not-participation/meeting-not-participation.component';
+import { MeetingInfoComponent } from './components/main/meeting/meeting-info/meeting-info.component';
+import {MeetingService} from './services/meeting/meeting.service';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -88,7 +96,13 @@ import {PaginationService} from "./services/pagination/pagination.service";
     QuestionaryListComponent,
     HolderComponent,
     SimpleDialogComponent,
-    QuestionaryCreateComponent
+    QuestionaryCreateComponent,
+    MeetingComponent,
+    MeetingActivityComponent,
+    MeetingResultComponent,
+    MeetingVoteComponent,
+    MeetingNotParticipationComponent,
+    MeetingInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -119,7 +133,8 @@ import {PaginationService} from "./services/pagination/pagination.service";
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatChipsModule
   ],
   providers: [
     {
@@ -144,7 +159,8 @@ import {PaginationService} from "./services/pagination/pagination.service";
     HolderService,
     ApartmentService,
     QuestionaryService,
-    PaginationService
+    PaginationService,
+    MeetingService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
