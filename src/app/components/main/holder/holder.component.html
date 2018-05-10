@@ -60,7 +60,7 @@
         </div>
         <h3>Информация</h3>
 
-        <mat-grid-list cols="3" gutterSize="30" rowHeight="4em">
+        <mat-grid-list cols="4" gutterSize="20" rowHeight="4em" >
 
           <mat-grid-tile>
             <mat-form-field class="fullwidth">
@@ -87,11 +87,17 @@
             </mat-form-field>
           </mat-grid-tile>
 
-          <mat-grid-tile colspan="3">
+          <mat-grid-tile>
             <mat-form-field class="fullwidth">
               <input matInput formControlName="legalPerson" placeholder="Юридическое лицо" tabindex="9"/>
               <mat-error *ngIf="f('legalPerson').invalid">{{e('legalPerson')}}</mat-error>
             </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <section class="fullwidth">
+              <mat-checkbox formControlName="chairman">Председатель</mat-checkbox>
+            </section>
           </mat-grid-tile>
 
           <mat-grid-tile>
@@ -108,11 +114,11 @@
 
           <mat-grid-tile>
             <section class="fullwidth">
-              <mat-checkbox formControlName="receiveNewsByEmail">Получает новости на email</mat-checkbox>
+              <mat-checkbox formControlName="receiveNewsByEmail">Новости на email</mat-checkbox>
             </section>
           </mat-grid-tile>
 
-          <mat-grid-tile colspan="3">
+          <mat-grid-tile colspan="4">
             <mat-form-field class="fullwidth">
               <input matInput formControlName="comment" placeholder="Комментарий" tabindex="10"/>
               <mat-error *ngIf="f('comment').invalid">{{e('comment')}}</mat-error>

@@ -158,6 +158,7 @@ export class HolderComponent implements OnInit {
     this.holder.participationMeeting = formDataApartment.participationMeeting;
     this.holder.receiveNewsByEmail = formDataApartment.receiveNewsByEmail;
     this.holder.councilman = formDataApartment.councilman;
+    this.holder.chairman = formDataApartment.chairman;
     this.holder.legalPerson = formDataApartment.legalPerson;
     this.holder.comment = formDataApartment.comment;
 
@@ -208,6 +209,7 @@ export class HolderComponent implements OnInit {
         shareAmount: [holder.shareAmount, Validators.required],
         comment: [holder.comment, ''],
         councilman: [holder.councilman, ''],
+        chairman: [holder.chairman, ''],
         participationMeeting: [holder.participationMeeting, ''],
         receiveNewsByEmail: [holder.receiveNewsByEmail, ''],
         legalPerson: [holder.legalPerson, ''],
@@ -221,6 +223,7 @@ export class HolderComponent implements OnInit {
         shareAmount: ['', Validators.required],
         comment: ['', ''],
         councilman: [false, ''],
+        chairman: [false, ''],
         participationMeeting: [false, ''],
         receiveNewsByEmail: [false, ''],
         legalPerson: ['', ''],
