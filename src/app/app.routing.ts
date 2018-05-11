@@ -100,6 +100,10 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
+    path: 'register/:login',
+    component: RegisterComponent
+  },
+  {
     path: 'confirm/:type/:key',
     component: ConfirmComponent
   },

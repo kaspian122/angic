@@ -40,6 +40,11 @@ export class RegisterComponent implements OnInit {
         this.form = this.fb.group({
           phone: ['', Validators.required]
         });
+
+        const phone = this.route.snapshot.paramMap.get('login') || null;
+        if (phone) {
+          this.form.get('phone').setValue(phone);
+        }
       }
     );
 

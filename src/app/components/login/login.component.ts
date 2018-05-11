@@ -57,6 +57,14 @@ export class LoginComponent implements OnInit {
       )
   }
 
+  public register() {
+    if (this.login) {
+      this.router.navigate(['/register', this.login]);
+    } else {
+      this.router.navigate(['/register']);
+    }
+  }
+
   public doLogout() {
     this.authService.logout().then(it => this.auth = it);
   }

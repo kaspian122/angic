@@ -21,7 +21,7 @@
               <ng-container *ngIf="timeLeft > 0" class="small">({{timeLeft}})</ng-container>
             </a>
 
-            <button mat-button [disabled]="form.pristine || form.status == 'INVALID' || loader ">
+            <button mat-button [disabled]="form.status == 'INVALID' || loader ">
               <mat-icon *ngIf="loader" class="spinner">autorenew</mat-icon>
               {{submitLabel}}
             </button>
