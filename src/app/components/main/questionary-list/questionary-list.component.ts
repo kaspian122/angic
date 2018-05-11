@@ -20,11 +20,12 @@ import {AuthService} from "../../../services/auth/auth.service";
 })
 export class QuestionaryListComponent extends TableComponent<QuestionarySummary> implements OnInit {
 
+  createAllowed: boolean = false;
+
   currentMkdId: string;
   displayedColumns = ['select', 'name', 'state', 'responseCount', 'date'];
 
   showArchived: boolean = false;
-  createAllowed: boolean = false;
 
   constructor(
     private dataService: QuestionaryService,

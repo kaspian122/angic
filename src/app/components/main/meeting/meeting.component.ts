@@ -18,7 +18,7 @@ import {MeetingInfo} from '../../../models/meeting/meeting-info';
 export class MeetingComponent implements OnInit {
 
   meetingRights: MeetingRights = null;
-  meetingInfo: MeetingInfo = null;
+  meetingInfo?: MeetingInfo = null;
   meetingId: string;
 
   constructor(

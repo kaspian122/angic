@@ -8,6 +8,7 @@ import {Apartment} from '../../models/apartment/apartment';
 import {PaginationInfo} from "../../models/pagination-info";
 import {PaginationService} from "../pagination/pagination.service";
 import {ReplaySubject} from "rxjs/ReplaySubject";
+import {SimpleObject} from '../../models/simple-object';
 
 @Injectable()
 export class HolderService {
@@ -18,6 +19,10 @@ export class HolderService {
     private authService: AuthService,
     private paginationService: PaginationService
   ) { }
+
+  public getSimpleHoldersByMkd(mkdId: string): Observable<SimpleObject[]>{
+    return this.http.get<SimpleObject[]>(this.config.getEndpoint(`mkd/${mkdId}/simpleHolders`), {headers: this.authService.headers()});
+  }
 
   public getHoldersByApartment(apartmentId: string): Observable<Holder[]>{
     return this.http.get<Holder[]>(this.config.getEndpoint(`apartment/${apartmentId}/holders`), {headers: this.authService.headers()});

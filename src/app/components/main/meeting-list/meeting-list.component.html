@@ -1,0 +1,87 @@
+<mat-card>
+  <mat-card-content>
+
+    <mat-card-title>
+      Общие собрания собственников
+      <mat-divider></mat-divider>
+    </mat-card-title>
+
+    <mat-grid-list cols="2" rowHeight="6:1">
+      <mat-grid-tile>
+        <div class="tile-left">
+          <mat-form-field>
+            <input matInput #inputField (keyup)="applyFilter(inputField.value)" placeholder="Поиск">
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="tile-right">
+          <mat-checkbox labelPosition="before" #checkBox [(ngModel)]="showCompleted"
+                        [indeterminate]="false"
+                        (change)="refreshTable()">Показывать завершенные
+          </mat-checkbox>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'select'">
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'select'">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(element) : null"
+                        [checked]="selection.isSelected(element)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="state">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'state'">Статус</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'state'"> {{element.state}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="number">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'number'">Номер</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'number'"> {{element.number}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="kind">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'kind'">Вид</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'kind'"> {{element.kind}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="initiator">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'initiator'">Инициатор</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'initiator'"> {{element.initiator}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="beginDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'beginDate'">Дата начала</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'beginDate'"> {{element.beginDate | date:'dd.MM.yyyy'}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="endDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'endDate'">Дата окончания</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'endDate'"> {{element.endDate | date:'dd.MM.yyyy'}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="loadDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'loadDate'">Дата создания</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'loadDate'"> {{element.loadDate | date:'dd.MM.yyyy'}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openMeeting(row)"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator
+                   [length]="totalLength"
+                   [pageSize]="selectedPageSize"
+                   [pageSizeOptions]="pageSizeOptions"
+                   [showFirstLastButtons]="true">
+    </mat-paginator>
+
+    <mat-card-actions>
+      <a routerLink="/meeting-edit" mat-raised-button>Добавить</a>
+      <a mat-raised-button (click)="openDeleteDialog()">Удалить</a>
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>

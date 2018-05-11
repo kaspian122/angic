@@ -1,0 +1,103 @@
+<mat-card>
+  <mat-card-title>
+    {{(title)}}
+  </mat-card-title>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-content>
+    <section *ngIf="form">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <h4>Информация:</h4>
+        <mat-grid-list cols="4" gutterSize="30" rowHeight="4em">
+          <mat-grid-tile>
+            <mat-form-field class="fullwidth">
+              <mat-select formControlName="kind" placeholder="Вид" tabindex="1">
+                <mat-option *ngFor="let kind of meetingEnums.MeetingKind" [value]="kind">{{kind.name}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="f('kind').invalid">{{e('kind')}}</mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field class="fullwidth">
+              <mat-select formControlName="quorum" placeholder="Кворум" tabindex="2">
+                <mat-option *ngFor="let quorum of meetingEnums.MeetingQuorum" [value]="quorum">{{quorum.name}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="f('quorum').invalid">{{e('quorum')}}</mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field class="fullwidth">
+              <input matInput [matDatepicker]="pickerBeginDate" formControlName="beginDate"
+                     placeholder="Дата начала" tabindex="3"/>
+              <mat-datepicker-toggle matSuffix [for]="pickerBeginDate"></mat-datepicker-toggle>
+              <mat-datepicker #pickerBeginDate></mat-datepicker>
+              <mat-error *ngIf="f('beginDate').invalid">{{e('beginDate')}}</mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field class="fullwidth">
+              <input matInput [matDatepicker]="pickerEndDate" formControlName="endDate"
+                     placeholder="Дата окончания" tabindex="4"/>
+              <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+              <mat-datepicker #pickerEndDate></mat-datepicker>
+              <mat-error *ngIf="f('endDate').invalid">{{e('endDate')}}</mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+        </mat-grid-list>
+
+        <h4>Инициаторы:</h4>
+
+        <mat-form-field class="fullwidth">
+          <mat-chip-list #chipList>
+            <mat-chip
+              *ngFor="let holderInitiator of holderInitiators"
+              [selectable]="true"
+              [removable]="true"
+              (remove)="removeInitiator(holderInitiator)"
+              >
+              {{holderInitiator.name}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+          <input
+            placeholder="ФИО"
+            matInput
+            #holderInput
+            [formControl]="holdersCtrl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="false"
+            tabindex="5"
+          />
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let holderInitiator of filteredHolderInitiators | async"
+                        [value]="holderInitiator.name">
+              {{ holderInitiator.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <br>
+
+        <div style="text-align: right">
+          <button mat-raised-button
+                  type="submit" #sbmt
+                  tabindex="20"
+                  [disabled]="form.pristine || form.status == 'INVALID'"
+
+          >
+            <mat-icon *ngIf="savingForm" class="spinner">autorenew</mat-icon>
+            {{(btnTitle)}}
+          </button>
+        </div>
+      </form>
+    </section>
+  </mat-card-content>
+</mat-card>

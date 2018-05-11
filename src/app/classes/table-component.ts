@@ -56,11 +56,18 @@ export abstract class TableComponent<T> extends SelectionComponent<T> implements
   }
 
   /**
-   * Переопределить, если нужно завязаться на какойто observable(прим. src/app/components/main/questionary-list/questionary-list.component.ts)
+   * Переопределить, если нужно завязаться на какойто observable
+   * (прим. src/app/components/main/questionary-list/questionary-list.component.ts)
    */
   refreshAfterInit() {
     this.refreshTable();
   }
+
+  /**
+   * Обновляет коллекцию - источник данных для таблицы: #dataCollection и #totalLength
+   * (прим. src/app/components/main/questionary-list/questionary-list.component.ts)
+   */
+  abstract updateDataCollection(paginationInfo: PaginationInfo): void
 
   /**
    * Обновляет таблицу со сбросом пагинации
@@ -69,11 +76,6 @@ export abstract class TableComponent<T> extends SelectionComponent<T> implements
     this.paginator.firstPage();
     this.updateTable();
   }
-
-  /**
-   * Обновляет коллекцию - источник данных для таблицы
-   */
-  abstract updateDataCollection(paginationInfo: PaginationInfo): void
 
   /**
    * Применяет фильтр
