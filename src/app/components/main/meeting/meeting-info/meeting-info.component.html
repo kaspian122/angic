@@ -3,32 +3,32 @@
   <mat-grid-list cols="2" rowHeight="9:1">
     <mat-grid-tile>
       <div class="tile">
-        Вид: {{(info.kind)}}
+        Вид: {{(info?.kind.name)}}
       </div>
     </mat-grid-tile>
     <mat-grid-tile>
       <div class="tile">
-        Кворум: {{(info.quorum)}}
+        Кворум: {{(info?.quorum.name)}}
       </div>
     </mat-grid-tile>
     <mat-grid-tile>
       <div class="tile">
-        Дата начала: {{(info.beginDate|date:'dd.MM.yyyy')}}
+        Дата начала: {{(info?.beginDate|date:'dd.MM.yyyy')}}
       </div>
     </mat-grid-tile>
     <mat-grid-tile>
       <div class="tile">
-        Дата окончания: {{(info.endDate|date:'dd.MM.yyyy')}}
+        Дата окончания: {{(info?.endDate|date:'dd.MM.yyyy')}}
       </div>
     </mat-grid-tile>
   </mat-grid-list>
 
-  <section *ngIf="info.holderInitiators.length > 0">
+  <section *ngIf="info?.holderInitiators.length > 0">
     <h4>Собственники-инициаторы:</h4>
     <mat-chip-list>
-      <mat-chip *ngFor="let holder of info.holderInitiators">
+      <mat-chip *ngFor="let holder of info?.holderInitiators">
         <div class="tile">
-          {{holder}}
+          {{holder.name}}
         </div>
       </mat-chip>
     </mat-chip-list>

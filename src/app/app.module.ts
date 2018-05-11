@@ -70,7 +70,7 @@ import { MeetingInfoComponent } from './components/main/meeting/meeting-info/mee
 import {MeetingService} from './services/meeting/meeting.service';
 import {MatChipsModule} from '@angular/material/chips';
 import { MeetingListComponent } from './components/main/meeting-list/meeting-list.component';
-import {MeetingCreateComponent} from './components/main/meeting-create/meeting-create.component';
+import {MeetingEditComponent} from './components/main/meeting-edit/meeting-edit.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
@@ -107,7 +107,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MeetingNotParticipationComponent,
     MeetingInfoComponent,
     MeetingListComponent,
-    MeetingCreateComponent
+    MeetingEditComponent
   ],
   imports: [
     BrowserModule,

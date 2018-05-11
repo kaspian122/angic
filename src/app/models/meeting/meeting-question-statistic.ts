@@ -1,9 +1,6 @@
 /**
  * Статистика на вопрос ОСС
  */
-import {MeetingQuestion} from './meeting-question';
-import {SimpleObject} from '../simple-object';
-
 export interface MeetingQuestionStatistic {
   /**
    * ID
@@ -13,12 +10,12 @@ export interface MeetingQuestionStatistic {
   /**
    * Вопрос ОСС
    */
-  meetingQuestion: MeetingQuestion;
+  meetingQuestion: string;
 
   /**
    * Ответ
    */
-  answer: SimpleObject;
+  answer: string;
 
   /**
    * Количество ответов, шт

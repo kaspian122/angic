@@ -18,7 +18,7 @@ import {HolderComponent} from './components/main/holder/holder.component';
 import {QuestionaryCreateComponent} from "./components/main/questionary-create/questionary-create.component";
 import {MeetingComponent} from './components/main/meeting/meeting.component';
 import {MeetingListComponent} from "./components/main/meeting-list/meeting-list.component";
-import {MeetingCreateComponent} from './components/main/meeting-create/meeting-create.component';
+import {MeetingEditComponent} from './components/main/meeting-edit/meeting-edit.component';
 
 
 const routes: Routes = [
@@ -76,8 +76,12 @@ const routes: Routes = [
             component: MeetingComponent,
           },
           {
-            path: 'meeting',
-            component: MeetingCreateComponent
+            path: 'meeting-edit',
+            component: MeetingEditComponent
+          },
+          {
+            path: 'meeting-edit/:id',
+            component: MeetingEditComponent
           }
         ]
       },

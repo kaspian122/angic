@@ -9,7 +9,7 @@ import {MeetingActivity} from '../../../../models/meeting/meeting-activity';
 })
 export class MeetingActivityComponent implements OnInit {
 
-  activity: MeetingActivity = null;
+  activity?: MeetingActivity = null;
   @Input() meetingId: string;
 
   constructor(

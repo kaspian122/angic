@@ -7,6 +7,7 @@ import {MeetingService} from "../../../services/meeting/meeting.service";
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {DeleteDialogComponent} from "../../delete-dialog/delete-dialog.component";
 import {BatchExecutionResult} from "../../../models/batch-execution-result";
+import {Router} from '@angular/router';
 
 /**
  * Список ОСС
@@ -27,7 +28,8 @@ export class MeetingListComponent extends TableComponent<SimpleMeetingInfo> impl
     private mkdService: MkdService,
     private meetingService: MeetingService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     super();
   }
@@ -80,6 +82,14 @@ export class MeetingListComponent extends TableComponent<SimpleMeetingInfo> impl
     this.snackBar.open(message, null, {
       duration: 3000
     });
+  }
+
+  openMeeting(row: SimpleMeetingInfo): void {
+    if(row.state == 'Проект') {
+      this.router.navigate([`/meeting-edit/${row.id}`]);
+    } else {
+      this.router.navigate([`/meeting/${row.id}`]);
+    }
   }
 
 }

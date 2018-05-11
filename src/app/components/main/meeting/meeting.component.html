@@ -1,6 +1,6 @@
 <mat-card *ngIf="meetingRights">
 
-  <mat-card-title>{{(meetingInfo.name)}}</mat-card-title>
+  <mat-card-title>{{(meetingInfo?.name)}}</mat-card-title>
   <mat-divider></mat-divider>
 
   <app-meeting-info [info]="meetingInfo"></app-meeting-info>

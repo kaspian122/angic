@@ -9,16 +9,17 @@ import {MatAutocompleteSelectedEvent} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
 import {MkdService} from '../../../services/mkd/mkd.service';
 import {HolderService} from '../../../services/holder/holder.service';
+import {MeetingInfo} from '../../../models/meeting/meeting-info';
 
 /**
  * Создание/редактирование ОСС
  */
 @Component({
   selector: 'app-meeting-create',
-  templateUrl: './meeting-create.component.html',
-  styleUrls: ['./meeting-create.component.css']
+  templateUrl: './meeting-edit.component.html',
+  styleUrls: ['./meeting-edit.component.css']
 })
-export class MeetingCreateComponent implements OnInit {
+export class MeetingEditComponent implements OnInit {
 
   /**
    * Форма
@@ -31,7 +32,12 @@ export class MeetingCreateComponent implements OnInit {
   meetingEnums: any;
 
   /**
-   * todo заменить на список из объекта ОСС
+   * ОСС
+   */
+  meeting: MeetingInfo;
+
+  /**
+   * Список выбранных инициаторов
    */
   holderInitiators: SimpleObject[] = [];
 
@@ -70,6 +76,12 @@ export class MeetingCreateComponent implements OnInit {
     private meetingService: MeetingService,
     private route: ActivatedRoute
   ) {
+    this.filteredHolderInitiators = this.holdersCtrl.valueChanges.pipe(
+      startWith(''),
+      map(holder =>
+        holder ? this.filter(holder) : this.allHolders
+      )
+    );
   }
 
   f(name) {
@@ -89,40 +101,58 @@ export class MeetingCreateComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.switchMap(p => Observable.of(p)).subscribe(
       params => {
-        this.mkdService.currentMkd.subscribe(
-          mkd =>
-            this.holderService.getSimpleHoldersByMkd(mkd.mkdId).subscribe(
-              data => {
-                this.allHolders = data;
-                this.filteredHolderInitiators = this.holdersCtrl.valueChanges.pipe(
-                  startWith(''),
-                  map(holder =>
-                    holder ? this.filter(holder) : this.allHolders
-                  )
-                );
-              }
-            )
-        );
-
-        this.title = 'Создание общего собрания собственников';
-        this.btnTitle = 'Создать';
+        let meetingId = params.get('id');
 
         this.meetingService.getMeetingEnums().subscribe(
-          data => {
-            this.meetingEnums = data;
-            this.initForm();
+          enums => {
+            this.meetingEnums = enums;
+
+            this.mkdService.currentMkd.subscribe(
+              mkd =>
+                this.holderService.getSimpleHoldersByMkd(mkd.mkdId).subscribe(
+                  holders => {
+                    if(meetingId == null) {
+                      this.title = 'Создание общего собрания собственников';
+                      this.btnTitle = 'Создать';
+                      this.meeting = null;
+                      this.allHolders = holders;
+                      this.initForm();
+                    } else {
+                      this.title = 'Редактирование общего собрания собственников';
+                      this.btnTitle = 'Сохранить';
+                      this.meetingService.getMeetingInfo(meetingId).subscribe(
+                        data => {
+                          this.meeting = data;
+                          this.holderInitiators = data.holderInitiators;
+                          this.allHolders = holders.filter(holder => !this.holderInitiators.map(it => it.id).includes(holder.id));
+                          this.initForm();
+                        }
+                      );
+                    }
+                  }
+                )
+            );
           }
         );
       });
   }
 
   initForm() {
-    this.form = this.fb.group({
-      kind: ['', Validators.required],
-      quorum: ['', Validators.required],
-      beginDate: ['', Validators.required],
-      endDate: ['', Validators.required]
-    });
+    if(this.meeting) {
+      this.form = this.fb.group({
+        kind: [this.meetingEnums.MeetingKind.find(it => it.id == this.meeting.kind.id), Validators.required],
+        quorum: [this.meetingEnums.MeetingQuorum.find(it => it.id == this.meeting.quorum.id), Validators.required],
+        beginDate: [new Date(this.meeting.beginDate), Validators.required],
+        endDate: [new Date(this.meeting.endDate), Validators.required]
+      });
+    } else {
+      this.form = this.fb.group({
+        kind: ['', Validators.required],
+        quorum: ['', Validators.required],
+        beginDate: ['', Validators.required],
+        endDate: ['', Validators.required]
+      });
+    }
   }
 
   onSubmit() {

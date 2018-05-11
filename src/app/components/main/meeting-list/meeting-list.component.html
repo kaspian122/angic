@@ -70,7 +70,7 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="/meeting/{{row.id}}"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openMeeting(row)"></mat-row>
     </mat-table>
     <mat-paginator #paginator
                    [length]="totalLength"
@@ -80,7 +80,7 @@
     </mat-paginator>
 
     <mat-card-actions>
-      <a routerLink="/admin/chairman" mat-raised-button>Добавить</a>
+      <a routerLink="/meeting-edit" mat-raised-button>Добавить</a>
       <a mat-raised-button (click)="openDeleteDialog()">Удалить</a>
     </mat-card-actions>
   </mat-card-content>
