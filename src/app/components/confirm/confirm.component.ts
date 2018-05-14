@@ -29,6 +29,7 @@ export class ConfirmComponent implements OnInit {
   ngOnInit() {
 
     this.form = this.fb.group({
+      login: ['', Validators.required],
       password: ['', Validators.required],
       passwordConfirm: ['', [Validators.required, this.compareWithPassword()]],
       type: [''],
@@ -42,11 +43,13 @@ export class ConfirmComponent implements OnInit {
             if (auth.status == 'AUTHENTICATED') {
               this.authService.logout().then(
                 () => {
+                  this.form.get('login').setValue(params.get('login'));
                   this.form.get('key').setValue(params.get('key'));
                   this.form.get('type').setValue(capitalize(params.get('type')));
                 }
               );
             } else {
+              this.form.get('login').setValue(params.get('login'));
               this.form.get('key').setValue(params.get('key'));
               this.form.get('type').setValue(capitalize(params.get('type')));
             }

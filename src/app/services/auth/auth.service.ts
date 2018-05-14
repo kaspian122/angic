@@ -48,7 +48,7 @@ export class AuthService {
    * @param refreshAuthOnForbidden если при попытке залогинется получили 403 (устарел CSRF_TOKEN), обновить auth
    * @return {Observable<Auth>}
    */
-  public login(login: string, password: string, refreshAuthOnForbidden: Boolean = true): Promise<Auth> {
+  public login(login: string, password: string, refreshAuthOnForbidden: Boolean = true): Promise<any> {
     if (!this.auth || !this.auth.csrfToken) {
       throw new Error("You have to get csrfToken before login")
     }

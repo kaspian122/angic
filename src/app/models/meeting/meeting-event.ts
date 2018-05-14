@@ -1,7 +1,7 @@
 /**
  * События ОСС
  */
-import {MeetingEdit} from './meeting';
+// import {MeetingEdit} from './meeting';
 import {Holder} from '../holder/holder';
 import {User} from '../user/user';
 import {SimpleObject} from '../simple-object';

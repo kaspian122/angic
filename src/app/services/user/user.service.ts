@@ -32,8 +32,12 @@ export class UserService {
     return this.http.post(this.config.getEndpoint('sendSms?'+param), null, {headers: this.authService.headers()});
   }
 
-  public checkCode(code: string, type: string) {
-    const params = new HttpParams().set('key', code).set('type', type);
+  public checkCode(login: string, code: string, type: string) {
+    const params = new HttpParams()
+      .set('login', login)
+      .set('key', code)
+      .set('type', type);
+
     return this.http.get(this.config.getEndpoint('auth/check'), {params: params})
   }
 }

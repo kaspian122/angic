@@ -125,7 +125,7 @@ export class QuestionaryCreateComponent implements OnInit {
     let i = this.files.length-1;
 
     let reader = new FileReader();
-    reader.onload = (e: ProgressEvent) => {
+    reader.onload = (e: any) => {
       this.thumbnails[i] = e.target.result;
     };
     reader.readAsDataURL(f);

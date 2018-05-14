@@ -1,6 +1,8 @@
 <div class="containerlogin" *ngIf="form">
   <div class="center-box" style="width: 500px;">
     <mat-card>
+      <mat-card-title>Регистрация</mat-card-title>
+      <mat-divider></mat-divider>
       <mat-card-content>
         <form name="registerform" #regForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" [formGroup]="form">
           <mat-form-field style="width: 100%">
