@@ -1,6 +1,9 @@
 /**
  * Общая информация по ОСС
  */
+import {SimpleObject} from '../simple-object';
+import {MeetingQuestionInfo} from './question/meeting-question-info';
+
 export interface MeetingInfo {
   /**
    * ID
@@ -20,17 +23,17 @@ export interface MeetingInfo {
   /**
    * Стадия
    */
-  state: string;
+  state: SimpleObject;
 
   /**
    * Вид
    */
-  kind: string;
+  kind: SimpleObject;
 
   /**
    * Кворум
    */
-  quorum: string;
+  quorum: SimpleObject;
 
   /**
    * Дата начала
@@ -50,6 +53,11 @@ export interface MeetingInfo {
   /**
    * Собственники-инициаторы
    */
-  holderInitiators: string[];
+  holderInitiators: SimpleObject[];
+
+  /**
+   * Вопросы
+   */
+  questions: MeetingQuestionInfo[];
 
 }

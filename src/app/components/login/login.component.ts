@@ -17,11 +17,9 @@ export class LoginComponent implements OnInit {
 
   public returnUrl = null;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
+  constructor(private authService: AuthService,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -34,20 +32,27 @@ export class LoginComponent implements OnInit {
 
   public doLogin() {
     this.errorMessage = null;
+    const login = this.login;
     this.authService.login(this.login, this.password)
       .then(
         it => {
-          this.auth = it;
-          if (this.returnUrl) {
-            this.router.navigate([this.returnUrl]);
-          } else {
-            if(this.authService.hasRole('ROLE_ADMIN')){
-              this.router.navigate(['/admin']);
-            } else {
-              this.router.navigate(['/']);
+          this.authService.getAuth(true).then(() => {
+            if (it.type == 'PasswordEmpty') {
+              this.router.navigate(['/register', login]);
+              return;
             }
-          }
 
+            if (this.returnUrl) {
+              this.router.navigate([this.returnUrl]);
+            } else {
+              if (this.authService.hasRole('ROLE_ADMIN')) {
+                this.router.navigate(['/admin']);
+              } else {
+                this.router.navigate(['/']);
+              }
+            }
+
+          });
         },
         (err: LoginFailedError) => {
           this.auth = err.auth;
@@ -55,6 +60,14 @@ export class LoginComponent implements OnInit {
           this.errorMessage = "Неверный логин или пароль";
         }
       )
+  }
+
+  public register() {
+    if (this.login) {
+      this.router.navigate(['/register', this.login]);
+    } else {
+      this.router.navigate(['/register']);
+    }
   }
 
   public doLogout() {

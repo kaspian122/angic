@@ -1,6 +1,8 @@
 <div class="containerlogin" *ngIf="form">
   <div class="center-box" style="width: 500px;">
     <mat-card>
+      <mat-card-title>Регистрация</mat-card-title>
+      <mat-divider></mat-divider>
       <mat-card-content>
         <form name="registerform" #regForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" [formGroup]="form">
           <mat-form-field style="width: 100%">
@@ -21,7 +23,7 @@
               <ng-container *ngIf="timeLeft > 0" class="small">({{timeLeft}})</ng-container>
             </a>
 
-            <button mat-button [disabled]="form.pristine || form.status == 'INVALID' || loader ">
+            <button mat-button [disabled]="form.status == 'INVALID' || loader ">
               <mat-icon *ngIf="loader" class="spinner">autorenew</mat-icon>
               {{submitLabel}}
             </button>

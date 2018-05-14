@@ -47,7 +47,7 @@ export class MeetingService {
   }
 
   public getMeetingInfo(meetingId: string): Observable<MeetingInfo> {
-    return this.http.get<MeetingInfo>(this.config.getEndpoint(`meeting/${meetingId}/info`), {headers: this.authService.headers()});
+    return this.http.get<MeetingInfo>(this.config.getEndpoint(`meeting/${meetingId}`), {headers: this.authService.headers()});
   }
 
   public getMeetingActivity(meetingId: string): Observable<MeetingActivity> {
@@ -68,6 +68,10 @@ export class MeetingService {
 
   public goToCorrect(meeting): Observable<any> {
     return this.http.put(this.config.getEndpoint('meeting/state/correct'), meeting, {headers: this.authService.headers()});
+  }
+
+  public getMeetingEnums(): Observable<any> {
+    return this.http.get(this.config.getEndpoint('meeting/enums'), {headers: this.authService.headers()});
   }
 
 }

@@ -40,6 +40,11 @@ export class RegisterComponent implements OnInit {
         this.form = this.fb.group({
           phone: ['', Validators.required]
         });
+
+        const phone = this.route.snapshot.paramMap.get('login') || null;
+        if (phone) {
+          this.form.get('phone').setValue(phone);
+        }
       }
     );
 
@@ -71,10 +76,11 @@ export class RegisterComponent implements OnInit {
 
   submitTwo() {
     const code = this.form.get('key').value;
-    this.userService.checkCode(code, 'Phone').subscribe(
+    const login = this.form.get('phone').value;
+    this.userService.checkCode(login, code, 'Phone').subscribe(
       () => {
         this.loader = false;
-        this.router.navigate(['/confirm', 'phone', code]);
+        this.router.navigate(['/confirm', login, 'phone', code]);
       },
       (e) => {
         ErrorHandler.handleFormError(e, this.form);
