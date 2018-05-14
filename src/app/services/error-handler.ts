@@ -9,13 +9,17 @@ export class ErrorHandler {
       case 400:
         try {
           let errors = err.error.errors;
-          Object.keys(errors).forEach(field=>{
-            if(group.get(field) == null) {
-              alert(errors[field][0]);
-            } else {
-              group.get(field).setErrors({"server": errors[field][0]});
-            }
-          });
+          if (errors) {
+            Object.keys(errors).forEach(field => {
+              if(group.get(field) == null) {
+                alert(errors[field][0]);
+              } else {
+                group.get(field).setErrors({"server": errors[field][0]});
+              }
+            });
+          } else {
+            alert(err.message);
+          }
         } catch (exception) {}
         break;
       case 500:

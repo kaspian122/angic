@@ -104,16 +104,13 @@ export class ApartmentComponent implements OnInit {
 
   e(name) {
     let e = this.f(name).errors;
-    if(e.required) {
-      return "Необходимо указать";
-    }
-    if(e.server) {
-      return e.server;
-    }
+    if(e.required) return "Необходимо указать";
+    if(e.pattern) return "Некорректные символы";
+    if(e.server) return e.server;
   }
 
   onSubmit() {
-    let formDataApartment = this.apartmentForm.value.apartment;
+    let formDataApartment = this.apartmentForm.value;
     formDataApartment.mkdId = this.currentMkd.mkdId;
 
     this.savingForm = true;
@@ -147,31 +144,29 @@ export class ApartmentComponent implements OnInit {
   }
 
   initForm() {
-    this.apartmentForm = this.fb.group({
-      'apartment': this.initApartment()
-    })
+    this.apartmentForm = this.initApartment()
   }
 
   initApartment() {
     if(this.apartment == null) {
       return this.fb.group({
-        number: ['', Validators.required],
+        number: ['', ''],
         floor: ['', ''],
         porch: ['', ''],
         area: ['', Validators.required],
         utilization: ['', Validators.required],
         ownership: ['', Validators.required],
-        totalShare: ['', Validators.required]
+        totalShare: ['', [Validators.required, Validators.pattern('[0-9]*')]]
       });
     } else {
       return this.fb.group({
-        number: [this.apartment.number, Validators.required],
+        number: [this.apartment.number, ''],
         floor: [this.apartment.floor, ''],
         porch: [this.apartment.porch, ''],
         area: [this.apartment.area, Validators.required],
         utilization: [this.mkdEnums.ApartmentUtilization.find(it => it.id == this.apartment.utilization.id), Validators.required],
         ownership: [this.mkdEnums.OwnershipType.find(it => it.id == this.apartment.ownership.id), Validators.required],
-        totalShare: [this.apartment.totalShare, Validators.required]
+        totalShare: [this.apartment.totalShare, [Validators.required, Validators.pattern('[0-9]*')]]
       });
     }
   }

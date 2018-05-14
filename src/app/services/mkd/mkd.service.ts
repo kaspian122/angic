@@ -9,6 +9,7 @@ import {Auth, MkdOwnersInfo} from '../auth/auth';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import {PaginationInfo} from "../../models/pagination-info";
 import {PaginationService} from "../pagination/pagination.service";
+import {MkdInfo} from "../../models/mkd/mkd-info";
 
 @Injectable()
 export class MkdService {
@@ -35,6 +36,10 @@ export class MkdService {
       result.next([data, total]);
     });
     return result;
+  }
+
+  public getMkdInfo(mkdId: string): Observable<MkdInfo>{
+    return this.http.get<MkdInfo>(this.config.getEndpoint(`mkd/${mkdId}/info`), {headers: this.authService.headers()});
   }
 
   public getMkdEnums(): Observable<any> {

@@ -82,7 +82,7 @@
 
           <mat-grid-tile>
             <mat-form-field class="fullwidth">
-              <input matInput formControlName="shareAmount" placeholder="Часть доли" tabindex="8"/>
+              <input matInput formControlName="shareAmount" placeholder="Часть доли" tabindex="8" type="number" min="1"/>
               <mat-error *ngIf="f('shareAmount').invalid">{{e('shareAmount')}}</mat-error>
             </mat-form-field>
           </mat-grid-tile>
@@ -95,25 +95,25 @@
           </mat-grid-tile>
 
           <mat-grid-tile>
-            <section class="fullwidth">
+            <section>
               <mat-checkbox formControlName="chairman">Председатель</mat-checkbox>
             </section>
           </mat-grid-tile>
 
           <mat-grid-tile>
-            <section class="fullwidth">
+            <section>
               <mat-checkbox formControlName="councilman">Член совета</mat-checkbox>
             </section>
           </mat-grid-tile>
 
           <mat-grid-tile>
-            <section class="fullwidth">
+            <section>
               <mat-checkbox formControlName="participationMeeting">Учавствует в ОСС</mat-checkbox>
             </section>
           </mat-grid-tile>
 
           <mat-grid-tile>
-            <section class="fullwidth">
+            <section>
               <mat-checkbox formControlName="receiveNewsByEmail">Новости на email</mat-checkbox>
             </section>
           </mat-grid-tile>

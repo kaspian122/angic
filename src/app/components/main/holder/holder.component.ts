@@ -110,12 +110,9 @@ export class HolderComponent implements OnInit {
 
   e(name) {
     let e = this.f(name).errors;
-    if(e.required) {
-      return "Необходимо указать";
-    }
-    if(e.server) {
-      return e.server;
-    }
+    if(e.required) return "Необходимо указать";
+    if(e.pattern) return "Некорректные символы";
+    if(e.server) return e.server;
   }
 
   onSubmit() {
@@ -166,7 +163,8 @@ export class HolderComponent implements OnInit {
       this.holderService.createHolder(this.holder).subscribe(
         data => {
           this.savingForm = false;
-          this.openSnackBar('Собственник создан', '')
+          this.openSnackBar('Собственник создан', '');
+          this.router.navigate([`/apartment/${this.apartmentId}`]);
         },
         (err: HttpErrorResponse) => {
           ErrorHandler.handleFormError(err, this.holderForm);
@@ -179,7 +177,8 @@ export class HolderComponent implements OnInit {
       this.holderService.updateHolder(this.holder).subscribe(
         data => {
           this.savingForm = false;
-          this.openSnackBar('Данные успешно сохранены', '')
+          this.openSnackBar('Данные успешно сохранены', '');
+          this.router.navigate([`/apartment/${this.apartmentId}`]);
         },
         (err: HttpErrorResponse) => {
           ErrorHandler.handleFormError(err, this.holderForm);
@@ -206,7 +205,7 @@ export class HolderComponent implements OnInit {
       return this.fb.group({
         certificateDate: [new Date(holder.certificateDate), Validators.required],
         certificateNumber: [holder.certificateNumber, Validators.required],
-        shareAmount: [holder.shareAmount, Validators.required],
+        shareAmount: [holder.shareAmount, [Validators.required, Validators.pattern('[0-9]*')]],
         comment: [holder.comment, ''],
         councilman: [holder.councilman, ''],
         chairman: [holder.chairman, ''],
@@ -220,7 +219,7 @@ export class HolderComponent implements OnInit {
       return this.fb.group({
         certificateDate: ['', Validators.required],
         certificateNumber: ['', Validators.required],
-        shareAmount: ['', Validators.required],
+        shareAmount: ['', [Validators.required, Validators.pattern('[0-9]*')]],
         comment: ['', ''],
         councilman: [false, ''],
         chairman: [false, ''],
