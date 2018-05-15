@@ -13,7 +13,7 @@ import {Holder} from "../../../models/holder/holder";
 export class HolderListComponent extends SelectionComponent<Holder> implements OnInit {
 
     public displayedColumns = [
-      'select', 'holderName', 'certificateNumber', 'certificateDate', 'shareAmount', 'areaMeters', 'percent'
+      'select', 'holderName', 'certificateNumber', 'certificateDate', 'shareAmount', 'areaMeters', 'percent', 'bools'
     ];
 
     @Input() apartmentId: string;

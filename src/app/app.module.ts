@@ -38,7 +38,7 @@ import { NewsComponent } from './components/main/news/news.component';
 import { HolderListComponent } from './components/main/holder-list/holder-list.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
-import {MAT_DATE_LOCALE, MatDialogModule, MatNativeDateModule, MatPaginatorModule, MatPaginatorIntl} from '@angular/material';
+import {MAT_DATE_LOCALE, MatDialogModule, MatNativeDateModule, MatPaginatorModule, MatPaginatorIntl, MatTooltipModule} from '@angular/material';
 import { ApartmentListComponent } from './components/main/apartment-list/apartment-list.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { QuestionaryComponent } from './components/main/questionary/questionary.component';
@@ -140,7 +140,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatNativeDateModule,
     MatExpansionModule,
     MatChipsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTooltipModule
   ],
   providers: [
     {

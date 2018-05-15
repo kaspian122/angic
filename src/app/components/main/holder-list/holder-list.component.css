@@ -1,27 +1,28 @@
-.holder-share-amount, .total-share, .voting, .percentage{
-    flex: 0 0 7%;
-}
-.apartment-number {
-    flex: 0 0 8%;
+.holder-share-amount, .holder-percent, .holder-areaMeters {
+    flex: 0 0 9%;
 }
 .certificate-date {
-    flex: 0 0 13%;
+    flex: 0 0 12%;
 }
-.holder-name, .certificate-number{
+.bools {
+  flex: 0 0 16%;
+}
+.holder-name, .certificate-number {
     flex: 0 0 20%;
-}
-.area {
-    flex: 0 0 10%;
 }
 .select {
     flex: 0 0 5%;
 }
-
 .mkd-info-holders-list {
     float: left;
     width: 100%;
 }
-
 .mat-column-select {
     overflow: visible;
+}
+mat-chip.mat-chip.mat-primary.ng-star-inserted {
+  margin: 2px 0 2px 4px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 16px;
 }
