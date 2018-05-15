@@ -1,6 +1,11 @@
 <mat-card-content>
   <h4>Информация:</h4>
   <mat-grid-list cols="2" rowHeight="9:1">
+    <mat-grid-tile colspan="2">
+      <div class="tile">
+        Стадия: {{(info?.state.name)}}
+      </div>
+    </mat-grid-tile>
     <mat-grid-tile>
       <div class="tile">
         Вид: {{(info?.kind.name)}}

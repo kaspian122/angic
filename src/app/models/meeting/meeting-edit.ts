@@ -55,5 +55,5 @@ export interface MeetingEdit {
   /**
    * Собственники-инициаторы
    */
-  holderInitiators: string[];
+  holderInitiatorIds: string[];
 }

@@ -8,11 +8,6 @@ export interface MeetingQuestionEdit {
   id: string;
 
   /**
-   * Номер п/п
-   */
-  orderNumber: number;
-
-  /**
    * Текст вопроса
    */
   name: string;
@@ -26,4 +21,9 @@ export interface MeetingQuestionEdit {
    * Кворум для принятия решения по вопросу
    */
   quorum: string;
+
+  /**
+   * Порядковый номер
+   */
+  orderNumber: string;
 }
