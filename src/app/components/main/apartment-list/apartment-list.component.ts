@@ -84,8 +84,8 @@ export class ApartmentListComponent extends TableComponent<ApartmentRow> impleme
       data => this.downloadFile(data, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'Объявление о регистрации.docx'));
   }
 
-  private downloadFile(data, contentType: String, downloadTitle: String) {
-       let blob = new Blob([data], { type: contentType });
+  private downloadFile(data, contentType: string, downloadTitle: string) {
+    let blob = new Blob([data], { type: contentType });
     let url= window.URL.createObjectURL(blob);
     const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
 
