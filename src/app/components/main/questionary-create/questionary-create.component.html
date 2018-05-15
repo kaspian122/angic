@@ -23,10 +23,12 @@
 
                 <mat-card style="padding: 20px; background-color: #fafafa">
 
-                    <mat-grid-list cols="6" rowHeight="1:1">
-                        <mat-grid-tile *ngFor="let thumbnail of thumbnails">
-                            <div style="width: 100px; height: 100px; background-repeat: no-repeat; background-size: contain;"
-                            [style.backgroundImage]="'url('+thumbnail+')'"></div>
+                    <mat-grid-list cols="6" rowHeight="1:1" *ngIf="files.length > 0">
+                        <mat-grid-tile *ngFor="let file of files">
+                            <div style="border: solid silver 1px; padding: 2px; cursor: pointer" (click)="deleteFile(file)">
+                                <div style="width: 100px; height: 100px; background-position: center; background-repeat: no-repeat; background-size: contain;"
+                                     [style.backgroundImage]="'url('+file.thumbnail+')'"></div>
+                            </div>
 
                         </mat-grid-tile>
                     </mat-grid-list>
@@ -74,7 +76,7 @@
                                 </mat-grid-tile>
                             </mat-grid-list>
 
-                            <mat-grid-list cols="3" formArrayName="options" rowHeight="4em">
+                            <mat-grid-list *ngIf="f('questions.'+i+'.type').value == 'Single' || f('questions.'+i+'.type').value == 'Multiple'" cols="3" formArrayName="options" rowHeight="4em">
                                 <mat-grid-tile colspan="2" *ngFor="let option of options(i).controls; let j=index" [formGroupName]="j">
                                     <mat-form-field class="fullwidth">
                                         <input type="text" matInput formControlName="option" [placeholder]="'Ответ №'+(j+1)">

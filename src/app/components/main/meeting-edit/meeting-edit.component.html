@@ -10,8 +10,8 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
         <h4>Информация:</h4>
-        <mat-grid-list cols="4" gutterSize="30" rowHeight="4em">
-          <mat-grid-tile>
+        <mat-grid-list cols="6" gutterSize="30" rowHeight="4em">
+          <mat-grid-tile colspan="3">
             <mat-form-field class="fullwidth">
               <mat-select formControlName="kind" placeholder="Вид" tabindex="1">
                 <mat-option *ngFor="let kind of meetingEnums.MeetingKind" [value]="kind">{{kind.name}}</mat-option>
@@ -20,7 +20,7 @@
             </mat-form-field>
           </mat-grid-tile>
 
-          <mat-grid-tile>
+          <mat-grid-tile colspan="3">
             <mat-form-field class="fullwidth">
               <mat-select formControlName="quorum" placeholder="Кворум" tabindex="2">
                 <mat-option *ngFor="let quorum of meetingEnums.MeetingQuorum" [value]="quorum">{{quorum.name}}</mat-option>
@@ -29,7 +29,7 @@
             </mat-form-field>
           </mat-grid-tile>
 
-          <mat-grid-tile>
+          <mat-grid-tile colspan="2">
             <mat-form-field class="fullwidth">
               <input matInput [matDatepicker]="pickerBeginDate" formControlName="beginDate"
                      placeholder="Дата начала" tabindex="3"/>
@@ -41,11 +41,25 @@
 
           <mat-grid-tile>
             <mat-form-field class="fullwidth">
+              <input matInput formControlName="beginTime" [dropSpecialCharacters]="false" placeholder="Время начала" mask='99:99' tabindex="4"/>
+              <mat-error *ngIf="f('beginTime').invalid">{{e('beginTime')}}</mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile colspan="2">
+            <mat-form-field class="fullwidth">
               <input matInput [matDatepicker]="pickerEndDate" formControlName="endDate"
-                     placeholder="Дата окончания" tabindex="4"/>
+                     placeholder="Дата окончания" tabindex="5"/>
               <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
               <mat-datepicker #pickerEndDate></mat-datepicker>
               <mat-error *ngIf="f('endDate').invalid">{{e('endDate')}}</mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field class="fullwidth">
+              <input matInput formControlName="endTime" [dropSpecialCharacters]="false" placeholder="Время окончания" mask='99:99' tabindex="6"/>
+              <mat-error *ngIf="f('endTime').invalid">{{e('endTime')}}</mat-error>
             </mat-form-field>
           </mat-grid-tile>
 

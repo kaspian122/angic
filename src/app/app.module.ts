@@ -72,6 +72,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import { MeetingListComponent } from './components/main/meeting-list/meeting-list.component';
 import {MeetingEditComponent} from './components/main/meeting-edit/meeting-edit.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {NgxMaskModule} from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -141,7 +142,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatExpansionModule,
     MatChipsModule,
     MatAutocompleteModule,
-    MatTooltipModule
+    MatTooltipModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [
     {
