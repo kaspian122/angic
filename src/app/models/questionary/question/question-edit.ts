@@ -28,6 +28,11 @@ export interface QuestionEdit {
   /**
    * Опции вопроса
    */
-  options: string[]
+  options: string[],
+
+  /**
+   * Порядок сортировки вопроса
+   */
+  orderNumber: number
 
 }

@@ -12,6 +12,8 @@ import {QuestionaryCreate} from "../../models/questionary/questionary-create";
 import {PaginationService} from "../pagination/pagination.service";
 import {PaginationInfo} from "../../models/pagination-info";
 import {ReplaySubject} from "rxjs/ReplaySubject";
+import {Attach} from "../../models/attach";
+import {forkJoin} from "rxjs/observable/forkJoin";
 
 @Injectable()
 export class QuestionaryService {
@@ -67,6 +69,35 @@ export class QuestionaryService {
 
   public createQuestionary(questionary: QuestionaryCreate) {
     return this.http.post(this.config.getEndpoint("questionary"), questionary, {headers: this.authService.headers()});
+  }
+
+  public attachFiles(id: string, files: Attach[], type: 'Questionary'|'MeetingQuestion'): Observable<any> {
+    if (!files) return Observable.of({});
+
+    let formData = new FormData();
+
+    files.forEach(file => {
+      formData.append('file', file.file)
+    });
+
+    return this.http.post(
+      this.config.getEndpoint('file/upload'),
+      formData,
+      {
+        params: new HttpParams().set('entityId', id).set('folderType', type),
+        headers: this.authService.headers()
+      }
+    );
+  }
+
+  public deleteFile(fileId: string, type: 'Questionary'|'MeetingQuestion'): Observable<any> {
+    return this.http.delete(
+      this.config.getEndpoint('file/delete'),
+      {
+        params: new HttpParams().set('fileId', fileId).set('folderType', type),
+        headers: this.authService.headers()
+      }
+    );
   }
 
 }

@@ -7,6 +7,7 @@ import {QuestionEdit} from "../../../models/questionary/question/question-edit";
 import {QuestionaryService} from "../../../services/questionary/questionary.service";
 import {QuestionaryInfo} from "../../../models/questionary/questionary-info";
 import {Router} from "@angular/router";
+import {Attach} from "../../../models/attach";
 
 @Component({
   selector: 'app-questionary-create',
@@ -18,8 +19,7 @@ export class QuestionaryCreateComponent implements OnInit {
   form: FormGroup;
   currentMkd?: MkdOwnersInfo = null;
 
-  files: File[] = [];
-  thumbnails: string[] = [];
+  private _files: Attach[] = [];
 
   loader: boolean = false;
 
@@ -86,7 +86,11 @@ export class QuestionaryCreateComponent implements OnInit {
     const saveForm: QuestionaryCreate = this.prepareSaveForm();
     this.questionaryService.createQuestionary(saveForm).subscribe(
       (info: QuestionaryInfo) => {
-        this.router.navigate(['/questionary-list']);
+        let filesToAttach = this.files.filter(f=>f.mode=='add');
+        this.questionaryService.attachFiles(info.id, filesToAttach, 'Questionary').subscribe(
+          // this.router.navigate(['/questionary-list']);
+          (data)=> console.log('done!!!', data)
+        )
       },
       (e) => {
         console.log(e);
@@ -100,18 +104,36 @@ export class QuestionaryCreateComponent implements OnInit {
       name: form.name,
       sendMail: form.sendMail,
       mkdId: form.mkdId,
-      questions: form.questions.map(q=>this.prepareQuestion(q)) as QuestionEdit[]
+      questions: form.questions.map((q,i)=>this.prepareQuestion(q, i)) as QuestionEdit[]
     } as QuestionaryCreate;
   }
 
-  prepareQuestion(q: any): QuestionEdit {
+  prepareQuestion(q: any, i: number): QuestionEdit {
     return {
       name: q.name,
       countQuorum: q.countQuorum,
       required: q.required,
       type: q.type,
-      options: q.options.map(o=>o.option)
+      options: this.prepareOptions(q),
+      orderNumber: i
     } as QuestionEdit;
+  }
+
+  prepareOptions(q: any) {
+    if (q.type == 'Score') {
+      return [
+        {name: '', number: 1},
+        {name: '', number: 2},
+        {name: '', number: 3},
+        {name: '', number: 4},
+        {name: '', number: 5}
+      ];
+    }
+
+    if (q.type == 'Single' || q.type == 'Multiple') {
+      return q.options.map(o=>{return {name: o.option, }});
+    }
+    return [];
   }
 
   fileSelect($event) {
@@ -120,15 +142,19 @@ export class QuestionaryCreateComponent implements OnInit {
   }
 
   addFile(f: File) {
-    this.files.push(f);
+    this._files.push({id: null, file: f, mode: "add", thumbnail: ''});
 
-    let i = this.files.length-1;
+    let i = this._files.length-1;
 
     let reader = new FileReader();
     reader.onload = (e: any) => {
-      this.thumbnails[i] = e.target.result;
+      this._files[i].thumbnail = e.target.result;
     };
     reader.readAsDataURL(f);
+  }
+
+  get files() {
+    return this._files.filter(f=>f.mode == 'keep' || f.mode =='add');
   }
 
   f(name) {
@@ -141,5 +167,8 @@ export class QuestionaryCreateComponent implements OnInit {
     if(e.server) return e.server;
   }
 
+  deleteFile(file: Attach) {
+    file.mode = 'del';
+  }
 }
 
