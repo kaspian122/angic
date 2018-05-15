@@ -181,14 +181,27 @@ export class MeetingEditComponent implements OnInit {
 
   prepareSaveForm(): MeetingEdit {
     const form = this.form.value;
+
+    let beginDate = new Date(form.beginDate);
+    if(form.beginTime) {
+      let beginTime = form.beginTime.split(":");
+      beginDate.setHours(beginTime[0], beginTime[1]);
+    }
+
+    let endDate = new Date(form.endDate);
+    if(form.endTime) {
+      let endTime = form.endTime.split(":");
+      endDate.setHours(endTime[0], endTime[1]);
+    }
+
     return {
       id: this.meeting && this.meeting.id || null,
       mkdId: this.mkdId,
       name: form.name,
       kind: form.kind.id,
       quorum: form.quorum.id,
-      beginDate: form.beginDate,
-      endDate: form.endDate,
+      beginDate: beginDate.toISOString(),
+      endDate: endDate.toISOString(),
       holderInitiatorIds: this.holderInitiators.map(it => it.id),
       questions: form.questions.map(it => MeetingEditComponent.prepareQuestion(form, it)) as MeetingQuestionEdit[]
     } as MeetingEdit;
@@ -216,6 +229,8 @@ export class MeetingEditComponent implements OnInit {
         quorum: [this.meetingEnums.MeetingQuorum.find(it => it.id == this.meeting.quorum.id), Validators.required],
         beginDate: [new Date(this.meeting.beginDate), Validators.required],
         endDate: [new Date(this.meeting.endDate), Validators.required],
+        beginTime: [MeetingEditComponent.getTimeStr(this.meeting.beginDate), ''],
+        endTime: [MeetingEditComponent.getTimeStr(this.meeting.endDate), ''],
         questions: this.fb.array(questionsFormGroups)
       });
     } else {
@@ -224,8 +239,22 @@ export class MeetingEditComponent implements OnInit {
         quorum: ['', Validators.required],
         beginDate: ['', Validators.required],
         endDate: ['', Validators.required],
+        beginTime: ['', ''],
+        endTime: ['', ''],
         questions: this.fb.array([])
       });
+    }
+  }
+
+  static getTimeStr(dateStr: string) {
+    return MeetingEditComponent.makeTimeFormat(new Date(dateStr).getHours()) + ":" + MeetingEditComponent.makeTimeFormat(new Date(dateStr).getMinutes());
+  }
+
+  static makeTimeFormat(time: number) {
+    if(time.toString().length == 1) {
+      return "0" + time.toString();
+    } else {
+      return time.toString();
     }
   }
 

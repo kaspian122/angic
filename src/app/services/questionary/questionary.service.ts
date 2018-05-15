@@ -77,7 +77,7 @@ export class QuestionaryService {
     let formData = new FormData();
 
     files.forEach(file => {
-      formData.append('file', file.file)
+      formData.append('files[]', file.file, file.file['name'])
     });
 
     return this.http.post(
