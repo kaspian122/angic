@@ -25,12 +25,12 @@
     </ng-container>
 
     <ng-container matColumnDef="certificateNumber">
-      <mat-header-cell *matHeaderCellDef [ngClass]="'certificate-number'"> Номер свидетельства </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef [ngClass]="'certificate-number'"> Номер свидетельст. </mat-header-cell>
       <mat-cell *matCellDef="let element" [ngClass]="'certificate-number'"> {{element.certificateNumber}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="certificateDate">
-      <mat-header-cell *matHeaderCellDef [ngClass]="'certificate-date'"> Дата свидетельства </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef [ngClass]="'certificate-date'"> Дата свидетельст. </mat-header-cell>
       <mat-cell *matCellDef="let element" [ngClass]="'certificate-date'"> {{element.certificateDate|date:'dd.MM.yyyy'}}
       </mat-cell>
     </ng-container>
@@ -46,8 +46,26 @@
     </ng-container>
 
     <ng-container matColumnDef="percent">
-      <mat-header-cell *matHeaderCellDef [ngClass]="'holder-percent'"> Процент голосов </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef [ngClass]="'holder-percent'"> % голосов </mat-header-cell>
       <mat-cell *matCellDef="let element" [ngClass]="'holder-percent'"> {{element.voteCount.percent}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="powerOfAttorneyName">
+      <mat-header-cell *matHeaderCellDef [ngClass]="'power-of-attorney-name'"> Доверенное лицо </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngClass]="'power-of-attorney-name'">
+        <div *ngIf="element.powerOfAttorney && isTodayWithinDates(element.powerOfAttorney.beginDate, element.powerOfAttorney.endDate)">
+        {{ element.powerOfAttorney.confidant.lastName + ' ' + element.powerOfAttorney.confidant.firstName + ' ' + element.powerOfAttorney.confidant.secondName}}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="powerOfAttorneyDate">
+      <mat-header-cell *matHeaderCellDef [ngClass]="'power-of-attorney-date'"> Дата окончания довер-ти </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngClass]="'power-of-attorney-date'">
+        <div *ngIf="element.powerOfAttorney && isTodayWithinDates(element.powerOfAttorney.beginDate, element.powerOfAttorney.endDate)">
+        {{element.powerOfAttorney.endDate|date:'dd.MM.yyyy'}}
+        </div>
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="bools">

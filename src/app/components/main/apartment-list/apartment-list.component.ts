@@ -76,18 +76,21 @@ export class ApartmentListComponent extends TableComponent<ApartmentRow> impleme
 
   loadToExcel(){
     this.holderService.getExcelFileWithHolders(this.currentMkd.mkdId).subscribe(
-        data=> this.downloadFile(data));
+        data=> this.downloadFile(data, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'Список собственников.xlsx'));
   }
 
-  private downloadFile(data){
-    let contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+  loadRegistryAd() {
+    this.mkdService.getRegistryAd(this.currentMkd.mkdId).subscribe(
+      data => this.downloadFile(data, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'Объявление о регистрации.docx'));
+  }
 
-    let blob = new Blob([data], { type: contentType });
+  private downloadFile(data, contentType: String, downloadTitle: String) {
+       let blob = new Blob([data], { type: contentType });
     let url= window.URL.createObjectURL(blob);
     const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
 
     a.href = url;
-    a.download = 'Список собственников.xlsx';
+    a.download = downloadTitle;
     document.body.appendChild(a);
     a.click();
 
