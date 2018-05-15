@@ -86,6 +86,36 @@
 
         <br>
 
+        <div formArrayName="questions">
+          <div *ngFor="let question of questions.controls; let i=index" [formGroupName]="i">
+            <mat-card style="padding: 20px; background-color: #fafafa">
+              <h3 style="float:left;">Вопрос №{{i+1}}</h3>
+              <mat-icon style="float: right; cursor:pointer;" (click)="deleteQuestion(i)">clear</mat-icon>
+
+              <mat-form-field class="fullwidth">
+                <input type="text" matInput formControlName="name" placeholder="Вопрос"/>
+                <mat-error *ngIf="f('questions.'+i+'.name').invalid">{{e('questions.'+i+'.name')}}</mat-error>
+              </mat-form-field>
+              <mat-form-field class="fullwidth">
+                <textarea matInput formControlName="description" placeholder="Описание" style = "overflow:hidden"></textarea>
+                <mat-error *ngIf="f('questions.'+i+'.description').invalid">{{e('questions.'+i+'.description')}}</mat-error>
+              </mat-form-field>
+              <mat-form-field class="fullwidth">
+                <mat-select formControlName="quorum" placeholder="Кворум">
+                  <mat-option *ngFor="let quorum of meetingEnums.MeetingQuorum" [value]="quorum">{{quorum.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="f('questions.'+i+'.quorum').invalid">{{e('questions.'+i+'.quorum')}}</mat-error>
+              </mat-form-field>
+            </mat-card>
+          </div>
+        </div>
+
+        <div style="text-align: center">
+          <a mat-raised-button (click)="addQuestion()">Добавить вопрос №{{questions.controls.length+1}}</a>
+        </div>
+
+        <br>
+
         <div style="text-align: right">
           <button mat-raised-button
                   type="submit" #sbmt

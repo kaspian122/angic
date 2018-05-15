@@ -11,11 +11,6 @@ export interface MeetingQuestionInfo {
   id: string;
 
   /**
-   * Номер п/п
-   */
-  orderNumber: number;
-
-  /**
    * Текст вопроса
    */
   name: string;
@@ -24,6 +19,11 @@ export interface MeetingQuestionInfo {
    * Описание вопроса
    */
   description: string;
+
+  /**
+   * Порядковый номер
+   */
+  orderNumber: string;
 
   /**
    * Кворум для принятия решения по вопросу
