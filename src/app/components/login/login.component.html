@@ -20,7 +20,7 @@
             <input matInput type="password" id='password' name="password" [(ngModel)]="password" placeholder="Пароль">
           </mat-form-field>
           <div style="text-align: right">
-            <a mat-button routerLink="/register">Зарегистрироваться</a>
+            <a mat-button (click)="register()">Зарегистрироваться</a>
 
             <button mat-raised-button (click)="doLogin()">Войти</button>
           </div>

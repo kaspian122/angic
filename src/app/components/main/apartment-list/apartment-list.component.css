@@ -1,11 +1,14 @@
-.floor, .total-share{
-    flex: 0 0 15%;
+.floor, .porch, .total-share{
+    flex: 0 0 10%;
 }
 .apartment-number {
     flex: 0 0 15%;
 }
-.ownership, .utilization{
-    flex: 0 0 20%;
+.ownership {
+    flex: 0 0 25%;
+}
+.utilization {
+  flex: 0 0 15%;
 }
 .area {
     flex: 0 0 10%;
@@ -21,4 +24,8 @@
 
 .mat-column-select {
     overflow: visible;
+}
+
+.red {
+  color: red;
 }

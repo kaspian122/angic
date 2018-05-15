@@ -5,23 +5,25 @@ import {ApartmentService} from '../../../services/apartment/apartment.service';
 import {HolderService} from '../../../services/holder/holder.service';
 import {MkdService} from '../../../services/mkd/mkd.service';
 import {TableComponent} from "../../../classes/table-component";
-import {Apartment} from "../../../models/apartment/apartment";
 import {PaginationInfo} from "../../../models/pagination-info";
+import {MkdOwnersInfo} from "../../../services/auth/auth";
+import {MkdInfo} from "../../../models/mkd/mkd-info";
+import {ApartmentRow} from "../../../models/apartment/apartment-row";
 
 @Component({
   selector: 'app-apartment-list',
   templateUrl: './apartment-list.component.html',
   styleUrls: ['./apartment-list.component.css']
 })
-export class ApartmentListComponent extends TableComponent<Apartment> implements OnInit {
-  public commonInfo;
-  public currentMkd;
+export class ApartmentListComponent extends TableComponent<ApartmentRow> implements OnInit {
+  mkdInfo: MkdInfo;
+  currentMkd: MkdOwnersInfo;
 
-  public displayedColumns = ['select', 'number', 'area', 'floor', 'ownership', 'totalShare', 'utilization'];
+  public displayedColumns = ['select', 'number', 'area', 'floor', 'porch', 'ownership', 'totalShare', 'utilization'];
 
   constructor(
     private apartmentService: ApartmentService,
-    private dataService: MkdService,
+    private mkdService: MkdService,
     private holderService: HolderService,
     private dialog: MatDialog
   ) {
@@ -32,27 +34,23 @@ export class ApartmentListComponent extends TableComponent<Apartment> implements
   }
 
   refreshAfterInit() {
-    this.dataService.currentMkd.subscribe(mkd => {
+    this.mkdService.currentMkd.subscribe(mkd => {
       this.currentMkd = mkd;
       this.refreshTable();
+      this.loadInfo();
     });
   }
 
   updateDataCollection(paginationInfo: PaginationInfo): void {
     this.apartmentService.getApartmentsList(this.currentMkd.mkdId, paginationInfo).subscribe(data => {
-      let apartmentList = data[0];
+      this.dataCollection.next(data[0]);
       this.totalLength = data[1];
-      this.dataCollection.next(apartmentList.apartments);
+    });
+  }
 
-      let totalAreaIn = 0;
-      for(let apartment of apartmentList.apartments) {
-        totalAreaIn += apartment.area;
-      }
-      this.commonInfo = {
-        totalAreaIn: totalAreaIn,
-        mkd: apartmentList.mkd,
-        totalAreaPercentageIn: parseFloat((totalAreaIn * 100 / apartmentList.mkd.area).toFixed(2))
-      };
+  loadInfo() {
+    this.mkdService.getMkdInfo(this.currentMkd.mkdId).subscribe(data => {
+      this.mkdInfo = data;
     });
   }
 

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Apartment} from '../../models/apartment/apartment';
-import {MkdApartmentsList} from '../../models/apartment/mkd-apartments-list';
 import {Observable} from 'rxjs/Observable';
 import {AppConfig} from '../../app.config';
 import {AuthService} from '../auth/auth.service';
 import {PaginationInfo} from "../../models/pagination-info";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {PaginationService} from "../pagination/pagination.service";
+import {ApartmentRow} from "../../models/apartment/apartment-row";
 
 @Injectable()
 export class ApartmentService {
@@ -19,15 +19,15 @@ export class ApartmentService {
     private paginationService: PaginationService
   ) { }
 
-  public getApartmentsList(mkdId: string, paginationInfo: PaginationInfo): Observable<[MkdApartmentsList, number]> {
-    let result = new ReplaySubject<[MkdApartmentsList, number]>();
+  public getApartmentsList(mkdId: string, paginationInfo: PaginationInfo): Observable<[ApartmentRow[], number]> {
+    let result = new ReplaySubject<[ApartmentRow[], number]>();
     let headers = this.authService.headers();
     headers = this.paginationService.setHeaderValues(headers, paginationInfo);
 
     let params = new HttpParams();
     params = this.paginationService.setRequestParams(params, paginationInfo);
 
-    this.http.get<MkdApartmentsList>(
+    this.http.get<ApartmentRow[]>(
       this.config.getEndpoint("mkd/" + mkdId + "/apartments"), {params: params, headers: headers, observe: 'response'}
     ).subscribe(resp => {
       let total = this.paginationService.getTotal(resp.headers);

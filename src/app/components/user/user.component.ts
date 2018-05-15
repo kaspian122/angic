@@ -11,7 +11,6 @@ import {MkdService} from '../../services/mkd/mkd.service';
 })
 export class UserComponent implements OnInit {
 
-  public auth?: Auth = null;
   public mkd = [];
   currentMkdId: string;
 
@@ -25,11 +24,10 @@ export class UserComponent implements OnInit {
     this.dataService.currentMkd.subscribe(mkd => {
       this.currentMkdId = mkd.mkdId;
     });
-    this.authService.getAuth(true)
+    this.authService.getAuth()
       .then(it => {
-        this.auth = it;
-        if(this.auth.mkdOwners){
-          this.mkd = this.auth.mkdOwners;
+        if(it.mkdOwners){
+          this.mkd = it.mkdOwners;
           for(let mkd of this.mkd){
             if(mkd.byDefault || this.mkd.length == 1 ){
               this.dataService.currentMkd.next(mkd);

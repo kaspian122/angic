@@ -18,6 +18,9 @@ export class QuestionaryCreateComponent implements OnInit {
   form: FormGroup;
   currentMkd?: MkdOwnersInfo = null;
 
+  files: File[] = [];
+  thumbnails: string[] = [];
+
   loader: boolean = false;
 
   constructor(
@@ -113,9 +116,19 @@ export class QuestionaryCreateComponent implements OnInit {
 
   fileSelect($event) {
     const files: FileList = $event.srcElement.files;
-    Array.from(files).forEach(file => {
+    Array.from(files).forEach(file => this.addFile(file));
+  }
 
-    });
+  addFile(f: File) {
+    this.files.push(f);
+
+    let i = this.files.length-1;
+
+    let reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.thumbnails[i] = e.target.result;
+    };
+    reader.readAsDataURL(f);
   }
 
   f(name) {

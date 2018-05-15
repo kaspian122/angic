@@ -21,8 +21,20 @@
                     </mat-grid-tile>
                 </mat-grid-list>
 
-                <a mat-button (click)="inputFile.click()">Import file</a>
-                <input (change)="fileSelect($event)" #inputFile type="file" [style.display]="'none'">
+                <mat-card style="padding: 20px; background-color: #fafafa">
+
+                    <mat-grid-list cols="6" rowHeight="1:1">
+                        <mat-grid-tile *ngFor="let thumbnail of thumbnails">
+                            <div style="width: 100px; height: 100px; background-repeat: no-repeat; background-size: contain;"
+                            [style.backgroundImage]="'url('+thumbnail+')'"></div>
+
+                        </mat-grid-tile>
+                    </mat-grid-list>
+
+
+                    <a mat-raised-button (click)="inputFile.click()">Добавить изображение</a>
+                    <input (change)="fileSelect($event)" #inputFile type="file" multiple [style.display]="'none'">
+                </mat-card>
 
                 <div formArrayName="questions">
                     <div *ngFor="let question of questions.controls; let i=index" [formGroupName]="i">

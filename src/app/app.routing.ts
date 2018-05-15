@@ -114,7 +114,11 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: 'confirm/:type/:key',
+    path: 'register/:login',
+    component: RegisterComponent
+  },
+  {
+    path: 'confirm/:login/:type/:key',
     component: ConfirmComponent
   },
   {
