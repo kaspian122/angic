@@ -40,16 +40,6 @@
       <mat-cell *matCellDef="let element" [ngClass]="'holder-share-amount'"> {{element.shareAmount}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="participationMeeting">
-      <mat-header-cell *matHeaderCellDef [ngClass]="'holder-participationMeeting'"> Учавствует в ОСС </mat-header-cell>
-      <mat-cell *matCellDef="let element" [ngClass]="'holder-participationMeeting'"> {{element.participationMeeting ? 'Да' : 'Нет'}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="councilman">
-      <mat-header-cell *matHeaderCellDef [ngClass]="'holder-councilman'"> Член совета </mat-header-cell>
-      <mat-cell *matCellDef="let element" [ngClass]="'holder-councilman'"> {{element.councilman ? 'Да' : 'Нет'}} </mat-cell>
-    </ng-container>
-
     <ng-container matColumnDef="areaMeters">
       <mat-header-cell *matHeaderCellDef [ngClass]="'holder-areaMeters'"> Кол-во голосов </mat-header-cell>
       <mat-cell *matCellDef="let element" [ngClass]="'holder-areaMeters'"> {{element.voteCount.areaMeters}} </mat-cell>
@@ -58,6 +48,18 @@
     <ng-container matColumnDef="percent">
       <mat-header-cell *matHeaderCellDef [ngClass]="'holder-percent'"> Процент голосов </mat-header-cell>
       <mat-cell *matCellDef="let element" [ngClass]="'holder-percent'"> {{element.voteCount.percent}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="bools">
+      <mat-header-cell *matHeaderCellDef [ngClass]="'bools'"> Настройки </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngClass]="'bools'">
+        <mat-chip-list>
+          <mat-chip *ngIf="element.chairman" matTooltip="Председатель совета">П</mat-chip>
+          <mat-chip *ngIf="element.councilman" matTooltip="Член совета">ЧC</mat-chip>
+          <mat-chip *ngIf="element.participationMeeting" matTooltip="Учавствует в ОСС">ОСС</mat-chip>
+          <mat-chip *ngIf="element.receiveNewsByEmail" matTooltip="Получает новости на email">Email</mat-chip>
+        </mat-chip-list>
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

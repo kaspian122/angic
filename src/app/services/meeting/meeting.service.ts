@@ -11,6 +11,8 @@ import {ReplaySubject} from "rxjs/ReplaySubject";
 import {PaginationInfo} from "../../models/pagination-info";
 import {PaginationService} from "../pagination/pagination.service";
 import {BatchExecutionResult} from "../../models/batch-execution-result";
+import {Holder} from '../../models/holder/holder';
+import {MeetingEdit} from '../../models/meeting/meeting-edit';
 
 @Injectable()
 export class MeetingService {
@@ -39,6 +41,14 @@ export class MeetingService {
       result.next([data, total]);
     });
     return result;
+  }
+
+  public createMeeting(meeting: MeetingEdit): Observable<any> {
+    return this.http.post(this.config.getEndpoint('meeting/'), meeting, {headers: this.authService.headers()});
+  }
+
+  public updateMeeting(meeting: MeetingEdit): Observable<any> {
+    return this.http.put(this.config.getEndpoint('meeting/'), meeting, {headers: this.authService.headers()});
   }
 
   public deleteMeetings(meetingIds: string[]): Observable<BatchExecutionResult> {
