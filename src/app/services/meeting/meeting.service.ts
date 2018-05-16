@@ -11,8 +11,8 @@ import {ReplaySubject} from "rxjs/ReplaySubject";
 import {PaginationInfo} from "../../models/pagination-info";
 import {PaginationService} from "../pagination/pagination.service";
 import {BatchExecutionResult} from "../../models/batch-execution-result";
-import {Holder} from '../../models/holder/holder';
 import {MeetingEdit} from '../../models/meeting/meeting-edit';
+import {SimpleObject} from "../../models/simple-object";
 
 @Injectable()
 export class MeetingService {
@@ -66,6 +66,10 @@ export class MeetingService {
 
   public getMeetingRights(meetingId: string): Observable<MeetingRights> {
     return this.http.get<MeetingRights>(this.config.getEndpoint(`meeting/${meetingId}/rights`), {headers: this.authService.headers()});
+  }
+
+  public getNotParticipatingHoldersList(mkdId: string): Observable<SimpleObject[]> {
+    return this.http.get<SimpleObject[]>(this.config.getEndpoint(`mkd/${mkdId}/holders/notparticipating`), {headers: this.authService.headers()});
   }
 
   public getZipFileFromMeeting(meetingId: string) {

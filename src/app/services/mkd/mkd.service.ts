@@ -50,7 +50,7 @@ export class MkdService {
     return this.http.post(this.config.getEndpoint('mkd'), mkdCreate, {headers: this.authService.headers()});
   }
 
-  public setCurrentMkd(mkdId: string): void{
+  public setCurrentMkd(mkdId: string): void {
     const headers = this.authService.headers();
 
     this.http.post(this.config.getEndpoint("user/settings/mkd/default"), mkdId, {headers: headers}).subscribe(
@@ -64,6 +64,10 @@ export class MkdService {
         );
       }
     );
+  }
+
+  public getRegistryAd(mkdId: string) {
+    return this.http.get(this.config.getEndpoint("mkd/" + mkdId + "/export/registryAd"), {headers: this.authService.headers(), responseType: 'arraybuffer'});
   }
 
 }

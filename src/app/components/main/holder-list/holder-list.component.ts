@@ -13,10 +13,12 @@ import {Holder} from "../../../models/holder/holder";
 export class HolderListComponent extends SelectionComponent<Holder> implements OnInit {
 
     public displayedColumns = [
-      'select', 'holderName', 'certificateNumber', 'certificateDate', 'shareAmount', 'areaMeters', 'percent', 'bools'
+      'select', 'holderName', 'certificateNumber', 'certificateDate', 'shareAmount', 'areaMeters', 'percent',
+      'powerOfAttorneyName', 'powerOfAttorneyDate', 'bools'
     ];
 
     @Input() apartmentId: string;
+    today = (new Date()).setHours(0, 0, 0, 0);
 
     constructor(
         private dataService: HolderService,
@@ -27,6 +29,10 @@ export class HolderListComponent extends SelectionComponent<Holder> implements O
 
     ngOnInit() {
       this.updateTable();
+    }
+
+    isTodayWithinDates(begin: Object, end: Object) : boolean {
+      return this.today >= begin && this.today <= end
     }
 
     openDeleteDialog(): void{

@@ -1,17 +1,29 @@
-.holder-share-amount, .holder-percent, .holder-areaMeters {
-    flex: 0 0 9%;
+.holder-percent, .holder-areaMeters {
+    flex: 0 0 7%;
+}
+.holder-share-amount {
+  flex: 0 0 6%;
 }
 .certificate-date {
-    flex: 0 0 12%;
+    flex: 0 0 11%;
 }
 .bools {
-  flex: 0 0 16%;
+  flex: 0 0 9%;
 }
-.holder-name, .certificate-number {
-    flex: 0 0 20%;
+.holder-name {
+    flex: 0 0 17%;
+}
+.certificate-number {
+  flex: 0 0 14%;
+}
+.power-of-attorney-name {
+  flex: 0 0 15%;
+}
+.power-of-attorney-date {
+  flex: 0 0 10%;
 }
 .select {
-    flex: 0 0 5%;
+    flex: 0 0 4%;
 }
 .mkd-info-holders-list {
     float: left;

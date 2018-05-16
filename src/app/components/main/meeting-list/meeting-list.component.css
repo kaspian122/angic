@@ -5,22 +5,19 @@
   flex: 0 0 5%;
 }
 .state {
-  flex: 0 0 15%;
+  flex: 0 0 14%;
 }
 .kind {
-  flex: 0 0 15%;
+  flex: 0 0 14%;
 }
 .initiator {
+  flex: 0 0 15%;
+}
+.beginDate, .endDate {
   flex: 0 0 20%;
 }
-.beginDate {
-  flex: 0 0 15%;
-}
-.endDate {
-  flex: 0 0 15%;
-}
 .loadDate {
-  flex: 0 0 15%;
+  flex: 0 0 12%;
 }
 .tile-left {
   float: left;
