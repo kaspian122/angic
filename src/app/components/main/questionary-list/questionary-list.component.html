@@ -60,7 +60,7 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="/questionary/{{row.id}}"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="row.state=='Проект' ? '/questionary-create/'+row.id: '/questionary/'+row.id"></mat-row>
     </mat-table>
     <mat-paginator #paginator
                    [length]="totalLength"

@@ -68,6 +68,10 @@ const routes: Routes = [
             component: QuestionaryCreateComponent,
           },
           {
+            path: 'questionary-create/:id',
+            component: QuestionaryCreateComponent,
+          },
+          {
             path: 'meeting-list',
             component: MeetingListComponent,
           },

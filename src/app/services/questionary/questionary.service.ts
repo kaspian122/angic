@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AppConfig} from '../../app.config';
 import {AuthService} from '../auth/auth.service';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import {QuestionaryActivity} from '../../models/questionary/questionary-activity';
 import {QuestionaryInfo} from '../../models/questionary/questionary-info';
 import {Observable} from 'rxjs/Observable';
@@ -71,13 +71,17 @@ export class QuestionaryService {
     return this.http.post(this.config.getEndpoint("questionary"), questionary, {headers: this.authService.headers()});
   }
 
+  public editQuestionary(questionary: QuestionaryCreate) {
+    return this.http.put(this.config.getEndpoint("questionary"), questionary, {headers: this.authService.headers()});
+  }
+
   public attachFiles(id: string, files: Attach[], type: 'Questionary'|'MeetingQuestion'): Observable<any> {
-    if (!files) return Observable.of({});
+    if (!files.length) return Observable.of({});
 
     let formData = new FormData();
 
     files.forEach(file => {
-      formData.append('file', file.file)
+      formData.append('files[]', file.file, file.file.name)
     });
 
     return this.http.post(
@@ -98,6 +102,15 @@ export class QuestionaryService {
         headers: this.authService.headers()
       }
     );
+  }
+
+  public getFile(id: string, type: string): Observable<HttpResponse<Blob>> {
+    return this.http.get(this.config.getEndpoint('file/download'), {
+      params: new HttpParams().set('fileId', id).set('folderType', type),
+      headers: this.authService.headers(),
+      observe: 'response',
+      responseType: 'blob'
+    })
   }
 
 }

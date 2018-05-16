@@ -21,6 +21,8 @@ export interface OptionInfo {
   /**
    * Процент по ответам
    */
-  responsePercent: number
+  responsePercent: number,
+
+  responseAmount: number
 
 }

@@ -1,13 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {MkdService} from "../../../services/mkd/mkd.service";
 import {MkdOwnersInfo} from "../../../services/auth/auth";
 import {QuestionaryCreate} from "../../../models/questionary/questionary-create";
 import {QuestionEdit} from "../../../models/questionary/question/question-edit";
 import {QuestionaryService} from "../../../services/questionary/questionary.service";
 import {QuestionaryInfo} from "../../../models/questionary/questionary-info";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Attach} from "../../../models/attach";
+import {Observable} from "rxjs/Observable";
+import {QuestionInfo} from "../../../models/questionary/question/question-info";
+import {OptionInfo} from "../../../models/questionary/question/option/option-info";
+import {forkJoin} from "rxjs/observable/forkJoin";
+import {HttpResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-questionary-create',
@@ -27,27 +32,73 @@ export class QuestionaryCreateComponent implements OnInit {
     private fb: FormBuilder,
     private mkdService: MkdService,
     private questionaryService: QuestionaryService,
+    private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit() {
-    console.log('init');
-    this.mkdService.currentMkd.subscribe(
-      mkd => {
-        this.currentMkd = mkd;
-        this.initForm();
+
+    this.route.paramMap.switchMap(p => Observable.of(p)).subscribe(
+      params => {
+        this.mkdService.currentMkd.subscribe(
+          mkd => {
+            this.currentMkd = mkd;
+            const id = params.get('id');
+            if (id) {
+              this.initEditForm(id);
+            } else {
+              this.initForm();
+            }
+          }
+        );
       }
     );
   }
 
-  initForm() {
-    this.form = this.fb.group({
-      mkdId: [this.currentMkd.mkdId],
-      name: ['', Validators.required],
+  initForm(info?: QuestionaryInfo) {
+
+    let formConfig = {
+      mkdId: [info ? null : this.currentMkd.mkdId],
+      name: [info ? info.name : '', Validators.required],
       questions: this.fb.array([]),
       sendMail: [false, Validators.required]
-    });
+    };
+
+    if (info && info.id) {
+      formConfig['id'] = info.id;
+    }
+
+    this.form = this.fb.group(formConfig);
+
+    if (info && info.questions && info.questions.length) {
+      info.questions.forEach(q => {
+        this.addQuestion(q);
+      });
+    }
+
   }
+
+  initEditForm(id: string) {
+    this.questionaryService.getQuestionaryInfo(id).subscribe(
+      info => {
+        let requests = info.files.map(f => this.questionaryService.getFile(f.id, 'Questionary'));
+        forkJoin(requests).subscribe(
+          results => {
+            results.forEach((response: HttpResponse<Blob>, i: number) => {
+              let file = new File([response.body], info.files[i].name, {type: response.headers.get('mime-type')});
+              this.addFile(file, 'keep', info.files[i].id);
+            });
+          },
+          null,
+          () => {
+            this.initForm(info);
+            this.form.updateValueAndValidity();
+          }
+        );
+      }
+    )
+  }
+
 
   get questions() {
     return this.form.get('questions') as FormArray;
@@ -57,24 +108,30 @@ export class QuestionaryCreateComponent implements OnInit {
     return this.questions.at(i).get('options') as FormArray;
   }
 
-  addQuestion() {
+  addQuestion(q: QuestionInfo) {
     this.questions.push(this.fb.group({
-      countQuorum: [false, Validators.required],
-      required:    [false, Validators.required],
-      name:        ['', Validators.required],
-      type:        ['Single', Validators.required],
+      countQuorum: [q ? q.countQuorum : false, Validators.required],
+      required:    [q ? q.required : false, Validators.required],
+      name:        [q ? q.name : '', Validators.required],
+      type:        [q ? q.type : 'Single', Validators.required],
       options:     this.fb.array([])
     }));
+
+    const i = this.questions.length - 1;
+
+    if (q && q.options && q.options.length) {
+      q.options.forEach(o => this.addOption(i, o))
+    }
   }
 
   deleteQuestion(i: number) {
     this.questions.removeAt(i);
   }
 
-  addOption(questionNum: number) {
+  addOption(questionNum: number, option?: OptionInfo) {
     let options = this.questions.at(questionNum).get('options') as FormArray;
     options.push(this.fb.group({
-      option: ['', Validators.required]
+      option: [option ? option.name : '', this.optionRequired]
     }));
   }
 
@@ -84,13 +141,28 @@ export class QuestionaryCreateComponent implements OnInit {
 
   onSubmit() {
     const saveForm: QuestionaryCreate = this.prepareSaveForm();
-    this.questionaryService.createQuestionary(saveForm).subscribe(
+
+    let request = saveForm.id
+      ? this.questionaryService.editQuestionary(saveForm)
+      : this.questionaryService.createQuestionary(saveForm);
+
+    request.subscribe(
       (info: QuestionaryInfo) => {
-        let filesToAttach = this.files.filter(f=>f.mode=='add');
-        this.questionaryService.attachFiles(info.id, filesToAttach, 'Questionary').subscribe(
-          // this.router.navigate(['/questionary-list']);
-          (data)=> console.log('done!!!', data)
-        )
+
+        let filesToDelete = this._files.filter(f=>f.mode=='del');
+        let delRequests = filesToDelete.map(f => this.questionaryService.deleteFile(f.id, 'Questionary'));
+        forkJoin(delRequests).subscribe(
+          null,
+          null,
+          () => {
+            let filesToAttach = this.files.filter(f=>f.mode=='add');
+            this.questionaryService.attachFiles(info.id, filesToAttach, 'Questionary').subscribe(
+              ()=> {
+                this.router.navigate(['/questionary-list']);
+              }
+            )
+          }
+        );
       },
       (e) => {
         console.log(e);
@@ -100,12 +172,19 @@ export class QuestionaryCreateComponent implements OnInit {
 
   prepareSaveForm(): QuestionaryCreate {
     const form = this.form.value;
-    return {
+    let value = {
       name: form.name,
       sendMail: form.sendMail,
-      mkdId: form.mkdId,
       questions: form.questions.map((q,i)=>this.prepareQuestion(q, i)) as QuestionEdit[]
-    } as QuestionaryCreate;
+    };
+
+    if (form.id) {
+      value['id'] = form.id;
+    } else {
+      value['mkdId'] = form.mkdId;
+    }
+
+    return value as QuestionaryCreate;
   }
 
   prepareQuestion(q: any, i: number): QuestionEdit {
@@ -141,8 +220,8 @@ export class QuestionaryCreateComponent implements OnInit {
     Array.from(files).forEach(file => this.addFile(file));
   }
 
-  addFile(f: File) {
-    this._files.push({id: null, file: f, mode: "add", thumbnail: ''});
+  addFile(f: File, mode: 'add'|'del'|'keep' = 'add', id: string = null) {
+    this._files.push({id: id, file: f, mode: mode, thumbnail: ''});
 
     let i = this._files.length-1;
 
@@ -170,5 +249,25 @@ export class QuestionaryCreateComponent implements OnInit {
   deleteFile(file: Attach) {
     file.mode = 'del';
   }
+
+  validateOptions(i: number) {
+    let options = this.form.get('questions.'+i+'.options') as FormArray;
+    options.controls.forEach(g => {
+      let o = g.get('option');
+      o.markAsTouched();
+      o.updateValueAndValidity();
+    });
+  }
+
+  optionRequired(control: AbstractControl): ValidationErrors {
+    // debugger;
+    let type = null;
+    try {type = control.parent.parent.parent.get('type').value;} catch (e) {return null;}
+    if ((type == 'Single' || type == 'Multiple') && !control.value) {
+      return {required: true};
+    }
+    return null;
+  }
+
 }
 

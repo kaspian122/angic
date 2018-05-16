@@ -66,3 +66,11 @@ a {
     text-decoration: none;
     color: #0e3f66;
 }
+
+.attachPlaceholder {
+    width: 100px;
+    height: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
