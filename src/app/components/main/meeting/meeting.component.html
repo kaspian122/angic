@@ -9,7 +9,7 @@
 
   <mat-tab-group>
     <mat-tab label="Не участвуют в ОСС" *ngIf="meetingRights.showNotParticipationMeeting">
-      <app-meeting-not-participation></app-meeting-not-participation>
+      <app-meeting-not-participation [meetingId]="meetingId"></app-meeting-not-participation>
     </mat-tab>
     <mat-tab label="Собрание" *ngIf="meetingRights.showVote">
       <app-meeting-vote></app-meeting-vote>
