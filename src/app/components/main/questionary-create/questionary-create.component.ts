@@ -8,11 +8,12 @@ import {QuestionaryService} from "../../../services/questionary/questionary.serv
 import {QuestionaryInfo} from "../../../models/questionary/questionary-info";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Attach} from "../../../models/attach";
-import {Observable} from "rxjs/Observable";
+import {FileService} from '../../../services/file/file.service';
 import {QuestionInfo} from "../../../models/questionary/question/question-info";
 import {OptionInfo} from "../../../models/questionary/question/option/option-info";
 import {forkJoin} from "rxjs/observable/forkJoin";
 import {HttpResponse} from "@angular/common/http";
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-questionary-create',
@@ -32,6 +33,7 @@ export class QuestionaryCreateComponent implements OnInit {
     private fb: FormBuilder,
     private mkdService: MkdService,
     private questionaryService: QuestionaryService,
+    private fileService: FileService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -81,7 +83,7 @@ export class QuestionaryCreateComponent implements OnInit {
   initEditForm(id: string) {
     this.questionaryService.getQuestionaryInfo(id).subscribe(
       info => {
-        let requests = info.files.map(f => this.questionaryService.getFile(f.id, 'Questionary'));
+        let requests = info.files.map(f => this.fileService.getFile(f.id, 'Questionary'));
         forkJoin(requests).subscribe(
           results => {
             results.forEach((response: HttpResponse<Blob>, i: number) => {
@@ -150,13 +152,13 @@ export class QuestionaryCreateComponent implements OnInit {
       (info: QuestionaryInfo) => {
 
         let filesToDelete = this._files.filter(f=>f.mode=='del');
-        let delRequests = filesToDelete.map(f => this.questionaryService.deleteFile(f.id, 'Questionary'));
+        let delRequests = filesToDelete.map(f => this.fileService.deleteFile(f.id, 'Questionary'));
         forkJoin(delRequests).subscribe(
           null,
           null,
           () => {
             let filesToAttach = this.files.filter(f=>f.mode=='add');
-            this.questionaryService.attachFiles(info.id, filesToAttach, 'Questionary').subscribe(
+            this.fileService.attachFiles(info.id, filesToAttach, 'Questionary').subscribe(
               ()=> {
                 this.router.navigate(['/questionary-list']);
               }

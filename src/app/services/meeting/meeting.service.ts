@@ -12,6 +12,7 @@ import {PaginationInfo} from "../../models/pagination-info";
 import {PaginationService} from "../pagination/pagination.service";
 import {BatchExecutionResult} from "../../models/batch-execution-result";
 import {MeetingEdit} from '../../models/meeting/meeting-edit';
+import {Attach} from '../../models/attach';
 import {SimpleObject} from "../../models/simple-object";
 
 @Injectable()
@@ -76,12 +77,16 @@ export class MeetingService {
     return this.http.get(this.config.getEndpoint(`meeting/${meetingId}/export/startZip`), {headers: this.authService.headers(), responseType: 'arraybuffer'});
   }
 
-  public goToProcess(meeting): Observable<any> {
-    return this.http.put(this.config.getEndpoint('meeting/state/ready'), meeting, {headers: this.authService.headers()});
+  public goToReview(meetingId): Observable<any> {
+    return this.http.put(this.config.getEndpoint(`meeting/${meetingId}/state/review`), null, {headers: this.authService.headers()});
   }
 
-  public goToCorrect(meeting): Observable<any> {
-    return this.http.put(this.config.getEndpoint('meeting/state/correct'), meeting, {headers: this.authService.headers()});
+  public goToProcess(meetingId): Observable<any> {
+    return this.http.put(this.config.getEndpoint(`meeting/${meetingId}/state/ready`), null, {headers: this.authService.headers()});
+  }
+
+  public goToCorrect(meetingId): Observable<any> {
+    return this.http.put(this.config.getEndpoint(`meeting/${meetingId}/state/correct`), null, {headers: this.authService.headers()});
   }
 
   public getMeetingEnums(): Observable<any> {

@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {QuestionaryRights} from '../../../models/questionary/questionary-rights';
 import {MeetingRights} from '../../../models/meeting/meeting-rights';
 import {QuestionaryService} from '../../../services/questionary/questionary.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MeetingService} from '../../../services/meeting/meeting.service';
 import {Observable} from 'rxjs/Observable';
 import {MeetingInfo} from '../../../models/meeting/meeting-info';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorHandler} from '../../../services/error-handler';
 
 /**
  * Форма просмотра и проведения собрания
@@ -23,7 +25,8 @@ export class MeetingComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private meetingService: MeetingService
+    private meetingService: MeetingService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -46,11 +49,15 @@ export class MeetingComponent implements OnInit {
   }
 
   goToProcess(): void {
-    this.meetingService.goToProcess(this.meetingInfo); //todo другая dto
+    this.meetingService.goToProcess(this.meetingId).subscribe(data => {
+      this.router.navigate([`/meeting-list`]);
+    });
   }
 
   goToCorrect(): void {
-    this.meetingService.goToCorrect(this.meetingInfo); //todo другая dto
+    this.meetingService.goToCorrect(this.meetingId).subscribe(data => {
+      this.router.navigate([`/meeting-list`]);
+    });
   }
 
   loadToZip(): void {

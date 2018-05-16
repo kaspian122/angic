@@ -120,6 +120,18 @@
                 </mat-select>
                 <mat-error *ngIf="f('questions.'+i+'.quorum').invalid">{{e('questions.'+i+'.quorum')}}</mat-error>
               </mat-form-field>
+
+              <mat-grid-list cols="6" rowHeight="1:1" *ngIf="question.value.newFiles.length > 0">
+                <mat-grid-tile *ngFor="let file of question.value.newFiles">
+                  <div style="border: solid silver 1px; padding: 2px; cursor: pointer" (click)="deleteFile(question, file)">
+                    <div style="width: 100px; height: 100px; background-position: center; background-repeat: no-repeat; background-size: contain;"
+                         [style.backgroundImage]="'url('+file.thumbnail+')'"></div>
+                  </div>
+                </mat-grid-tile>
+              </mat-grid-list>
+
+              <a mat-raised-button (click)="inputFile.click()">Добавить файл</a>
+              <input (change)="fileSelect($event, question)" #inputFile type="file" multiple [style.display]="'none'">
             </mat-card>
           </div>
         </div>
@@ -140,6 +152,7 @@
             <mat-icon *ngIf="savingForm" class="spinner">autorenew</mat-icon>
             {{(btnTitle)}}
           </button>
+          <a mat-raised-button *ngIf="meeting" (click)="goToReview()">На проверку</a>
         </div>
       </form>
     </section>

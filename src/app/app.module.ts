@@ -73,6 +73,7 @@ import { MeetingListComponent } from './components/main/meeting-list/meeting-lis
 import {MeetingEditComponent} from './components/main/meeting-edit/meeting-edit.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {NgxMaskModule} from 'ngx-mask';
+import {FileService} from './services/file/file.service';
 
 @NgModule({
   declarations: [
@@ -169,7 +170,8 @@ import {NgxMaskModule} from 'ngx-mask';
     ApartmentService,
     QuestionaryService,
     PaginationService,
-    MeetingService
+    MeetingService,
+    FileService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

@@ -2,6 +2,8 @@
  * Вопрос в бюллетени ОСС
  */
 import {SimpleObject} from '../../simple-object';
+import {MeetingQuestionFile} from './meeting-question-file';
+import {MeetingQuestionStatistic} from './meeting-question-statistic';
 
 export interface MeetingQuestionInfo {
 
@@ -29,4 +31,11 @@ export interface MeetingQuestionInfo {
    * Кворум для принятия решения по вопросу
    */
   quorum: SimpleObject;
+
+  /**
+   * Список файлов
+   */
+  files: MeetingQuestionFile[];
+
+  statistic: MeetingQuestionStatistic[]
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {MeetingInfo} from '../../../../models/meeting/meeting-info';
 
 @Component({
   selector: 'app-meeting-result',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./meeting-result.component.css']
 })
 export class MeetingResultComponent implements OnInit {
+
+  @Input() meeting: MeetingInfo;
 
   constructor() { }
 

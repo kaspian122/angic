@@ -5,7 +5,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {Observable} from 'rxjs/Observable';
 import {SimpleObject} from '../../../models/simple-object';
 import {map, startWith} from 'rxjs/operators';
-import {MAT_DATE_FORMATS, MatAutocompleteSelectedEvent} from '@angular/material';
+import {MatAutocompleteSelectedEvent} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MkdService} from '../../../services/mkd/mkd.service';
 import {HolderService} from '../../../services/holder/holder.service';
@@ -14,6 +14,9 @@ import {MeetingEdit} from '../../../models/meeting/meeting-edit';
 import {MeetingQuestionEdit} from '../../../models/meeting/question/meeting-question-edit';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorHandler} from '../../../services/error-handler';
+import {AbstractControl} from '@angular/forms/src/model';
+import {FileService} from '../../../services/file/file.service';
+import {Attach} from '../../../models/attach';
 
 /**
  * Создание/редактирование ОСС
@@ -83,6 +86,7 @@ export class MeetingEditComponent implements OnInit {
     private mkdService: MkdService,
     private holderService: HolderService,
     private meetingService: MeetingService,
+    private fileService: FileService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -155,9 +159,8 @@ export class MeetingEditComponent implements OnInit {
 
     if (this.meeting) {
       this.meetingService.updateMeeting(saveForm).subscribe(
-        data => {
-          this.savingForm = false;
-          this.router.navigate([`/meeting-list`]);
+        (data: MeetingInfo) => {
+          this.afterSave(data);
         },
         (err: HttpErrorResponse) => {
           ErrorHandler.handleFormError(err, this.form);
@@ -166,9 +169,8 @@ export class MeetingEditComponent implements OnInit {
       );
     } else {
       this.meetingService.createMeeting(saveForm).subscribe(
-        data => {
-          this.savingForm = false;
-          this.router.navigate([`/meeting-list`]);
+        (data: MeetingInfo) => {
+          this.afterSave(data);
         },
         (err: HttpErrorResponse) => {
           ErrorHandler.handleFormError(err, this.form);
@@ -176,7 +178,33 @@ export class MeetingEditComponent implements OnInit {
         }
       );
     }
+  }
 
+  afterSave(data: MeetingInfo) {
+    let qCnt = 0;
+    this.savingForm = false;
+
+    if(data.questions.length == 0) {
+      this.router.navigate([`/meeting-list`]);
+    } else {
+      this.form.value.questions.forEach(question => {
+          let filesToAttach = question.newFiles.filter(f => f.value.id == null && f.value.mode == 'add').map(it => it.value);
+          if (filesToAttach.length > 0) {
+            let dataQuestion = data.questions.find(it => it.orderNumber == question.orderNumber);
+            if (dataQuestion) {
+              this.fileService.attachFiles(dataQuestion.id, filesToAttach, 'MeetingQuestion').subscribe(t => {
+                qCnt += 1;
+                if(qCnt == data.questions.length) {
+                  this.router.navigate([`/meeting-list`]);
+                }
+              });
+            }
+          } else if(question.orderNumber == this.form.value.questions.length) {
+            this.router.navigate([`/meeting-list`]);
+          }
+        }
+      );
+    }
   }
 
   prepareSaveForm(): MeetingEdit {
@@ -209,20 +237,32 @@ export class MeetingEditComponent implements OnInit {
 
   static prepareQuestion(form: any, question: any): MeetingQuestionEdit {
     return {
+      id: question.id,
       name: question.name,
       description: question.description,
       quorum: question.quorum.id,
-      orderNumber: form.questions.indexOf(question) + 1
+      orderNumber: form.questions.indexOf(question) + 1,
     } as MeetingQuestionEdit;
+  }
+
+  goToReview(): void {
+    this.meetingService.goToReview(this.meeting.id).subscribe(data => {
+      this.router.navigate([`/meeting-list`]);
+    }, (err: HttpErrorResponse) => {
+      ErrorHandler.handleFormError(err, this.form);
+      this.savingForm = false;
+    });
   }
 
   initForm() {
     if(this.meeting) {
       let questionsFormGroups = this.meeting.questions.map(question => this.fb.group({
+        id: [question.id, ''],
         name: [question.name, Validators.required],
         description: [question.description, Validators.required],
         orderNumber: [question.orderNumber, Validators.required],
         quorum: [this.meetingEnums.MeetingQuorum.find(it => it.id == question.quorum.id), Validators.required],
+        newFiles: this.fb.array([])
       }));
       this.form = this.fb.group({
         kind: [this.meetingEnums.MeetingKind.find(it => it.id == this.meeting.kind.id), Validators.required],
@@ -233,6 +273,7 @@ export class MeetingEditComponent implements OnInit {
         endTime: [MeetingEditComponent.getTimeStr(this.meeting.endDate), ''],
         questions: this.fb.array(questionsFormGroups)
       });
+      //this.form.value.questions.forEach(q => new File() this.addFile(q));
     } else {
       this.form = this.fb.group({
         kind: ['', Validators.required],
@@ -263,7 +304,9 @@ export class MeetingEditComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       orderNumber: [this.questions.controls.length+1, Validators.required],
-      quorum: ['', Validators.required]
+      quorum: ['', Validators.required],
+      files: this.fb.array([]),
+      newFiles: this.fb.array([])
     }));
 
     this.form.markAsDirty({});
@@ -303,6 +346,32 @@ export class MeetingEditComponent implements OnInit {
     }
 
     this.holderInput.nativeElement.value = '';
+  }
+
+  fileSelect($event, question) {
+    const files: FileList = $event.srcElement.files;
+    Array.from(files).forEach(file => this.addFile(file, question));
+  }
+
+  addFile(f: File, question: AbstractControl) {
+    (question.get('newFiles') as FormArray).push(this.fb.group({
+      id: null, file: f, mode: "add", thumbnail: ''
+    }));
+
+    let i = (question.value.newFiles as FormArray).length-1;
+
+    let reader = new FileReader();
+    reader.onload = (e: any) => {
+      (question.get('newFiles') as FormArray).at(i).value.thumbnail = e.target.result;
+    };
+    reader.readAsDataURL(f);
+    this.form.markAsDirty({});
+  }
+
+  deleteFile(question: AbstractControl, file: Attach) {
+    file.mode = 'del';
+    (question.get('newFiles') as FormArray).removeAt(question.value.newFiles.indexOf(file));
+    this.form.markAsDirty({});
   }
 
 }
