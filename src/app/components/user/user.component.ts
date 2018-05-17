@@ -3,6 +3,7 @@ import {AuthService} from "../../services/auth/auth.service";
 import {Router} from "@angular/router";
 import {Auth, MkdOwnersInfo} from "../../services/auth/auth";
 import {MkdService} from '../../services/mkd/mkd.service';
+import {ReplaySubject} from "rxjs/ReplaySubject";
 
 @Component({
   selector: 'app-user',
@@ -21,6 +22,7 @@ export class UserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.dataService.currentMkd = new ReplaySubject<MkdOwnersInfo>(1);
     this.dataService.currentMkd.subscribe(mkd => {
       this.currentMkdId = mkd.mkdId;
     });
