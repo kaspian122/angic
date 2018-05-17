@@ -37,5 +37,8 @@ export interface MeetingQuestionInfo {
    */
   files: MeetingQuestionFile[];
 
+  /**
+   * Статистика по файлам
+   */
   statistic: MeetingQuestionStatistic[]
 }

@@ -223,7 +223,7 @@ export class QuestionaryCreateComponent implements OnInit {
   }
 
   addFile(f: File, mode: 'add'|'del'|'keep' = 'add', id: string = null) {
-    this._files.push({id: id, file: f, mode: mode, thumbnail: ''});
+    this._files.push({id: id, file: f, name: f.name, mode: mode, thumbnail: ''});
 
     let i = this._files.length-1;
 

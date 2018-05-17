@@ -1,7 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MeetingService} from '../../../services/meeting/meeting.service';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {Observable} from 'rxjs/Observable';
 import {SimpleObject} from '../../../models/simple-object';
 import {map, startWith} from 'rxjs/operators';
@@ -17,6 +16,8 @@ import {ErrorHandler} from '../../../services/error-handler';
 import {AbstractControl} from '@angular/forms/src/model';
 import {FileService} from '../../../services/file/file.service';
 import {Attach} from '../../../models/attach';
+import {MeetingQuestionInfo} from '../../../models/meeting/question/meeting-question-info';
+import {forkJoin} from 'rxjs/observable/forkJoin';
 
 /**
  * Создание/редактирование ОСС
@@ -56,7 +57,6 @@ export class MeetingEditComponent implements OnInit {
   /**
    * Бутор нужный для автокомплита с собственниками
    */
-  separatorKeysCodes = [ENTER, COMMA];
   holdersCtrl: FormControl = new FormControl();
   @ViewChild('holderInput') holderInput: ElementRef;
   filteredHolderInitiators: Observable<SimpleObject[]>;
@@ -112,6 +112,8 @@ export class MeetingEditComponent implements OnInit {
     }
   }
 
+  /**************************** Инициализация ****************************************/
+
   ngOnInit() {
     this.route.paramMap.switchMap(p => Observable.of(p)).subscribe(
       params => {
@@ -152,6 +154,60 @@ export class MeetingEditComponent implements OnInit {
       });
   }
 
+  initForm() {
+    if(this.meeting) {
+      let questionsFormGroups = this.meeting.questions.map(question => this.fb.group({
+        id: [question.id, ''],
+        name: [question.name, Validators.required],
+        description: [question.description, Validators.required],
+        orderNumber: [question.orderNumber, Validators.required],
+        quorum: [this.meetingEnums.MeetingQuorum.find(it => it.id == question.quorum.id), Validators.required],
+        files: this.fb.array(this.initFiles(question)),
+        attachs: this.fb.array([])
+      }));
+      this.form = this.fb.group({
+        kind: [this.meetingEnums.MeetingKind.find(it => it.id == this.meeting.kind.id), Validators.required],
+        quorum: [this.meetingEnums.MeetingQuorum.find(it => it.id == this.meeting.quorum.id), Validators.required],
+        beginDate: [new Date(this.meeting.beginDate), Validators.required],
+        endDate: [new Date(this.meeting.endDate), Validators.required],
+        beginTime: [MeetingEditComponent.getTimeStr(this.meeting.beginDate), ''],
+        endTime: [MeetingEditComponent.getTimeStr(this.meeting.endDate), ''],
+        questions: this.fb.array(questionsFormGroups)
+      });
+      this.initAttachs();
+    } else {
+      this.form = this.fb.group({
+        kind: ['', Validators.required],
+        quorum: ['', Validators.required],
+        beginDate: ['', Validators.required],
+        endDate: ['', Validators.required],
+        beginTime: ['', ''],
+        endTime: ['', ''],
+        questions: this.fb.array([])
+      });
+    }
+  }
+
+  initFiles(question: MeetingQuestionInfo) {
+    return question.files.map(file => this.fb.group({
+      id: [file.id, ''],
+      name: [file.name, '']
+    }));
+  }
+
+  initAttachs() {
+    this.questions.controls.forEach(question => {
+        question.value.files.forEach(file => {
+          (question.get('attachs') as FormArray).push(this.fb.group({
+            id: file.id, file: null, name: file.name, mode: 'keep', thumbnail: ''
+          }));
+        });
+      }
+    );
+  }
+
+  /**************************** Сохранение ****************************************/
+
   onSubmit() {
     this.savingForm = true;
 
@@ -184,24 +240,31 @@ export class MeetingEditComponent implements OnInit {
     let qCnt = 0;
     this.savingForm = false;
 
-    if(data.questions.length == 0) {
+    if (data.questions.length == 0) {
       this.router.navigate([`/meeting-list`]);
     } else {
       this.form.value.questions.forEach(question => {
-          let filesToAttach = question.newFiles.filter(f => f.value.id == null && f.value.mode == 'add').map(it => it.value);
-          if (filesToAttach.length > 0) {
-            let dataQuestion = data.questions.find(it => it.orderNumber == question.orderNumber);
-            if (dataQuestion) {
-              this.fileService.attachFiles(dataQuestion.id, filesToAttach, 'MeetingQuestion').subscribe(t => {
-                qCnt += 1;
-                if(qCnt == data.questions.length) {
-                  this.router.navigate([`/meeting-list`]);
+          let filesToDelete = question.attachs.filter(f => f.id != null && f.mode == 'del');
+          let delRequests = filesToDelete.map(f => this.fileService.deleteFile(f.id, 'MeetingQuestion'));
+          forkJoin(delRequests).subscribe(
+            null,
+            null,
+            () => {
+              let filesToAttach = question.attachs.filter(f => f.id == null && f.mode == 'add').map(it => it);
+              if (filesToAttach.length > 0) {
+                let dataQuestion = data.questions.find(it => it.orderNumber == question.orderNumber);
+                if (dataQuestion) {
+                  this.fileService.attachFiles(dataQuestion.id, filesToAttach, 'MeetingQuestion').subscribe(t => {
+                    qCnt += 1;
+                    if (qCnt == data.questions.length) {
+                      this.router.navigate([`/meeting-list`]);
+                    }
+                  });
                 }
-              });
-            }
-          } else if(question.orderNumber == this.form.value.questions.length) {
-            this.router.navigate([`/meeting-list`]);
-          }
+              } else if (question.orderNumber == this.form.value.questions.length) {
+                this.router.navigate([`/meeting-list`]);
+              }
+            });
         }
       );
     }
@@ -245,6 +308,8 @@ export class MeetingEditComponent implements OnInit {
     } as MeetingQuestionEdit;
   }
 
+  /**************************** События ****************************************/
+
   goToReview(): void {
     this.meetingService.goToReview(this.meeting.id).subscribe(data => {
       this.router.navigate([`/meeting-list`]);
@@ -254,38 +319,47 @@ export class MeetingEditComponent implements OnInit {
     });
   }
 
-  initForm() {
-    if(this.meeting) {
-      let questionsFormGroups = this.meeting.questions.map(question => this.fb.group({
-        id: [question.id, ''],
-        name: [question.name, Validators.required],
-        description: [question.description, Validators.required],
-        orderNumber: [question.orderNumber, Validators.required],
-        quorum: [this.meetingEnums.MeetingQuorum.find(it => it.id == question.quorum.id), Validators.required],
-        newFiles: this.fb.array([])
-      }));
-      this.form = this.fb.group({
-        kind: [this.meetingEnums.MeetingKind.find(it => it.id == this.meeting.kind.id), Validators.required],
-        quorum: [this.meetingEnums.MeetingQuorum.find(it => it.id == this.meeting.quorum.id), Validators.required],
-        beginDate: [new Date(this.meeting.beginDate), Validators.required],
-        endDate: [new Date(this.meeting.endDate), Validators.required],
-        beginTime: [MeetingEditComponent.getTimeStr(this.meeting.beginDate), ''],
-        endTime: [MeetingEditComponent.getTimeStr(this.meeting.endDate), ''],
-        questions: this.fb.array(questionsFormGroups)
-      });
-      //this.form.value.questions.forEach(q => new File() this.addFile(q));
-    } else {
-      this.form = this.fb.group({
-        kind: ['', Validators.required],
-        quorum: ['', Validators.required],
-        beginDate: ['', Validators.required],
-        endDate: ['', Validators.required],
-        beginTime: ['', ''],
-        endTime: ['', ''],
-        questions: this.fb.array([])
-      });
-    }
+  addQuestion() {
+    this.questions.push(this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      orderNumber: [this.questions.controls.length+1, Validators.required],
+      quorum: ['', Validators.required],
+      files: this.fb.array([]),
+      attachs: this.fb.array([])
+    }));
+
+    this.form.markAsDirty({});
   }
+
+  deleteQuestion(i: number) {
+    this.questions.removeAt(i);
+    this.form.markAsDirty({});
+  }
+
+  addFile(f: File, question: AbstractControl) {
+    (question.get('attachs') as FormArray).push(this.fb.group({
+      id: null, file: f, name: f.name, mode: "add", thumbnail: ''
+    }));
+
+    this.form.markAsDirty({});
+  }
+
+  deleteFile(question: AbstractControl, file: Attach) {
+    file.mode = 'del';
+    this.form.markAsDirty({});
+  }
+
+  /**************************** GET ****************************************/
+  get questions() {
+    return this.form.get('questions') as FormArray;
+  }
+
+  getFilesForView(question: AbstractControl) {
+    return question.value.attachs.filter(it => it.mode != 'del');
+  }
+
+  /**************************** Остальное ****************************************/
 
   static getTimeStr(dateStr: string) {
     return MeetingEditComponent.makeTimeFormat(new Date(dateStr).getHours()) + ":" + MeetingEditComponent.makeTimeFormat(new Date(dateStr).getMinutes());
@@ -297,28 +371,6 @@ export class MeetingEditComponent implements OnInit {
     } else {
       return time.toString();
     }
-  }
-
-  addQuestion() {
-    this.questions.push(this.fb.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      orderNumber: [this.questions.controls.length+1, Validators.required],
-      quorum: ['', Validators.required],
-      files: this.fb.array([]),
-      newFiles: this.fb.array([])
-    }));
-
-    this.form.markAsDirty({});
-  }
-
-  get questions() {
-    return this.form.get('questions') as FormArray;
-  }
-
-  deleteQuestion(i: number) {
-    this.questions.removeAt(i);
-    this.form.markAsDirty({});
   }
 
   filter(name: string) {
@@ -352,26 +404,4 @@ export class MeetingEditComponent implements OnInit {
     const files: FileList = $event.srcElement.files;
     Array.from(files).forEach(file => this.addFile(file, question));
   }
-
-  addFile(f: File, question: AbstractControl) {
-    (question.get('newFiles') as FormArray).push(this.fb.group({
-      id: null, file: f, mode: "add", thumbnail: ''
-    }));
-
-    let i = (question.value.newFiles as FormArray).length-1;
-
-    let reader = new FileReader();
-    reader.onload = (e: any) => {
-      (question.get('newFiles') as FormArray).at(i).value.thumbnail = e.target.result;
-    };
-    reader.readAsDataURL(f);
-    this.form.markAsDirty({});
-  }
-
-  deleteFile(question: AbstractControl, file: Attach) {
-    file.mode = 'del';
-    (question.get('newFiles') as FormArray).removeAt(question.value.newFiles.indexOf(file));
-    this.form.markAsDirty({});
-  }
-
 }
