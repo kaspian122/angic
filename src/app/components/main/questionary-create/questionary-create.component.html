@@ -99,6 +99,12 @@
 
 
                 <div style="text-align: right">
+                    <button *ngIf="form.get('id') && form.get('id').value" mat-raised-button
+                            (click)="publish()"
+                            type="button"
+                            [disabled]="loader">
+                        Опубликовать
+                    </button>
                     <button mat-raised-button
                             type="submit" #sbmt
                             [disabled]="form.status == 'INVALID' || loader">

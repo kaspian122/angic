@@ -14,6 +14,8 @@ import {OptionInfo} from "../../../models/questionary/question/option/option-inf
 import {forkJoin} from "rxjs/observable/forkJoin";
 import {HttpResponse} from "@angular/common/http";
 import {Observable} from 'rxjs/Observable';
+import {MatDialog, MatSnackBar} from "@angular/material";
+import {SimpleDialogComponent} from "../../simple-dialog/simple-dialog.component";
 
 @Component({
   selector: 'app-questionary-create',
@@ -35,7 +37,9 @@ export class QuestionaryCreateComponent implements OnInit {
     private questionaryService: QuestionaryService,
     private fileService: FileService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -47,6 +51,7 @@ export class QuestionaryCreateComponent implements OnInit {
             this.currentMkd = mkd;
             const id = params.get('id');
             if (id) {
+              this.loader = true;
               this.initEditForm(id);
             } else {
               this.initForm();
@@ -95,16 +100,21 @@ export class QuestionaryCreateComponent implements OnInit {
         //   () => {
         //   }
         // );
-
-        info.files.forEach(f => {
-          this.addFile(null, 'keep', f.id, f.name);
-        });
-
-        this.initForm(info);
-        this.form.updateValueAndValidity();
-
+        this.loadFormData(info);
+        this.loader = false;
       }
     )
+  }
+
+  loadFormData(info: QuestionaryInfo) {
+    this._files = [];
+
+    info.files.forEach(f => {
+      this.addFile(null, 'keep', f.id, f.name);
+    });
+
+    this.initForm(info);
+    this.form.updateValueAndValidity();
   }
 
   get questions() {
@@ -147,6 +157,7 @@ export class QuestionaryCreateComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loader = true;
     const saveForm: QuestionaryCreate = this.prepareSaveForm();
 
     let request = saveForm.id
@@ -165,7 +176,11 @@ export class QuestionaryCreateComponent implements OnInit {
             let filesToAttach = this.files.filter(f=>f.mode=='add');
             this.fileService.attachFiles(info.id, filesToAttach, 'Questionary').subscribe(
               ()=> {
-                this.router.navigate(['/questionary-list']);
+                this.snackBar.open('Анкета сохранена', '', {
+                  duration: 2000
+                });
+                this.initEditForm(info.id);
+                // this.router.navigate(['/questionary-list']);
               }
             )
           }
@@ -261,6 +276,29 @@ export class QuestionaryCreateComponent implements OnInit {
 
   deleteFile(file: Attach) {
     file.mode = 'del';
+  }
+
+  publish() {
+    const id = this.form.get('id').value;
+    if (!id) return;
+    this.dialog.open(SimpleDialogComponent, {
+      height: '170px',
+      width: '350px',
+      data: {
+        title: 'Опубликовать анкету'
+      }
+    }).afterClosed().subscribe(
+      result => {
+        if (result) {
+          this.loader = true;
+          this.questionaryService.publishQuestionary(id).subscribe(
+            ()=>{this.router.navigate(['/questionary-list']);},
+            null,
+            ()=>{this.loader = false;}
+          );
+        }
+      }
+    );
   }
 
   validateOptions(i: number) {
