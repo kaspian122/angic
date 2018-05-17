@@ -121,11 +121,11 @@
                 <mat-error *ngIf="f('questions.'+i+'.quorum').invalid">{{e('questions.'+i+'.quorum')}}</mat-error>
               </mat-form-field>
 
-              <mat-grid-list cols="6" rowHeight="1:1" *ngIf="question.value.newFiles.length > 0">
-                <mat-grid-tile *ngFor="let file of question.value.newFiles">
-                  <div style="border: solid silver 1px; padding: 2px; cursor: pointer" (click)="deleteFile(question, file)">
-                    <div style="width: 100px; height: 100px; background-position: center; background-repeat: no-repeat; background-size: contain;"
-                         [style.backgroundImage]="'url('+file.thumbnail+')'"></div>
+              <mat-grid-list cols="6" rowHeight="1:1" *ngIf="question.value.attachs.length > 0">
+                <mat-grid-tile *ngFor="let file of getFilesForView(question)">
+                  <div style="float: left; width: 100%; cursor: pointer"
+                       (click)="deleteFile(question, file)">
+                    <mat-icon mat-list-icon>insert_drive_file</mat-icon> {{file.name}}
                   </div>
                 </mat-grid-tile>
               </mat-grid-list>
