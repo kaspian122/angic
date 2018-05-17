@@ -1,48 +1,50 @@
+<section>
+  <div *ngFor="let question of meeting?.questions">
+    <mat-card style="padding: 20px; background-color: #fafafa">
 
-    <section>
-      <div *ngFor="let question of meeting?.questions">
-        <mat-card style="padding: 20px; background-color: #fafafa">
-          <h3 style="float:left;">{{question.name}}</h3>
+      <mat-card-content>
+        <h3 style="float:left;">{{question.name}}</h3>
+      </mat-card-content>
 
-          <mat-grid-list cols="1" rowHeight="6:1">
+      <mat-card-content>
+        {{question.description}}
+      </mat-card-content>
+
+      <mat-card-content>
+        <mat-grid-list cols="4" rowHeight="3em">
+          <mat-grid-tile>
+            <div class="tile"></div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="tile-center">Кол-во голосов</div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="tile-center">Кол-во голосов в м.кв.</div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="tile-center">% от числа<br>проголосовавших</div>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <div *ngFor="let answer of question.statistic">
+          <mat-grid-list cols="4" rowHeight="1.5em">
             <mat-grid-tile>
-              <div class="tile">{{question.description}}</div>
+              <div class="tile">{{answer.answer}}</div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="tile-center">{{answer.responseCount}}</div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="tile-center">{{answer.responseAmount}}</div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="tile-center">{{answer.responsePercent}}</div>
             </mat-grid-tile>
           </mat-grid-list>
+        </div>
+      </mat-card-content>
 
-          <mat-grid-list cols="4" rowHeight="9:1">
-            <mat-grid-tile>
-              <div class="tile"></div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-              <div class="tile-center">Кол-во голосов</div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-              <div class="tile-center">Кол-во голосов в м.кв.</div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-              <div class="tile-center">% от числа проголосовавших</div>
-            </mat-grid-tile>
-          </mat-grid-list>
-
-          <div *ngFor="let answer of question.statistic">
-            <mat-grid-list cols="4" rowHeight="1em">
-              <mat-grid-tile>
-                <div class="tile">{{answer.answer}}</div>
-              </mat-grid-tile>
-              <mat-grid-tile>
-                <div class="tile-center">{{answer.responseCount}}</div>
-              </mat-grid-tile>
-              <mat-grid-tile>
-                <div class="tile-center">{{answer.responseAmount}}</div>
-              </mat-grid-tile>
-              <mat-grid-tile>
-                <div class="tile-center">{{answer.responsePercent}}</div>
-              </mat-grid-tile>
-            </mat-grid-list>
-          </div>
-
-        </mat-card>
-      </div>
-    </section>
+    </mat-card>
+  </div>
+</section>
 
