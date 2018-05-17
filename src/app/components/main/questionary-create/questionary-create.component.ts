@@ -83,24 +83,29 @@ export class QuestionaryCreateComponent implements OnInit {
   initEditForm(id: string) {
     this.questionaryService.getQuestionaryInfo(id).subscribe(
       info => {
-        let requests = info.files.map(f => this.fileService.getFile(f.id, 'Questionary'));
-        forkJoin(requests).subscribe(
-          results => {
-            results.forEach((response: HttpResponse<Blob>, i: number) => {
-              let file = new File([response.body], info.files[i].name, {type: response.headers.get('mime-type')});
-              this.addFile(file, 'keep', info.files[i].id);
-            });
-          },
-          null,
-          () => {
-            this.initForm(info);
-            this.form.updateValueAndValidity();
-          }
-        );
+        // let requests = info.files.map(f => this.fileService.getFile(f.id, 'Questionary'));
+        // forkJoin(requests).subscribe(
+        //   results => {
+        //     results.forEach((response: HttpResponse<Blob>, i: number) => {
+        //       let file = new File([response.body], info.files[i].name, {type: response.headers.get('mime-type')});
+        //       this.addFile(file, 'keep', info.files[i].id);
+        //     });
+        //   },
+        //   null,
+        //   () => {
+        //   }
+        // );
+
+        info.files.forEach(f => {
+          this.addFile(null, 'keep', f.id, f.name);
+        });
+
+        this.initForm(info);
+        this.form.updateValueAndValidity();
+
       }
     )
   }
-
 
   get questions() {
     return this.form.get('questions') as FormArray;
@@ -222,16 +227,22 @@ export class QuestionaryCreateComponent implements OnInit {
     Array.from(files).forEach(file => this.addFile(file));
   }
 
-  addFile(f: File, mode: 'add'|'del'|'keep' = 'add', id: string = null) {
-    this._files.push({id: id, file: f, name: f.name, mode: mode, thumbnail: ''});
+  addFile(f: File, mode: 'add'|'del'|'keep' = 'add', id: string = null, name: string = null) {
+    this._files.push({
+      id: id,
+      file: f,
+      name: name || f.name,
+      mode: mode,
+      thumbnail: ''
+    });
 
-    let i = this._files.length-1;
-
-    let reader = new FileReader();
-    reader.onload = (e: any) => {
-      this._files[i].thumbnail = e.target.result;
-    };
-    reader.readAsDataURL(f);
+    // let i = this._files.length-1;
+    //
+    // let reader = new FileReader();
+    // reader.onload = (e: any) => {
+    //   this._files[i].thumbnail = e.target.result;
+    // };
+    // reader.readAsDataURL(f);
   }
 
   get files() {
