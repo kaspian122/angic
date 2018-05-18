@@ -5,35 +5,35 @@
         Новости
         <mat-divider></mat-divider>
       </a>
-      <a mat-list-item routerLink="/apartments-list" routerLinkActive="active" *ngIf="hasPrivileges"><mat-icon>list</mat-icon>
+      <a mat-list-item routerLink="/apartments-list" routerLinkActive="active" *ngIf="hasSuperPrivileges"><mat-icon>list</mat-icon>
         Квартиры
         <mat-divider></mat-divider>
       </a>
-      <a mat-list-item routerLink="/questionary-list" routerLinkActive="active"><mat-icon>whatshot</mat-icon>
+      <a mat-list-item *ngIf="hasSuperPrivileges || hasHolderPrivileges" routerLink="/questionary-list" routerLinkActive="active"><mat-icon>whatshot</mat-icon>
         Опросы
         <mat-divider></mat-divider>
       </a>
-      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>content_paste</mat-icon>
+      <a mat-list-item *ngIf="hasSuperPrivileges"><mat-icon>content_paste</mat-icon>
         План работ
         <mat-divider></mat-divider>
       </a>
-      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>account_balance</mat-icon>
+      <a mat-list-item *ngIf="hasSuperPrivileges"><mat-icon>account_balance</mat-icon>
         Бюджет дома
         <mat-divider></mat-divider>
       </a>
-      <a mat-list-item routerLink="/meeting-list" routerLinkActive="active"><mat-icon>group</mat-icon>
+      <a mat-list-item *ngIf="hasSuperPrivileges || hasHolderPrivileges" routerLink="/meeting-list" routerLinkActive="active"><mat-icon>group</mat-icon>
         Общие собрания
         <mat-divider></mat-divider>
       </a>
-      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>checkbox</mat-icon>
+      <a mat-list-item *ngIf="hasSuperPrivileges"><mat-icon>checkbox</mat-icon>
         Заявки
         <mat-divider></mat-divider>
       </a>
-      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>attachment</mat-icon>
+      <a mat-list-item *ngIf="hasSuperPrivileges"><mat-icon>attachment</mat-icon>
         Номенклатура
         <mat-divider></mat-divider>
       </a>
-      <a mat-list-item *ngIf="hasPrivileges"><mat-icon>forum</mat-icon>
+      <a mat-list-item *ngIf="hasSuperPrivileges"><mat-icon>forum</mat-icon>
         Объявления
       </a>
     </mat-nav-list>

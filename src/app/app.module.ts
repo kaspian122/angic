@@ -75,6 +75,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {NgxMaskModule} from 'ngx-mask';
 import {FileService} from './services/file/file.service';
 import { RedirectComponent } from './components/redirect/redirect.component';
+import {MatRadioModule} from '@angular/material/radio';
 import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 
 @NgModule({
@@ -147,6 +148,7 @@ import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
     MatChipsModule,
     MatAutocompleteModule,
     MatTooltipModule,
+    MatRadioModule,
     NgxMaskModule.forRoot()
   ],
   providers: [

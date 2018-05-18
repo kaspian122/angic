@@ -14,6 +14,7 @@ import {BatchExecutionResult} from "../../models/batch-execution-result";
 import {MeetingEdit} from '../../models/meeting/meeting-edit';
 import {Attach} from '../../models/attach';
 import {SimpleObject} from "../../models/simple-object";
+import {MeetingResponse} from '../../models/meeting/question/meeting-response';
 
 @Injectable()
 export class MeetingService {
@@ -55,6 +56,10 @@ export class MeetingService {
   public deleteMeetings(meetingIds: string[]): Observable<BatchExecutionResult> {
     return this.http.request<BatchExecutionResult>(
       "DELETE", this.config.getEndpoint("meeting"), {body: meetingIds, headers: this.authService.headers()});
+  }
+
+  public saveMeetingResponse(id: string, meetingResponses: MeetingResponse[]): Observable<any> {
+    return this.http.post(this.config.getEndpoint(`meeting/${id}/response`), meetingResponses, {headers: this.authService.headers()});
   }
 
   public getMeetingInfo(meetingId: string): Observable<MeetingInfo> {

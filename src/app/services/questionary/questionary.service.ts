@@ -71,4 +71,9 @@ export class QuestionaryService {
   public editQuestionary(questionary: QuestionaryCreate) {
     return this.http.put(this.config.getEndpoint("questionary"), questionary, {headers: this.authService.headers()});
   }
+
+  public publishQuestionary(id: string) {
+    return this.http.put(this.config.getEndpoint(`questionary/${id}/publish`), null, {headers: this.authService.headers()})
+  }
+
 }

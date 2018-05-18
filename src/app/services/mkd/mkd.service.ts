@@ -13,7 +13,7 @@ import {MkdInfo} from "../../models/mkd/mkd-info";
 
 @Injectable()
 export class MkdService {
-  public currentMkd: ReplaySubject<MkdOwnersInfo> = new ReplaySubject<MkdOwnersInfo>();
+  public currentMkd: ReplaySubject<MkdOwnersInfo>;
   public auth?: Auth = null;
 
   constructor(

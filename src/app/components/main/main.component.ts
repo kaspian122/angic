@@ -13,7 +13,8 @@ import {MkdService} from '../../services/mkd/mkd.service';
 export class MainComponent implements OnInit {
 
   public auth?: Auth = null;
-  public hasPrivileges = false;
+  public hasSuperPrivileges = false;
+  public hasHolderPrivileges = false;
   public currentMkd?: MkdOwnersInfo = null;
 
   constructor(
@@ -33,7 +34,8 @@ export class MainComponent implements OnInit {
           if (this.auth.mkdOwners.length > 1) {
             let m = this.auth.mkdOwners.find(e => e.byDefault == true);
           }
-          this.hasPrivileges = this.authService.checkRole(['CHAIRMAN', 'SYSTEM_ADMIN', 'BOARD_MEMBER'], m.authorities);
+          this.hasSuperPrivileges = this.authService.checkRole(['CHAIRMAN', 'SYSTEM_ADMIN', 'BOARD_MEMBER'], m.authorities);
+          this.hasHolderPrivileges = this.authService.checkRole(['HOLDER'], m.authorities);
         }
       });
     this.mkdService.currentMkd.subscribe(
