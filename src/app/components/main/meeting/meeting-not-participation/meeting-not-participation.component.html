@@ -1,3 +1,3 @@
 <mat-nav-list>
-  <a mat-list-item *ngFor="let user of users" routerLink="/">{{user.name}}</a>
+  <a mat-list-item *ngFor="let user of users" routerLink="/meeting-not-participation/{{meetingId}}/{{user.id}}">{{user.name}}</a>
 </mat-nav-list>

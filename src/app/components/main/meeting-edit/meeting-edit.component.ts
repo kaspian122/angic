@@ -172,7 +172,7 @@ export class MeetingEditComponent implements OnInit {
         endDate: [new Date(this.meeting.endDate), Validators.required],
         beginTime: [MeetingEditComponent.getTimeStr(this.meeting.beginDate), ''],
         endTime: [MeetingEditComponent.getTimeStr(this.meeting.endDate), ''],
-        questions: this.fb.array(questionsFormGroups)
+        questions: this.fb.array(questionsFormGroups, Validators.required)
       });
       this.initAttachs();
     } else {
@@ -183,7 +183,7 @@ export class MeetingEditComponent implements OnInit {
         endDate: ['', Validators.required],
         beginTime: ['', ''],
         endTime: ['', ''],
-        questions: this.fb.array([])
+        questions: this.fb.array([], Validators.required)
       });
     }
   }

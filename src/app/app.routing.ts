@@ -19,6 +19,7 @@ import {QuestionaryCreateComponent} from "./components/main/questionary-create/q
 import {MeetingComponent} from './components/main/meeting/meeting.component';
 import {MeetingListComponent} from "./components/main/meeting-list/meeting-list.component";
 import {MeetingEditComponent} from './components/main/meeting-edit/meeting-edit.component';
+import {MeetingVoteComponent} from './components/main/meeting/meeting-vote/meeting-vote.component';
 
 
 const routes: Routes = [
@@ -78,6 +79,10 @@ const routes: Routes = [
           {
             path: 'meeting/:id',
             component: MeetingComponent,
+          },
+          {
+            path: 'meeting-not-participation/:id/:holderId',
+            component: MeetingVoteComponent,
           },
           {
             path: 'meeting-edit',

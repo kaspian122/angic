@@ -1,16 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MeetingInfo} from '../../../../models/meeting/meeting-info';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MeetingService} from '../../../../services/meeting/meeting.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MeetingQuestionInfo} from '../../../../models/meeting/question/meeting-question-info';
 import {FileService} from '../../../../services/file/file.service';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import {forkJoin} from 'rxjs/observable/forkJoin';
 import {Attach} from '../../../../models/attach';
 import {ErrorHandler} from '../../../../services/error-handler';
 import {MeetingResponse} from '../../../../models/meeting/question/meeting-response';
 import {MeetingRights} from '../../../../models/meeting/meeting-rights';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-meeting-vote',
@@ -19,9 +19,9 @@ import {MeetingRights} from '../../../../models/meeting/meeting-rights';
 })
 export class MeetingVoteComponent implements OnInit {
 
-  @Input() meeting: MeetingInfo;
+  @Input() meeting?: MeetingInfo;
 
-  @Input() meetingRights: MeetingRights;
+  @Input() meetingRights?: MeetingRights;
 
   /**
    * Форма
@@ -38,6 +38,11 @@ export class MeetingVoteComponent implements OnInit {
    */
   savingForm: boolean = false;
 
+  /**
+   * Id собственника
+   */
+  holderId: string;
+
   constructor(
     private fb: FormBuilder,
     private meetingService: MeetingService,
@@ -47,11 +52,31 @@ export class MeetingVoteComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.meetingService.getMeetingEnums().subscribe(
-      enums => {
-        this.meetingEnums = enums;
-        this.initForm();
-     });
+    this.route.paramMap.switchMap(p => Observable.of(p)).subscribe(
+      params => {
+        let meetingId = params.get('id');
+        let holderId = params.get('holderId');
+        if(holderId) {
+          this.holderId = holderId;
+          this.meetingService.getMeetingHolderInfo(meetingId, holderId).subscribe(meetingInfo => {
+              this.meeting = meetingInfo;
+
+              this.meetingService.getMeetingEnums().subscribe(
+                enums => {
+                  this.meetingEnums = enums;
+                  this.meetingRights = {editVote: true} as MeetingRights;
+                  this.initForm();
+                });
+            }
+          );
+        } else {
+          this.meetingService.getMeetingEnums().subscribe(
+            enums => {
+              this.meetingEnums = enums;
+              this.initForm();
+            });
+        }
+      });
   }
 
   initForm() {
@@ -118,6 +143,7 @@ export class MeetingVoteComponent implements OnInit {
     return this.form.get('questions') as FormArray;
   }
 
+  /**
   addFile(question: AbstractControl, f: File, mode: 'add'|'del'|'keep' = 'add', id: string = null) {
     (question.get('attachs') as FormArray).push(this.fb.group({
       id: id, file: f, name: f.name, mode: 'keep', thumbnail: ''
@@ -131,6 +157,7 @@ export class MeetingVoteComponent implements OnInit {
     };
     reader.readAsDataURL(f);
   }
+   **/
 
   downloadFile(file: Attach) {
     this.fileService.getFile(file.id, 'MeetingQuestion').subscribe(
@@ -164,15 +191,27 @@ export class MeetingVoteComponent implements OnInit {
       )
     });
 
-    this.meetingService.saveMeetingResponse(this.meeting.id, meetingResponses).subscribe(
-      (data) => {
-        this.router.navigate([`/meeting-list`]);
-      },
-      (err: HttpErrorResponse) => {
-        ErrorHandler.handleFormError(err, this.form);
-        this.savingForm = false;
-      }
-    );
+    if(this.holderId) {
+      this.meetingService.saveMeetingResponseForHolder(this.meeting.id, this.holderId, meetingResponses).subscribe(
+        (data) => {
+          this.router.navigate([`/meeting/${this.meeting.id}`]);
+        },
+        (err: HttpErrorResponse) => {
+          ErrorHandler.handleFormError(err, this.form);
+          this.savingForm = false;
+        }
+      );
+    } else {
+      this.meetingService.saveMeetingResponse(this.meeting.id, meetingResponses).subscribe(
+        (data) => {
+          this.router.navigate([`/meeting-list`]);
+        },
+        (err: HttpErrorResponse) => {
+          ErrorHandler.handleFormError(err, this.form);
+          this.savingForm = false;
+        }
+      );
+    }
   }
 
 }

@@ -23,7 +23,7 @@ export class MeetingNotParticipationComponent implements OnInit {
 
   ngOnInit() {
     this.mkdService.currentMkd.subscribe(mkd => {
-        this.meetingService.getNotParticipatingHoldersList(mkd.mkdId).subscribe(
+        this.meetingService.getNotParticipatingHoldersList(mkd.mkdId, this.meetingId).subscribe(
           data => this.users = data
         );
       }

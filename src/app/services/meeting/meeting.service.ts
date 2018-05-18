@@ -62,8 +62,16 @@ export class MeetingService {
     return this.http.post(this.config.getEndpoint(`meeting/${id}/response`), meetingResponses, {headers: this.authService.headers()});
   }
 
+  public saveMeetingResponseForHolder(id: string, holderId: string, meetingResponses: MeetingResponse[]): Observable<any> {
+    return this.http.post(this.config.getEndpoint(`meeting/${id}/${holderId}/response`), meetingResponses, {headers: this.authService.headers()});
+  }
+
   public getMeetingInfo(meetingId: string): Observable<MeetingInfo> {
     return this.http.get<MeetingInfo>(this.config.getEndpoint(`meeting/${meetingId}`), {headers: this.authService.headers()});
+  }
+
+  public getMeetingHolderInfo(meetingId: string, holderId: string): Observable<MeetingInfo> {
+    return this.http.get<MeetingInfo>(this.config.getEndpoint(`meeting/${meetingId}/holder/${holderId}`), {headers: this.authService.headers()});
   }
 
   public getMeetingActivity(meetingId: string): Observable<MeetingActivity> {
@@ -74,8 +82,8 @@ export class MeetingService {
     return this.http.get<MeetingRights>(this.config.getEndpoint(`meeting/${meetingId}/rights`), {headers: this.authService.headers()});
   }
 
-  public getNotParticipatingHoldersList(mkdId: string): Observable<SimpleObject[]> {
-    return this.http.get<SimpleObject[]>(this.config.getEndpoint(`mkd/${mkdId}/holders/notparticipating`), {headers: this.authService.headers()});
+  public getNotParticipatingHoldersList(mkdId: string, meetingId: string): Observable<SimpleObject[]> {
+    return this.http.get<SimpleObject[]>(this.config.getEndpoint(`meeting/${meetingId}/${mkdId}/holders/notparticipating`), {headers: this.authService.headers()});
   }
 
   public getZipFileFromMeeting(meetingId: string) {
