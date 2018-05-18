@@ -33,12 +33,17 @@ export interface MeetingQuestionInfo {
   quorum: SimpleObject;
 
   /**
+   * Ответ на вопрос от текущего пользователя
+   */
+  answer: SimpleObject;
+
+  /**
    * Список файлов
    */
   files: MeetingQuestionFile[];
 
   /**
-   * Статистика по файлам
+   * Статистика по вопросам
    */
   statistic: MeetingQuestionStatistic[]
 }

@@ -74,6 +74,7 @@ import {MeetingEditComponent} from './components/main/meeting-edit/meeting-edit.
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {NgxMaskModule} from 'ngx-mask';
 import {FileService} from './services/file/file.service';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -144,6 +145,7 @@ import {FileService} from './services/file/file.service';
     MatChipsModule,
     MatAutocompleteModule,
     MatTooltipModule,
+    MatRadioModule,
     NgxMaskModule.forRoot()
   ],
   providers: [

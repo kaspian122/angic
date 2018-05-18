@@ -12,7 +12,7 @@
       <app-meeting-not-participation [meetingId]="meetingId"></app-meeting-not-participation>
     </mat-tab>
     <mat-tab label="Собрание" *ngIf="meetingRights.showVote">
-      <app-meeting-vote></app-meeting-vote>
+      <app-meeting-vote [meeting]="meetingInfo"></app-meeting-vote>
     </mat-tab>
     <mat-tab label="Результаты" *ngIf="meetingRights.showResult">
       <app-meeting-result [meeting]="meetingInfo"></app-meeting-result>

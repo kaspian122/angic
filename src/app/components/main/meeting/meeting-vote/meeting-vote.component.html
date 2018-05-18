@@ -1,3 +1,53 @@
-<mat-card-content>
+<section *ngIf="form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div formArrayName="questions">
+      <div *ngFor="let question of questions.controls; let i=index" [formGroupName]="i">
+        <mat-card style="padding: 20px; background-color: #fafafa">
 
-</mat-card-content>
+          <mat-card-content>
+            <h3 style="float:left;">{{question.value.name}}</h3>
+          </mat-card-content>
+
+          <mat-card-content>
+            {{question.value.description}}
+          </mat-card-content>
+
+          <mat-grid-list cols="6" rowHeight="1:1" *ngIf="question.value.attachs.length > 0">
+            <mat-grid-tile *ngFor="let file of question.value.attachs">
+              <div style="border: solid silver 1px; padding: 2px; cursor: pointer" (click)="downloadFile(file)">
+                <div class="attachPlaceholder" [style.backgroundImage]="'url('+file.thumbnail+')'"></div>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-card-content>
+            <mat-radio-group formControlName="answer">
+              <mat-radio-button *ngFor="let answer of meetingEnums.MeetingQuestionAnswer;"
+                                [value]="answer.name" [disabled]="!canEdit"
+                                style="margin: 0 20px;">
+                {{answer.name}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </mat-card-content>
+
+        </mat-card>
+      </div>
+    </div>
+
+    <div style="text-align: right; width: 100%; margin: 0 -9px;">
+      <button mat-raised-button
+              type="submit" #sbmt
+              tabindex="20"
+              [disabled]="form.status == 'INVALID' || !canEdit"
+
+      >
+        <mat-icon *ngIf="savingForm" class="spinner">autorenew</mat-icon>
+        Сохранить
+      </button>
+    </div>
+
+    <br>
+
+  </form>
+</section>
+
