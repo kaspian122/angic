@@ -9,7 +9,7 @@
         Квартиры
         <mat-divider></mat-divider>
       </a>
-      <a mat-list-item *ngIf="hasHolderPrivileges" routerLink="/questionary-list" routerLinkActive="active"><mat-icon>whatshot</mat-icon>
+      <a mat-list-item *ngIf="hasSuperPrivileges || hasHolderPrivileges" routerLink="/questionary-list" routerLinkActive="active"><mat-icon>whatshot</mat-icon>
         Опросы
         <mat-divider></mat-divider>
       </a>
@@ -21,7 +21,7 @@
         Бюджет дома
         <mat-divider></mat-divider>
       </a>
-      <a mat-list-item *ngIf="hasHolderPrivileges" routerLink="/meeting-list" routerLinkActive="active"><mat-icon>group</mat-icon>
+      <a mat-list-item *ngIf="hasSuperPrivileges || hasHolderPrivileges" routerLink="/meeting-list" routerLinkActive="active"><mat-icon>group</mat-icon>
         Общие собрания
         <mat-divider></mat-divider>
       </a>

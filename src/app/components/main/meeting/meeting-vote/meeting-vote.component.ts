@@ -10,6 +10,7 @@ import {forkJoin} from 'rxjs/observable/forkJoin';
 import {Attach} from '../../../../models/attach';
 import {ErrorHandler} from '../../../../services/error-handler';
 import {MeetingResponse} from '../../../../models/meeting/question/meeting-response';
+import {MeetingRights} from '../../../../models/meeting/meeting-rights';
 
 @Component({
   selector: 'app-meeting-vote',
@@ -20,6 +21,8 @@ export class MeetingVoteComponent implements OnInit {
 
   @Input() meeting: MeetingInfo;
 
+  @Input() meetingRights: MeetingRights;
+
   /**
    * Форма
    */
@@ -29,11 +32,6 @@ export class MeetingVoteComponent implements OnInit {
    * Список коллекций для выпадающих списков формы
    */
   meetingEnums: any;
-
-  /**
-   * Режим редактирования
-   */
-  canEdit: boolean = false;
 
   /**
    * true -> идет сохранение формы в данный момент
@@ -78,7 +76,6 @@ export class MeetingVoteComponent implements OnInit {
     if(question.answer) {
       return question.answer.name;
     } else {
-      this.canEdit = true;
       return this.meetingEnums.MeetingQuestionAnswer[this.meetingEnums.MeetingQuestionAnswer.length-1].name;
     }
   }
@@ -91,6 +88,15 @@ export class MeetingVoteComponent implements OnInit {
   }
 
   initAttachs() {
+    this.questions.controls.forEach(question => {
+        question.value.files.forEach(file => {
+          (question.get('attachs') as FormArray).push(this.fb.group({
+            id: file.id, file: null, name: file.name, mode: 'keep', thumbnail: ''
+          }));
+        });
+      }
+    );
+    /**
     this.questions.controls.forEach(question => {
         let requests = question.value.files.map(f => this.fileService.getFile(f.id, 'MeetingQuestion'));
         forkJoin(requests).subscribe(
@@ -105,6 +111,7 @@ export class MeetingVoteComponent implements OnInit {
         );
       }
     );
+     */
   }
 
   get questions() {
@@ -126,16 +133,21 @@ export class MeetingVoteComponent implements OnInit {
   }
 
   downloadFile(file: Attach) {
-    let url= window.URL.createObjectURL(file.file);
-    const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
+    this.fileService.getFile(file.id, 'MeetingQuestion').subscribe(
+      (response: HttpResponse<Blob>) => {
+        let f = new File([response.body], file.name, {type: response.headers.get('mime-type')});
+        let url= window.URL.createObjectURL(f);
+        const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
 
-    a.href = url;
-    a.download = file.name;
-    document.body.appendChild(a);
-    a.click();
+        a.href = url;
+        a.download = f.name;
+        document.body.appendChild(a);
+        a.click();
 
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    );
   }
 
   onSubmit() {
