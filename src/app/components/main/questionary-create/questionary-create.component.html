@@ -23,14 +23,14 @@
 
                 <mat-card style="margin:5px 0; background-color: #fafafa">
                     <mat-card-content>
-                        <mat-grid-list cols="6" rowHeight="1:1" *ngIf="files.length > 0">
-                            <mat-grid-tile *ngFor="let file of files">
-                                <div style="border: solid silver 1px; padding: 2px; cursor: pointer" (click)="deleteFile(file)">
-                                    <div class="attachPlaceholder" [style.backgroundImage]="'url('+file.thumbnail+')'"></div>
+                        <mat-grid-list cols="4" rowHeight="4em" *ngIf="files.length > 0">
+                            <mat-grid-tile *ngFor="let file of files" style="cursor: pointer" (click)="deleteFile(file)">
+                                <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    <mat-icon style="vertical-align: middle">insert_drive_file</mat-icon> {{file.name}}
                                 </div>
                             </mat-grid-tile>
                         </mat-grid-list>
-                        <a mat-raised-button (click)="inputFile.click()">Добавить изображение</a>
+                        <a mat-raised-button (click)="inputFile.click()">Добавить файл</a>
                         <input (change)="fileSelect($event)" #inputFile type="file" multiple [style.display]="'none'">
                     </mat-card-content>
                 </mat-card>
@@ -99,6 +99,12 @@
 
 
                 <div style="text-align: right">
+                    <button *ngIf="form.get('id') && form.get('id').value" mat-raised-button
+                            (click)="publish()"
+                            type="button"
+                            [disabled]="loader">
+                        Опубликовать
+                    </button>
                     <button mat-raised-button
                             type="submit" #sbmt
                             [disabled]="form.status == 'INVALID' || loader">
