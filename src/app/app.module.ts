@@ -74,6 +74,8 @@ import {MeetingEditComponent} from './components/main/meeting-edit/meeting-edit.
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {NgxMaskModule} from 'ngx-mask';
 import {FileService} from './services/file/file.service';
+import { RedirectComponent } from './components/redirect/redirect.component';
+import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -109,7 +111,8 @@ import {FileService} from './services/file/file.service';
     MeetingNotParticipationComponent,
     MeetingInfoComponent,
     MeetingListComponent,
-    MeetingEditComponent
+    MeetingEditComponent,
+    RedirectComponent
   ],
   imports: [
     BrowserModule,
@@ -158,6 +161,12 @@ import {FileService} from './services/file/file.service';
     {
       provide: MatPaginatorIntl,
       useClass: MatPaginatorIntlRu
+    },
+    {
+      provide: 'externalUrlRedirectResolver',
+      useValue: (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+        window.location.href = (route.data as any).externalUrl;
+      }
     },
     CookieService,
     AuthGuard,
