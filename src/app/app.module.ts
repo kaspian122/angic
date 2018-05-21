@@ -38,7 +38,15 @@ import { NewsComponent } from './components/main/news/news.component';
 import { HolderListComponent } from './components/main/holder-list/holder-list.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
-import {MAT_DATE_LOCALE, MatDialogModule, MatNativeDateModule, MatPaginatorModule, MatPaginatorIntl, MatTooltipModule} from '@angular/material';
+import {
+  MAT_DATE_LOCALE,
+  MatDialogModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatPaginatorIntl,
+  MatTooltipModule,
+  DateAdapter, MAT_DATE_FORMATS
+} from '@angular/material';
 import { ApartmentListComponent } from './components/main/apartment-list/apartment-list.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { QuestionaryComponent } from './components/main/questionary/questionary.component';
@@ -77,6 +85,19 @@ import {FileService} from './services/file/file.service';
 import {MatRadioModule} from '@angular/material/radio';
 import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import { ForumComponent } from './components/forum/forum.component';
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'L',
+  },
+  display: {
+    dateInput: 'L',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'L',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @NgModule({
   declarations: [
@@ -159,6 +180,12 @@ import { ForumComponent } from './components/forum/forum.component';
     },
     {
       provide: MAT_DATE_LOCALE, useValue: 'ru-Ru'
+    },
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]
+    },
+    {
+      provide: MAT_DATE_FORMATS, useValue: MY_FORMATS
     },
     {
       provide: MatPaginatorIntl,
