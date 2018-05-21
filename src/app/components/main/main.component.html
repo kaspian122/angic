@@ -13,6 +13,7 @@
         Опросы
         <mat-divider></mat-divider>
       </a>
+      <!--
       <a mat-list-item *ngIf="hasSuperPrivileges"><mat-icon>content_paste</mat-icon>
         План работ
         <mat-divider></mat-divider>
@@ -20,11 +21,12 @@
       <a mat-list-item *ngIf="hasSuperPrivileges"><mat-icon>account_balance</mat-icon>
         Бюджет дома
         <mat-divider></mat-divider>
-      </a>
+      </a>-->
       <a mat-list-item *ngIf="hasSuperPrivileges || hasHolderPrivileges" routerLink="/meeting-list" routerLinkActive="active"><mat-icon>group</mat-icon>
         Общие собрания
         <mat-divider></mat-divider>
       </a>
+      <!--
       <a mat-list-item *ngIf="hasSuperPrivileges"><mat-icon>checkbox</mat-icon>
         Заявки
         <mat-divider></mat-divider>
@@ -35,7 +37,7 @@
       </a>
       <a mat-list-item *ngIf="hasSuperPrivileges"><mat-icon>forum</mat-icon>
         Объявления
-      </a>
+      </a>-->
     </mat-nav-list>
   </mat-sidenav>
 
