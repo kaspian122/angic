@@ -74,9 +74,9 @@ import {MeetingEditComponent} from './components/main/meeting-edit/meeting-edit.
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {NgxMaskModule} from 'ngx-mask';
 import {FileService} from './services/file/file.service';
-import { RedirectComponent } from './components/redirect/redirect.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import { ForumComponent } from './components/forum/forum.component';
 
 @NgModule({
   declarations: [
@@ -113,7 +113,7 @@ import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
     MeetingInfoComponent,
     MeetingListComponent,
     MeetingEditComponent,
-    RedirectComponent
+    ForumComponent
   ],
   imports: [
     BrowserModule,
@@ -163,12 +163,6 @@ import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
     {
       provide: MatPaginatorIntl,
       useClass: MatPaginatorIntlRu
-    },
-    {
-      provide: 'externalUrlRedirectResolver',
-      useValue: (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-        window.location.href = (route.data as any).externalUrl;
-      }
     },
     CookieService,
     AuthGuard,

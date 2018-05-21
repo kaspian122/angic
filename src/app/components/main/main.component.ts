@@ -4,6 +4,7 @@ import {AuthService} from "../../services/auth/auth.service";
 import {Auth, MkdOwnersInfo} from "../../services/auth/auth";
 import {UserService} from "../../services/user/user.service";
 import {MkdService} from '../../services/mkd/mkd.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -21,11 +22,12 @@ export class MainComponent implements OnInit {
     private http: HttpClient,
     private authService: AuthService,
     private dataService: UserService,
-    private mkdService: MkdService
+    private mkdService: MkdService,
+    public router: Router
   ) { }
 
   ngOnInit() {
-
+    console.log(this.router.url);
     this.authService.getAuth(true)
       .then(it => {
         this.auth = it;

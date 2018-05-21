@@ -20,6 +20,7 @@ import {MeetingComponent} from './components/main/meeting/meeting.component';
 import {MeetingListComponent} from "./components/main/meeting-list/meeting-list.component";
 import {MeetingEditComponent} from './components/main/meeting-edit/meeting-edit.component';
 import {RedirectComponent} from './components/redirect/redirect.component';
+import {ForumComponent} from './components/forum/forum.component';
 
 
 const routes: Routes = [
@@ -90,13 +91,7 @@ const routes: Routes = [
           },
           {
             path: 'forum',
-            component: RedirectComponent,
-            resolve: {
-              url: 'externalUrlRedirectResolver'
-            },
-            data: {
-              externalUrl: 'http://forum-mkd.sibir.local'
-            }
+            component: ForumComponent
           },
         ]
       },
