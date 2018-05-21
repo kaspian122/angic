@@ -18,6 +18,9 @@ import {FileService} from '../../../services/file/file.service';
 import {Attach} from '../../../models/attach';
 import {MeetingQuestionInfo} from '../../../models/meeting/question/meeting-question-info';
 import {forkJoin} from 'rxjs/observable/forkJoin';
+import * as _moment from 'moment';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+const moment = _moment;
 
 /**
  * Создание/редактирование ОСС
@@ -60,6 +63,7 @@ export class MeetingEditComponent implements OnInit {
   holdersCtrl: FormControl = new FormControl();
   @ViewChild('holderInput') holderInput: ElementRef;
   filteredHolderInitiators: Observable<SimpleObject[]>;
+  separatorKeysCodes = [ENTER, COMMA];
 
   /**
    * ID дома
