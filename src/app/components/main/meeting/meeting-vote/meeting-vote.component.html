@@ -1,3 +1,54 @@
-<mat-card-content>
+<section *ngIf="form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div formArrayName="questions">
+      <div *ngFor="let question of questions?.controls; let i=index" [formGroupName]="i">
+        <mat-card style="padding: 20px; background-color: #fafafa">
 
-</mat-card-content>
+          <mat-card-content>
+            <h3 style="float:left;">{{question.value.name}}</h3>
+          </mat-card-content>
+
+          <mat-card-content>
+            {{question.value.description}}
+
+            <mat-grid-list cols="4" rowHeight="5em" *ngIf="question.value.attachs.length > 0">
+              <mat-grid-tile *ngFor="let file of question.value.attachs" style="cursor: pointer" (click)="downloadFile(file)">
+                <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  <mat-icon style="vertical-align: middle">insert_drive_file</mat-icon> {{file.name}}
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </mat-card-content>
+
+          <mat-card-content>
+            <mat-radio-group formControlName="answer">
+              <mat-radio-button *ngFor="let answer of meetingEnums.MeetingQuestionAnswer;"
+                                [value]="answer.name" [disabled]="!meetingRights?.editVote"
+                                style="margin: 0 20px;">
+                {{answer.name}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </mat-card-content>
+
+        </mat-card>
+      </div>
+    </div>
+
+    <div style="text-align: right; width: 100%; margin: 0 -9px;">
+      <a mat-raised-button *ngIf="holderId" routerLink="/meeting/{{meeting.id}}">Вернуться</a>
+      <button mat-raised-button
+              type="submit" #sbmt
+              tabindex="20"
+              [disabled]="form.status == 'INVALID' || !meetingRights?.editVote"
+
+      >
+        <mat-icon *ngIf="savingForm" class="spinner">autorenew</mat-icon>
+        Сохранить
+      </button>
+    </div>
+
+    <br>
+
+  </form>
+</section>
+

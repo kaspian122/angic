@@ -4,6 +4,7 @@ import {AuthService} from "../../services/auth/auth.service";
 import {Auth, MkdOwnersInfo} from "../../services/auth/auth";
 import {UserService} from "../../services/user/user.service";
 import {MkdService} from '../../services/mkd/mkd.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -13,18 +14,20 @@ import {MkdService} from '../../services/mkd/mkd.service';
 export class MainComponent implements OnInit {
 
   public auth?: Auth = null;
-  public hasPrivileges = false;
+  public hasSuperPrivileges = false;
+  public hasHolderPrivileges = false;
   public currentMkd?: MkdOwnersInfo = null;
 
   constructor(
     private http: HttpClient,
     private authService: AuthService,
     private dataService: UserService,
-    private mkdService: MkdService
+    private mkdService: MkdService,
+    public router: Router
   ) { }
 
   ngOnInit() {
-
+    console.log(this.router.url);
     this.authService.getAuth(true)
       .then(it => {
         this.auth = it;
@@ -33,7 +36,8 @@ export class MainComponent implements OnInit {
           if (this.auth.mkdOwners.length > 1) {
             let m = this.auth.mkdOwners.find(e => e.byDefault == true);
           }
-          this.hasPrivileges = this.authService.checkRole(['CHAIRMAN', 'SYSTEM_ADMIN', 'BOARD_MEMBER'], m.authorities);
+          this.hasSuperPrivileges = this.authService.checkRole(['CHAIRMAN', 'SYSTEM_ADMIN', 'BOARD_MEMBER'], m.authorities);
+          this.hasHolderPrivileges = this.authService.checkRole(['HOLDER'], m.authorities);
         }
       });
     this.mkdService.currentMkd.subscribe(

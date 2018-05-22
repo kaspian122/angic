@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  forumUrl: 'http://localhost',
+  forumUrl: 'http://forum-mkd.sibir.local',
   apiUrl: '/api'
 };
