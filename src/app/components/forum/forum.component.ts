@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForumComponent implements OnInit {
 
-  constructor() { }
+  public host: string;
+
+  constructor() {
+    this.host = 'http://localhost';
+  }
+
 
   ngOnInit() {
+
   }
 
 }
