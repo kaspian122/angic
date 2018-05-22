@@ -1,3 +1,9 @@
-<iframe src="http://forum-mkd.sibir.local" width="99%" height="99%" seamless="seamless" align="middle" frameborder="0" marginheight="2%">
+<iframe src="http://localhost" width="99%" height="99%" seamless="seamless" align="middle" frameborder="0" marginheight="2%" *ngIf="!isProd && !isTest">
+  Ваш браузер не поддерживает плавающие фреймы!
+</iframe>
+<iframe src="http://forum-mkd.sibir.local" width="99%" height="99%" seamless="seamless" align="middle" frameborder="0" marginheight="2%" *ngIf="isTest">
+  Ваш браузер не поддерживает плавающие фреймы!
+</iframe>
+<iframe src="http://prod.todo" width="99%" height="99%" seamless="seamless" align="middle" frameborder="0" marginheight="2%" *ngIf="isProd">
   Ваш браузер не поддерживает плавающие фреймы!
 </iframe>

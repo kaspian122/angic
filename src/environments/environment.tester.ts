@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  tester: false,
+  tester: true,
   apiUrl: '/api'
 };

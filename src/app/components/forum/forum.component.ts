@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {environment} from 'environments/environment';
 
 @Component({
   selector: 'app-forum',
@@ -7,15 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForumComponent implements OnInit {
 
-  public host: string;
+  public isProd: boolean;
+  public isTest: boolean;
 
-  constructor() {
-    this.host = 'http://localhost';
-  }
-
+  constructor() { }
 
   ngOnInit() {
-
+    this.isProd = environment.production;
+    this.isTest = environment.tester;
   }
 
 }
