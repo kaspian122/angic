@@ -8,14 +8,14 @@ import {environment} from 'environments/environment';
 })
 export class ForumComponent implements OnInit {
 
+  public url: string;
   public isProd: boolean;
   public isTest: boolean;
 
   constructor() { }
 
   ngOnInit() {
-    this.isProd = environment.production;
-    this.isTest = environment.tester;
+    this.url = environment.forumUrl;
   }
 
 }

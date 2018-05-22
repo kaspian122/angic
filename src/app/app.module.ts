@@ -86,6 +86,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import { ForumComponent } from './components/forum/forum.component';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import { SafePipe } from '../safe.pipe';
 
 export const MY_FORMATS = {
   parse: {
@@ -134,7 +135,8 @@ export const MY_FORMATS = {
     MeetingInfoComponent,
     MeetingListComponent,
     MeetingEditComponent,
-    ForumComponent
+    ForumComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,

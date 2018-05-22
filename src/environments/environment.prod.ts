@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  tester: false,
+  forumUrl: 'http://todo',
   apiUrl: '/api'
 };

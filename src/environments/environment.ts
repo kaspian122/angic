@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  tester: false,
+  forumUrl: 'http://localhost',
   apiUrl: '/api'
 };
