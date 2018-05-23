@@ -4,7 +4,7 @@
 
   <mat-tab-group>
     <mat-tab label="Анкета" *ngIf="questionaryRights?.showVote">
-      <app-questionary-vote></app-questionary-vote>
+      <app-questionary-vote [questionaryId]="questionaryId"></app-questionary-vote>
     </mat-tab>
     <mat-tab label="Результаты">
       <app-questionary-result [questionary]="questionaryInfo" *ngIf="questionaryRights?.showResult"></app-questionary-result>

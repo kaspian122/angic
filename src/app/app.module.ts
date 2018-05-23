@@ -86,6 +86,7 @@ import {FileService} from './services/file/file.service';
 import {MatRadioModule} from '@angular/material/radio';
 import { ForumComponent } from './components/forum/forum.component';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import { SafePipe } from '../safe.pipe';
 
 export const MY_FORMATS = {
   parse: {
@@ -135,7 +136,8 @@ export const MY_FORMATS = {
     MeetingInfoComponent,
     MeetingListComponent,
     MeetingEditComponent,
-    ForumComponent
+    ForumComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,
