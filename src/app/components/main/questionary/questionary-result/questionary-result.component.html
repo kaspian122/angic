@@ -1,3 +1,50 @@
-<mat-card-content>
-  В разработке
-</mat-card-content>
+<section>
+  <div *ngFor="let question of questionary?.questions">
+    <mat-card style="padding: 20px; background-color: #fafafa">
+
+      <mat-card-content>
+        <h3 style="float:left;">{{question.name}}</h3>
+      </mat-card-content>
+
+      <mat-card-content *ngIf="question.freeAnswers && question.freeAnswers.length > 0">
+        <a mat-raised-button (click)="openFreeDialog(question)">Проголосовало {{question.freeAnswers.length}} человек</a>
+      </mat-card-content>
+
+      <mat-card-content *ngIf="!question.freeAnswers">
+        <mat-grid-list cols="4" rowHeight="3em">
+          <mat-grid-tile>
+            <div class="tile">Ответы</div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="tile-center">Кол-во голосов</div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="tile-center">Кол-во голосов в м.кв.</div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="tile-center">% от числа<br>проголосовавших</div>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <div *ngFor="let answer of question.options">
+          <mat-grid-list cols="4" rowHeight="1.5em">
+            <mat-grid-tile>
+              <div class="tile">{{answer.name || answer.number}}</div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="tile-center">{{answer.responseCount}}</div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="tile-center">{{answer.responseAmount}}</div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="tile-center">{{answer.responsePercent}}</div>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+      </mat-card-content>
+
+    </mat-card>
+  </div>
+</section>
+

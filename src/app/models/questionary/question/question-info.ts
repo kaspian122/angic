@@ -31,6 +31,11 @@ export interface QuestionInfo {
   countQuorum: boolean,
 
   /**
+   * Список свободных ответов
+   */
+  freeAnswers: string[],
+
+  /**
    * Опции вопроса
    */
   options: OptionInfo[]

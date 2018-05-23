@@ -14,6 +14,11 @@ export interface OptionInfo {
   name: string,
 
   /**
+   * Числовое значение
+   */
+  number: number,
+
+  /**
    * Количество ответов, шт
    */
   responseCount: number,
@@ -23,6 +28,9 @@ export interface OptionInfo {
    */
   responsePercent: number,
 
+  /**
+   * Сумма по ответам, м2
+   */
   responseAmount: number
 
 }

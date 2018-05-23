@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {QuestionaryInfo} from '../../../../models/questionary/questionary-info';
+import {MatDialog, MatDialogClose} from '@angular/material';
+import {QuestionaryResultFreeAnswersComponent} from './questionary-result-free-answers/questionary-result-free-answers.component';
+import {QuestionInfo} from '../../../../models/questionary/question/question-info';
 
 /**
  * Вкладка результаты анкеты
@@ -10,9 +14,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuestionaryResultComponent implements OnInit {
 
-  constructor() { }
+  @Input() questionary: QuestionaryInfo;
+
+  constructor(
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
+  }
+
+  openFreeDialog(question: QuestionInfo): void{
+    this.dialog.open(QuestionaryResultFreeAnswersComponent, {
+      height: '500px',
+      width: '500px',
+      data: { question }
+    });
   }
 
 }
