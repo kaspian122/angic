@@ -6,7 +6,8 @@
       <mat-card-content>
         <form name="registerform" #regForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" [formGroup]="form">
           <mat-form-field style="width: 100%">
-            <input matInput type="text" name="phone" formControlName="phone" placeholder="Номер телефона">
+            <span matPrefix>+7 &nbsp;</span>
+            <input matInput type="text" name="phone" formControlName="phone" placeholder="Номер телефона" mask='9999999999'>
             <mat-error *ngIf="f('phone').invalid">{{e('phone')}}</mat-error>
           </mat-form-field>
 
