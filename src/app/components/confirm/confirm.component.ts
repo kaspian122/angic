@@ -29,7 +29,7 @@ export class ConfirmComponent implements OnInit {
   ngOnInit() {
 
     this.form = this.fb.group({
-      login: ['', Validators.required],
+      login: [''],
       password: ['', Validators.required],
       passwordConfirm: ['', [Validators.required, this.compareWithPassword()]],
       type: [''],
