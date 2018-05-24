@@ -1,3 +1,65 @@
 <mat-card-content>
-  В разработке
+
+  <section *ngIf="form">
+
+    <p style="margin-bottom: 20px;">{{info.name}}</p>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-card style="margin:5px 0; background-color: #fafafa" *ngIf="files.length > 0">
+        <mat-card-content>
+          <mat-grid-list cols="4" rowHeight="4em">
+            <mat-grid-tile *ngFor="let file of files" style="cursor: pointer" (click)="downloadFile(file)">
+              <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <mat-icon style="vertical-align: middle">insert_drive_file</mat-icon> {{file.name}}
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-card-content>
+      </mat-card>
+
+      <div formArrayName="responses">
+        <div *ngFor="let question of responses.controls; let i=index" [formGroupName]="i">
+          <mat-card style="margin:5px 0; background-color: #fafafa">
+            <mat-card-content>
+
+              <h3>{{i+1}}. {{info.questions[i].name}}</h3>
+
+              <mat-radio-group  *ngIf="info.questions[i].type == 'Single'" class="radio-group" formControlName="questionOptionIds">
+                <mat-radio-button *ngFor="let option of info.questions[i].options; let j=index" class="radio-button" [value]="option.id">
+                  {{option.name}}
+                </mat-radio-button>
+              </mat-radio-group>
+
+              <mat-radio-group  *ngIf="info.questions[i].type == 'Score'" class="radio-group" formControlName="questionOptionIds">
+                <mat-radio-button *ngFor="let option of info.questions[i].options; let j=index" class="radio-button" [value]="option.id">
+                  {{option.number}}
+                </mat-radio-button>
+              </mat-radio-group>
+
+              <div *ngIf="info.questions[i].type == 'Multiple'" formArrayName="questionOptionIds">
+                <div *ngFor="let option of info.questions[i].options; let j=index" [formGroupName]="j">
+                  <mat-checkbox formControlName="value">{{info.questions[i].options[j].name}}</mat-checkbox>
+                </div>
+              </div>
+
+
+
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+      <div style="text-align: right">
+        <button mat-raised-button
+                type="submit" #sbmt
+                [disabled]="form.status == 'INVALID' || loader">
+          <mat-icon *ngIf="loader" class="spinner">autorenew</mat-icon>
+          Сохранить
+        </button>
+      </div>
+      <!--<a mat-raised-button (click)="log()">Test</a>-->
+    </form>
+
+    <pre style="font-size: 9px;">{{ form.value | json }}</pre>
+  </section>
 </mat-card-content>

@@ -3,6 +3,7 @@ import {QuestionaryService} from "../../../../services/questionary/questionary.s
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {Attach} from "../../../../models/attach";
 import {QuestionInfo} from "../../../../models/questionary/question/question-info";
+import {QuestionaryInfo} from "../../../../models/questionary/questionary-info";
 
 /**
  * Вкладка прохождения анкеты
@@ -17,8 +18,10 @@ export class QuestionaryVoteComponent implements OnInit {
   @Input() questionaryId: string;
 
   form: FormGroup;
+  info: QuestionaryInfo;
+  loader: boolean = false;
 
-  files: Attach[];
+  files: Attach[] = [];
 
   constructor(
     private questionaryService: QuestionaryService,
@@ -29,6 +32,7 @@ export class QuestionaryVoteComponent implements OnInit {
     this.questionaryService.getQuestionaryInfo(this.questionaryId).subscribe(
       info => {
 
+        this.info = info;
 
         info.files.forEach(f => {this.addFile(f.id, f.name)});
 
@@ -48,13 +52,26 @@ export class QuestionaryVoteComponent implements OnInit {
   }
 
   addResponse(i: number, q: QuestionInfo) {
-    this.responses.push(this.fb.group({
+
+    let config = {
       questionId: [q.id],
       freeAnswer: [''],
-      questionOptionIds: this.fb.array([
-        q.options.map(o => this.fb.group({optionId: [false]}))
-      ])
-    }));
+    };
+
+    switch (q.type) {
+      case ('Multiple'):
+        config['questionOptionIds'] = this.fb.array(
+          q.options.map(o => this.fb.group({optionId: [o.id], value: [false]}))
+        );
+        break;
+      case ('Single'):
+      case ('Score'):
+        config['questionOptionIds'] = [null];
+        break;
+
+    }
+
+    this.responses.push(this.fb.group(config));
   }
 
   addFile(id: string = null, name: string = null) {
@@ -67,5 +84,8 @@ export class QuestionaryVoteComponent implements OnInit {
     });
   }
 
+  downloadFile(file) {
+
+  }
 
 }

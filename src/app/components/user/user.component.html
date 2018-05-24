@@ -2,14 +2,9 @@
     <mat-toolbar color="primary" class="example-toolbar">
         <!--<button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>-->
         <a routerLink="/" style="width: 302px;"><img style="vertical-align: middle; " src="/assets/rq.png" alt=""></a>
-        
-        <a mat-button routerLink="/">Онлайн МКД</a>
-        <a mat-button routerLink=".">Закупки</a>
-        <a mat-button routerLink=".">Обслуживание</a>
-        <a mat-button routerLink="/forum">Форум</a>
-        <div style="-webkit-box-flex: 1;-ms-flex-positive: 1;flex-grow: 1;"></div>
-        <a *ngIf="auth" mat-button> {{(auth.user.lastName)}} {{(auth.user.firstName)}} {{(auth.user.secondName)}}</a>
 
+        <div style="-webkit-box-flex: 1;-ms-flex-positive: 1;flex-grow: 1;"></div>
+        <a mat-button routerLink="/forum" style="margin-right: 10px">Форум</a>
         <mat-form-field *ngIf="mkd.length > 1">
           <mat-select [(ngModel)]="currentMkdId" (change)="setCurrentMkd()">
             <mat-option *ngFor="let mkdItem of mkd" [value]="mkdItem.mkdId">
@@ -18,11 +13,12 @@
           </mat-select>
         </mat-form-field>
         <div *ngIf="mkd.length == 1">
-            <div *ngFor="let mkdItem of mkd" >
+            <div *ngFor="let mkdItem of mkd">
               <span id="{{mkdItem.mkdId}}">{{ mkdItem.adress }}</span>
             </div>
         </div>
-        <a *ngIf="authService.hasRole('ROLE_ADMIN')" mat-button routerLink="/admin">Администратор</a>
+        <a *ngIf="authService.hasRole('ROLE_ADMIN')" mat-button routerLink="/admin" style="margin-left: 10px;">Администратор</a>
+        <span *ngIf="auth" style="margin-left: 10px; margin-right: 10px">{{(auth.user.lastName)}} {{(auth.user.firstName)}} {{(auth.user.secondName)}}</span>
         <a mat-button (click)="logOut()">Выйти</a>
     </mat-toolbar>
     <router-outlet></router-outlet>

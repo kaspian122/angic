@@ -41,7 +41,9 @@ export class QuestionaryListComponent extends TableComponent<QuestionarySummary>
 
   refreshAfterInit() {
     this.mkdService.currentMkd.subscribe(mkd => {
-      this.createAllowed = this.authService.checkRole(['CHAIRMAN', 'BOARD_MEMBER'], mkd.authorities);
+      setTimeout(()=>{
+        this.createAllowed = this.authService.checkRole(['CHAIRMAN', 'BOARD_MEMBER'], mkd.authorities);
+      });
       this.currentMkdId = mkd.mkdId;
       this.refreshTable();
     });

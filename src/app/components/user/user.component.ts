@@ -14,6 +14,7 @@ export class UserComponent implements OnInit {
 
   public mkd = [];
   currentMkdId: string;
+  public auth?: Auth = null;
 
   constructor(
     private router: Router,
@@ -28,6 +29,7 @@ export class UserComponent implements OnInit {
     });
     this.authService.getAuth()
       .then(it => {
+        this.auth = it;
         if(it.mkdOwners){
           this.mkd = it.mkdOwners;
           for(let mkd of this.mkd){
