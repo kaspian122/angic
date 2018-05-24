@@ -1,0 +1,8 @@
+<div mat-dialog-title style="float: right;">
+  <button mat-icon-button [mat-dialog-close]="true">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-list>
+  <mat-list-item *ngFor="let answer of data?.question?.freeAnswers">{{answer}}</mat-list-item>
+</mat-list>

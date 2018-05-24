@@ -67,6 +67,7 @@ import { HolderComponent } from './components/main/holder/holder.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { QuestionaryCreateComponent } from './components/main/questionary-create/questionary-create.component';
+import { QuestionaryResultFreeAnswersComponent } from './components/main/questionary/questionary-result/questionary-result-free-answers/questionary-result-free-answers.component';
 import { MatPaginatorIntlRu } from "./classes/mat-paginator-intl-ru";
 import {PaginationService} from "./services/pagination/pagination.service";
 import { MeetingComponent } from './components/main/meeting/meeting.component';
@@ -83,9 +84,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {NgxMaskModule} from 'ngx-mask';
 import {FileService} from './services/file/file.service';
 import {MatRadioModule} from '@angular/material/radio';
-import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import { ForumComponent } from './components/forum/forum.component';
-import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import { SafePipe } from '../safe.pipe';
 
 export const MY_FORMATS = {
@@ -127,6 +127,7 @@ export const MY_FORMATS = {
     HolderComponent,
     SimpleDialogComponent,
     QuestionaryCreateComponent,
+    QuestionaryResultFreeAnswersComponent,
     MeetingComponent,
     MeetingActivityComponent,
     MeetingResultComponent,
@@ -210,7 +211,8 @@ export const MY_FORMATS = {
   bootstrap: [AppComponent],
   entryComponents: [
     DeleteDialogComponent,
-    SimpleDialogComponent
+    SimpleDialogComponent,
+    QuestionaryResultFreeAnswersComponent
   ]
 
 })

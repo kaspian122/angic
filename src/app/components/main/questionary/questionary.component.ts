@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {QuestionaryRights} from "../../../models/questionary/questionary-rights";
 import {Observable} from "rxjs/Observable";
 import {QuestionaryService} from '../../../services/questionary/questionary.service';
+import {QuestionaryInfo} from '../../../models/questionary/questionary-info';
 
 /**
  * Анкета для голосования и просмотра
@@ -15,6 +16,7 @@ import {QuestionaryService} from '../../../services/questionary/questionary.serv
 export class QuestionaryComponent implements OnInit {
 
   questionaryRights: QuestionaryRights = null;
+  questionaryInfo?: QuestionaryInfo = null;
   questionaryId: string;
 
   constructor(
@@ -29,6 +31,10 @@ export class QuestionaryComponent implements OnInit {
   getQuestionaryInfo(): void {
     this.route.paramMap.switchMap(p => Observable.of(p)).subscribe(params => {
         this.questionaryId = params.get('id');
+        this.dataService.getQuestionaryInfo(this.questionaryId).subscribe(info => {
+            this.questionaryInfo = info;
+          }
+        );
         this.dataService.getQuestionaryRights(this.questionaryId).subscribe(questionaryRights => {
             this.questionaryRights = questionaryRights;
           }
