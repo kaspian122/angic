@@ -21,7 +21,7 @@ export class QuestionaryVoteComponent implements OnInit {
   info: QuestionaryInfo;
   loader: boolean = false;
 
-  files: Attach[];
+  files: Attach[] = [];
 
   constructor(
     private questionaryService: QuestionaryService,
@@ -60,16 +60,16 @@ export class QuestionaryVoteComponent implements OnInit {
 
     switch (q.type) {
       case ('Multiple'):
-      config['questionOptionIds'] = this.fb.array([
-        q.options.map(o => this.fb.group({optionId: [o.id], value: [false]}))
-      ])
+        config['questionOptionIds'] = this.fb.array(
+          q.options.map(o => this.fb.group({optionId: [o.id], value: [false]}))
+        );
+        break;
+      case ('Single'):
+      case ('Score'):
+        config['questionOptionIds'] = [null];
+        break;
 
     }
-
-    if (q.type == 'Single') {
-      config['questionOptionIds'] = [null];
-    }
-
 
     this.responses.push(this.fb.group(config));
   }

@@ -1,6 +1,8 @@
+<mat-card-content>
+
   <section *ngIf="form">
 
-    {{info.name}}
+    <p style="margin-bottom: 20px;">{{info.name}}</p>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <mat-card style="margin:5px 0; background-color: #fafafa" *ngIf="files.length > 0">
@@ -22,17 +24,22 @@
 
               <h3>{{i+1}}. {{info.questions[i].name}}</h3>
 
-              <mat-radio-group  *ngIf="info.questions[i].type == 'Single'" formControlName="questionOptionIds">
-                <mat-radio-button *ngFor="let option of info.questions[i].options; let j=index" [value]="option.id">
+              <mat-radio-group  *ngIf="info.questions[i].type == 'Single'" class="radio-group" formControlName="questionOptionIds">
+                <mat-radio-button *ngFor="let option of info.questions[i].options; let j=index" class="radio-button" [value]="option.id">
                   {{option.name}}
                 </mat-radio-button>
               </mat-radio-group>
 
-              <div *ngIf="info.questions[i].type == 'Single'" formArrayName="questionOptionIds">
-                <div *ngFor="let option of info.questions[i].options; let j=index" formGroupName="j">
-                  <mat-checkbox formControlName="value"></mat-checkbox>
+              <mat-radio-group  *ngIf="info.questions[i].type == 'Score'" class="radio-group" formControlName="questionOptionIds">
+                <mat-radio-button *ngFor="let option of info.questions[i].options; let j=index" class="radio-button" [value]="option.id">
+                  {{option.number}}
+                </mat-radio-button>
+              </mat-radio-group>
+
+              <div *ngIf="info.questions[i].type == 'Multiple'" formArrayName="questionOptionIds">
+                <div *ngFor="let option of info.questions[i].options; let j=index" [formGroupName]="j">
+                  <mat-checkbox formControlName="value">{{info.questions[i].options[j].name}}</mat-checkbox>
                 </div>
-                <mat-checkbox></mat-checkbox>
               </div>
 
 
@@ -53,5 +60,6 @@
       <!--<a mat-raised-button (click)="log()">Test</a>-->
     </form>
 
-    <!--<pre style="font-size: 9px;">{{ form.value | json }}</pre>-->
+    <pre style="font-size: 9px;">{{ form.value | json }}</pre>
   </section>
+</mat-card-content>
