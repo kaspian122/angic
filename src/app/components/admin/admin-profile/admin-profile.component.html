@@ -35,12 +35,16 @@
 
       <ng-container matColumnDef="chairman">
         <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'chairman'">Председатель</mat-header-cell>
-        <mat-cell *matCellDef="let element" [ngClass]="'chairman'"> {{element.chairman?.name}}</mat-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'chairman'" >
+          <div matTooltip="{{element.toolTipChairman}}">{{element.chairman?.name}}</div>
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="admin">
         <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'admin'">Администратор</mat-header-cell>
-        <mat-cell *matCellDef="let element" [ngClass]="'admin'"> {{element.admin.name}}</mat-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'admin'" >
+            <div matTooltip="{{element.toolTipAdmin}}">{{element.admin.name}}</div>
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="floorCount">
