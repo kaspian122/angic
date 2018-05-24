@@ -157,6 +157,7 @@ export class HolderComponent implements OnInit {
     this.holder.councilman = formDataApartment.councilman;
     this.holder.chairman = formDataApartment.chairman;
     this.holder.legalPerson = formDataApartment.legalPerson;
+    this.holder.legalPersonCode = formDataApartment.legalPersonCode;
     this.holder.comment = formDataApartment.comment;
 
     if (this.isCreate) {
@@ -198,6 +199,7 @@ export class HolderComponent implements OnInit {
         this.preloadPoaUser(holder.powerOfAttorney.confidant);
       }
     }
+    this.updateLegalPersonCode();
   }
 
   initHolder(holder) {
@@ -212,6 +214,7 @@ export class HolderComponent implements OnInit {
         participationMeeting: [holder.participationMeeting, ''],
         receiveNewsByEmail: [holder.receiveNewsByEmail, ''],
         legalPerson: [holder.legalPerson, ''],
+        legalPersonCode: [holder.legalPersonCode, [Validators.pattern('[0-9]*')]],
         'portalUser': this.initUser(holder.portalUser),
         'powerOfAttorney': this.initPowerOfAttorney(holder.powerOfAttorney)
       });
@@ -226,6 +229,7 @@ export class HolderComponent implements OnInit {
         participationMeeting: [true, ''],
         receiveNewsByEmail: [true, ''],
         legalPerson: ['', ''],
+        legalPersonCode: ['', [Validators.pattern('[0-9]*')]],
         'portalUser': this.initUser(null),
         'powerOfAttorney': this.initPowerOfAttorney(null)
       });
@@ -442,4 +446,14 @@ export class HolderComponent implements OnInit {
     });
   }
 
+  updateLegalPersonCode() {
+    const legalPerson = this.holderForm.get('legalPerson').value;
+
+    if (legalPerson) {
+      this.holderForm.get('legalPersonCode').enable();
+    } else {
+      this.holderForm.get('legalPersonCode').disable();
+      this.holderForm.get('legalPersonCode').patchValue('');
+    }
+  }
 }

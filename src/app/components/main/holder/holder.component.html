@@ -88,10 +88,23 @@
           </mat-grid-tile>
 
           <mat-grid-tile>
+          </mat-grid-tile>
+
+          <mat-grid-tile colspan="2">
             <mat-form-field class="fullwidth">
-              <input matInput formControlName="legalPerson" placeholder="Юридическое лицо" tabindex="9"/>
+              <input matInput formControlName="legalPerson" placeholder="Юридическое лицо" tabindex="9" (keyup)="updateLegalPersonCode()"/>
               <mat-error *ngIf="f('legalPerson').invalid">{{e('legalPerson')}}</mat-error>
             </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field class="fullwidth">
+              <input matInput formControlName="legalPersonCode" placeholder="ИНН или ОГРН" tabindex="10" maxlength="13"/>
+              <mat-error *ngIf="f('legalPersonCode').invalid">{{e('legalPersonCode')}}</mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
           </mat-grid-tile>
 
           <mat-grid-tile>
@@ -120,7 +133,7 @@
 
           <mat-grid-tile colspan="4">
             <mat-form-field class="fullwidth">
-              <input matInput formControlName="comment" placeholder="Комментарий" tabindex="10"/>
+              <input matInput formControlName="comment" placeholder="Комментарий" tabindex="11"/>
               <mat-error *ngIf="f('comment').invalid">{{e('comment')}}</mat-error>
             </mat-form-field>
           </mat-grid-tile>

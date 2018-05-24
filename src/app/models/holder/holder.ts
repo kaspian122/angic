@@ -14,6 +14,7 @@ export interface Holder {
   councilman: boolean;
   chairman: boolean;
   legalPerson: string;
+  legalPersonCode: string;
   comment: string;
   realHolderName: string;
   powerOfAttorney: PowerOfAttorney;
