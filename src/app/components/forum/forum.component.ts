@@ -9,8 +9,6 @@ import {environment} from 'environments/environment';
 export class ForumComponent implements OnInit {
 
   public url: string;
-  public isProd: boolean;
-  public isTest: boolean;
 
   constructor() { }
 

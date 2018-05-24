@@ -136,6 +136,10 @@ const routes: Routes = [
     component: ConfirmComponent
   },
   {
+    path: 'confirm/:type/:key',
+    component: ConfirmComponent
+  },
+  {
     path: 'forbidden',
     component: ForbiddenComponent
   }
