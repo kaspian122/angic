@@ -408,4 +408,14 @@ export class MeetingEditComponent implements OnInit {
     const files: FileList = $event.srcElement.files;
     Array.from(files).forEach(file => this.addFile(file, question));
   }
+
+  updateBeginDateTime() {
+    this.form.get('beginTime').setErrors(null);
+    this.form.get('beginDate').setErrors(null);
+  }
+
+  updateEndDateTime() {
+    this.form.get('endTime').setErrors(null);
+    this.form.get('endDate').setErrors(null);
+  }
 }
