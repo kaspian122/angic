@@ -12,6 +12,7 @@ import {QuestionaryCreate} from "../../models/questionary/questionary-create";
 import {PaginationService} from "../pagination/pagination.service";
 import {PaginationInfo} from "../../models/pagination-info";
 import {ReplaySubject} from "rxjs/ReplaySubject";
+import {QuestionResponses} from "../../models/questionary/question/question-responses";
 
 @Injectable()
 export class QuestionaryService {
@@ -76,4 +77,7 @@ export class QuestionaryService {
     return this.http.put(this.config.getEndpoint(`questionary/${id}/publish`), null, {headers: this.authService.headers()})
   }
 
+  public respondQuestionary(id: string, responses: QuestionResponses) {
+    return this.http.post(this.config.getEndpoint(`questionary/${id}/response`), responses, {headers: this.authService.headers()});
+  }
 }

@@ -36,8 +36,18 @@ export interface QuestionInfo {
   freeAnswers: string[],
 
   /**
+   * Свободный ответ пользователя
+   */
+  freeAnswersByUser: string[],
+
+  /**
    * Опции вопроса
    */
   options: OptionInfo[]
+
+  /**
+   * Опции вопроса выбранные пользователем
+   */
+  optionsByUser: OptionInfo[]
 
 }

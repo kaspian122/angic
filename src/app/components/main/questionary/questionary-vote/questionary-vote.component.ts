@@ -4,6 +4,13 @@ import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {Attach} from "../../../../models/attach";
 import {QuestionInfo} from "../../../../models/questionary/question/question-info";
 import {QuestionaryInfo} from "../../../../models/questionary/questionary-info";
+import {QuestionResponse, QuestionResponses} from "../../../../models/questionary/question/question-responses";
+import {ErrorHandler} from "../../../../services/error-handler";
+import {forkJoin} from "rxjs/observable/forkJoin";
+import {MkdService} from "../../../../services/mkd/mkd.service";
+import {QuestionaryRights} from "../../../../models/questionary/questionary-rights";
+import {OptionInfo} from "../../../../models/questionary/question/option/option-info";
+import {MatSnackBar} from "@angular/material";
 
 /**
  * Вкладка прохождения анкеты
@@ -15,36 +22,43 @@ import {QuestionaryInfo} from "../../../../models/questionary/questionary-info";
 })
 export class QuestionaryVoteComponent implements OnInit {
 
-  @Input() questionaryId: string;
+  @Input() questionary: QuestionaryInfo;
+  @Input() questionaryRights: QuestionaryRights;
 
   form: FormGroup;
-  info: QuestionaryInfo;
   loader: boolean = false;
 
   files: Attach[] = [];
 
   constructor(
     private questionaryService: QuestionaryService,
-    private fb: FormBuilder,
+    private snackBar: MatSnackBar,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
-    this.questionaryService.getQuestionaryInfo(this.questionaryId).subscribe(
-      info => {
+    console.log(this.questionary);
+    this.questionary.files.forEach(f => {this.addFile(f.id, f.name)});
+    this.initForm();
+  }
 
-        this.info = info;
+  initForm() {
+    this.form = this.fb.group({
+      responses: this.fb.array([])
+    });
 
-        info.files.forEach(f => {this.addFile(f.id, f.name)});
+    this.questionary.questions.forEach((q, i) => {
+      this.addResponse(i, q);
+    });
+    this.checkVoteRights();
+  }
 
-        this.form = this.fb.group({
-          responses: this.fb.array([])
-        });
-
-        info.questions.forEach((q, i) => {
-          this.addResponse(i, q);
-        });
-      }
-    )
+  checkVoteRights() {
+    if (!this.questionaryRights.editVote) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
   }
 
   get responses() {
@@ -54,24 +68,28 @@ export class QuestionaryVoteComponent implements OnInit {
   addResponse(i: number, q: QuestionInfo) {
 
     let config = {
-      questionId: [q.id],
-      freeAnswer: [''],
+      questionId: [q.id]
     };
 
     switch (q.type) {
       case ('Multiple'):
         config['questionOptionIds'] = this.fb.array(
-          q.options.map(o => this.fb.group({optionId: [o.id], value: [false]}))
+          q.options.map(o => this.fb.group({optionId: [o.id], value: [this.checkboxValue(o.id, q.optionsByUser)]}))
         );
         break;
       case ('Single'):
       case ('Score'):
-        config['questionOptionIds'] = [null];
+        config['questionOptionIds'] = [q.optionsByUser.length ? q.optionsByUser[0].id : null];
         break;
-
+      case ('FreeForm'):
+        config['freeAnswer'] = [q.freeAnswersByUser.length ? q.freeAnswersByUser[0] : ''];
     }
 
     this.responses.push(this.fb.group(config));
+  }
+
+  checkboxValue(optionId: string, optionsByUser: OptionInfo[]) {
+    return !!optionsByUser.filter(o => o.id == optionId).length;
   }
 
   addFile(id: string = null, name: string = null) {
@@ -88,4 +106,77 @@ export class QuestionaryVoteComponent implements OnInit {
 
   }
 
+  onSubmit() {
+    this.loader = true;
+    const responses = this.prepareSaveForm();
+
+    this.questionaryService.respondQuestionary(this.questionary.id, responses).subscribe(
+      () => {
+        this.snackBar.open('Благодарим Вас за участие в опросе! Ваше мнение будет обязательно учтено!', '', {
+          duration: 2000
+        });
+
+        this.questionaryService.getQuestionaryRights(this.questionary.id).subscribe(
+          (rights) => {
+            this.questionaryRights = rights;
+            this.checkVoteRights();
+          },
+          null,
+          () => {
+            this.loader = false;
+          }
+        )
+      },
+      (err) => {
+        ErrorHandler.handleFormError(err, this.form);
+        this.loader = false;
+      }
+    )
+  }
+
+  prepareSaveForm(): QuestionResponses {
+    let form = this.form.value;
+
+    let result = {
+      responses: []
+    };
+
+    form.responses.forEach((r, i)=> {
+
+      let response: QuestionResponse = {
+        questionId: r.questionId,
+        required: this.questionary.questions[i].required,
+        questionOptionIds: [],
+        freeAnswer: null
+      };
+
+      const type = this.questionary.questions[i].type;
+
+      switch (type) {
+        case 'Single':
+        case 'Score':
+          response['questionOptionIds'] = r.questionOptionIds ? [r.questionOptionIds] : [];
+          break;
+        case 'Multiple':
+          response['questionOptionIds'] = r.questionOptionIds.filter(o => o.value).map(o => o.optionId);
+          break;
+        case 'FreeForm':
+          response['freeAnswer'] = r.freeAnswer;
+      }
+
+      result.responses.push(response);
+    });
+
+    return result as QuestionResponses;
+  }
+
+  f(name) {
+    return this.form.get(name);
+  }
+
+  e(name) {
+    let e = this.f(name).errors;
+    if(e.required) return "Необходимо указать";
+    if(e.server) return e.server;
+  }
 }

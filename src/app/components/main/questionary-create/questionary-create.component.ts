@@ -16,6 +16,7 @@ import {HttpResponse} from "@angular/common/http";
 import {Observable} from 'rxjs/Observable';
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {SimpleDialogComponent} from "../../simple-dialog/simple-dialog.component";
+import {ErrorHandler} from "../../../services/error-handler";
 
 @Component({
   selector: 'app-questionary-create',
@@ -186,8 +187,9 @@ export class QuestionaryCreateComponent implements OnInit {
           }
         );
       },
-      (e) => {
-        console.log(e);
+      (err) => {
+        ErrorHandler.handleFormError(err, this.form);
+        this.loader = false;
       }
     );
   }
