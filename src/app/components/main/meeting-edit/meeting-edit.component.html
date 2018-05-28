@@ -11,21 +11,12 @@
 
         <h4>Информация:</h4>
         <mat-grid-list cols="6" gutterSize="20" rowHeight="4em">
-          <mat-grid-tile colspan="3">
+          <mat-grid-tile colspan="6">
             <mat-form-field class="fullwidth">
               <mat-select formControlName="kind" placeholder="Вид" tabindex="1">
                 <mat-option *ngFor="let kind of meetingEnums.MeetingKind" [value]="kind">{{kind.name}}</mat-option>
               </mat-select>
               <mat-error *ngIf="f('kind').invalid">{{e('kind')}}</mat-error>
-            </mat-form-field>
-          </mat-grid-tile>
-
-          <mat-grid-tile colspan="3">
-            <mat-form-field class="fullwidth">
-              <mat-select formControlName="quorum" placeholder="Кворум" tabindex="2">
-                <mat-option *ngFor="let quorum of meetingEnums.MeetingQuorum" [value]="quorum">{{quorum.name}}</mat-option>
-              </mat-select>
-              <mat-error *ngIf="f('quorum').invalid">{{e('quorum')}}</mat-error>
             </mat-form-field>
           </mat-grid-tile>
 
@@ -117,7 +108,7 @@
                 <mat-error *ngIf="f('questions.'+i+'.description').invalid">{{e('questions.'+i+'.description')}}</mat-error>
               </mat-form-field>
               <mat-form-field class="fullwidth">
-                <mat-select formControlName="quorum" placeholder="Кворум">
+                <mat-select formControlName="quorum" placeholder="Требуемый % голосов">
                   <mat-option *ngFor="let quorum of meetingEnums.MeetingQuorum" [value]="quorum">{{quorum.name}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="f('questions.'+i+'.quorum').invalid">{{e('questions.'+i+'.quorum')}}</mat-error>

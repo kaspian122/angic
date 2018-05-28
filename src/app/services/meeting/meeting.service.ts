@@ -87,7 +87,7 @@ export class MeetingService {
   }
 
   public getZipFileFromMeeting(meetingId: string) {
-    return this.http.get(this.config.getEndpoint(`meeting/${meetingId}/export/startZip`), {headers: this.authService.headers(), responseType: 'arraybuffer'});
+    return this.http.get(this.config.getEndpoint(`meeting/${meetingId}/export/zip`), {headers: this.authService.headers(), responseType: 'arraybuffer'});
   }
 
   public goToReview(meetingId): Observable<any> {

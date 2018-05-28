@@ -174,7 +174,6 @@ export class MeetingEditComponent implements OnInit {
       }));
       this.form = this.fb.group({
         kind: [this.meetingEnums.MeetingKind.find(it => it.id == this.meeting.kind.id), Validators.required],
-        quorum: [this.meetingEnums.MeetingQuorum.find(it => it.id == this.meeting.quorum.id), Validators.required],
         beginDate: [new Date(this.meeting.beginDate), Validators.required],
         endDate: [new Date(this.meeting.endDate), Validators.required],
         beginTime: [MeetingEditComponent.getTimeStr(this.meeting.beginDate), ''],
@@ -185,7 +184,6 @@ export class MeetingEditComponent implements OnInit {
     } else {
       this.form = this.fb.group({
         kind: ['', Validators.required],
-        quorum: ['', Validators.required],
         beginDate: ['', Validators.required],
         endDate: ['', Validators.required],
         beginTime: ['', ''],
@@ -298,7 +296,6 @@ export class MeetingEditComponent implements OnInit {
       mkdId: this.mkdId,
       name: form.name,
       kind: form.kind.id,
-      quorum: form.quorum.id,
       beginDate: beginDate.toISOString(),
       endDate: endDate.toISOString(),
       holderInitiatorIds: this.holderInitiators.map(it => it.id),

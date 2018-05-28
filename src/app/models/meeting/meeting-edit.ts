@@ -28,11 +28,6 @@ export interface MeetingEdit {
   kind: string;
 
   /**
-   * Кворум
-   */
-  quorum: string;
-
-  /**
    * Дата начала
    */
   beginDate: string;

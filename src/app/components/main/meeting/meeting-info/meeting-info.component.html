@@ -1,6 +1,6 @@
 <mat-card-content>
   <h4>Информация:</h4>
-  <mat-grid-list cols="3" rowHeight="9:1">
+  <mat-grid-list cols="2" rowHeight="9:1">
     <mat-grid-tile>
       <div class="tile">
         Стадия: {{(info?.state.name)}}
@@ -11,17 +11,12 @@
         Вид: {{(info?.kind.name)}}
       </div>
     </mat-grid-tile>
-    <mat-grid-tile>
-      <div class="tile">
-        Кворум: {{(info?.quorum.name)}}
-      </div>
-    </mat-grid-tile>
     <mat-grid-tile colspan="1">
       <div class="tile">
         Дата начала: {{(info?.beginDate|date:'dd.MM.yyyy HH:mm')}}
       </div>
     </mat-grid-tile>
-    <mat-grid-tile colspan="2">
+    <mat-grid-tile colspan="1">
       <div class="tile">
         Дата окончания: {{(info?.endDate|date:'dd.MM.yyyy HH:mm')}}
       </div>

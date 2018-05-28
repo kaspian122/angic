@@ -28,11 +28,6 @@ export interface SimpleMeetingInfo {
   kind: string;
 
   /**
-   * Кворум
-   */
-  quorum: string;
-
-  /**
    * Дата начала
    */
   beginDate: string;
