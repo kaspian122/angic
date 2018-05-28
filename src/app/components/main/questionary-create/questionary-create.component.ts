@@ -180,7 +180,7 @@ export class QuestionaryCreateComponent implements OnInit {
                   duration: 2000
                 });
                 this.initEditForm(info.id);
-                // this.router.navigate(['/questionary-list']);
+                this.router.navigate(['/questionary-list']);
               }
             )
           }
