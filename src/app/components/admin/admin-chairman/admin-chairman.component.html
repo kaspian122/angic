@@ -13,14 +13,14 @@
           <mat-grid-list cols="5" gutterSize="20" rowHeight="4em">
             <mat-grid-tile colspan="4">
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="address" placeholder="Адрес" tabindex="1"/>
+                <input matInput formControlName="address" placeholder="Адрес" tabindex="1" autocomplete="off"/>
                 <mat-error *ngIf="f('mkd.address').invalid">{{e('mkd.address')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="area" placeholder="Площадь дома" tabindex="2"/>
+                <input matInput formControlName="area" placeholder="Площадь дома" tabindex="2" autocomplete="off"/>
                 <mat-error *ngIf="f('mkd.area').invalid">{{e('mkd.area')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
@@ -36,21 +36,21 @@
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="floorCount" maxlength="2" placeholder="Кол-во этажей" tabindex="4"/>
+                <input matInput formControlName="floorCount" maxlength="2" placeholder="Кол-во этажей" tabindex="4" autocomplete="off"/>
                 <mat-error *ngIf="f('mkd.floorCount').invalid">{{e('mkd.floorCount')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="porchCount" maxlength="2" placeholder="Кол-во подъездов" tabindex="5"/>
+                <input matInput formControlName="porchCount" maxlength="2" placeholder="Кол-во подъездов" tabindex="5" autocomplete="off"/>
                 <mat-error *ngIf="f('mkd.porchCount').invalid">{{e('mkd.porchCount')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="apartmentCount" placeholder="Кол-во квартир" tabindex="6"/>
+                <input matInput formControlName="apartmentCount" placeholder="Кол-во квартир" tabindex="6" autocomplete="off"/>
                 <mat-error *ngIf="f('mkd.apartmentCount').invalid">{{e('mkd.apartmentCount')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
@@ -66,28 +66,28 @@
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
                 <span matPrefix>+7 &nbsp;</span>
-                <input matInput formControlName="phone" type="tel" placeholder="Телефон" tabindex="7" (blur)="phoneBlur()" (keyup)="phoneKeyup()"/>
+                <input matInput formControlName="phone" type="tel" placeholder="Телефон" tabindex="7" (blur)="phoneBlur()" (keyup)="phoneKeyup()" autocomplete="off"/>
                 <mat-error *ngIf="f('user.phone').invalid">{{e('user.phone')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="lastName" placeholder="Фамилия" tabindex="9" />
+                <input matInput formControlName="lastName" placeholder="Фамилия" tabindex="9" autocomplete="off"/>
                 <mat-error *ngIf="f('user.lastName').invalid">{{e('user.lastName')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="email" placeholder="Эл. почта" tabindex="8" />
+                <input matInput formControlName="email" placeholder="Эл. почта" tabindex="8" autocomplete="off"/>
                 <mat-error *ngIf="f('user.email').invalid">{{e('user.email')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="firstName" placeholder="Имя"  tabindex="10" />
+                <input matInput formControlName="firstName" placeholder="Имя"  tabindex="10" autocomplete="off"/>
                 <mat-error *ngIf="f('user.firstName').invalid">{{e('user.firstName')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
@@ -95,7 +95,7 @@
             <mat-grid-tile></mat-grid-tile>
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="secondName" placeholder="Отчество"  tabindex="11" />
+                <input matInput formControlName="secondName" placeholder="Отчество"  tabindex="11" autocomplete="off"/>
                 <mat-error *ngIf="f('user.secondName').invalid">{{e('user.secondName')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>

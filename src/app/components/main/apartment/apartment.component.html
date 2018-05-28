@@ -11,28 +11,28 @@
           <mat-grid-list cols="3" gutterSize="30" rowHeight="4em">
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="number" placeholder="№ кв." tabindex="1"/>
+                <input matInput formControlName="number" placeholder="№ кв." tabindex="1" autocomplete="off"/>
                 <mat-error *ngIf="f('number').invalid">{{e('number')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="floor" placeholder="Этаж" tabindex="2"/>
+                <input matInput formControlName="floor" placeholder="Этаж" tabindex="2" autocomplete="off"/>
                 <mat-error *ngIf="f('floor').invalid">{{e('floor')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="porch" placeholder="Подъезд" tabindex="3"/>
+                <input matInput formControlName="porch" placeholder="Подъезд" tabindex="3" autocomplete="off"/>
                 <mat-error *ngIf="f('porch').invalid">{{e('porch')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="area" placeholder="Площадь" tabindex="4"/>
+                <input matInput formControlName="area" placeholder="Площадь" tabindex="4" autocomplete="off"/>
                 <mat-error *ngIf="f('area').invalid">{{e('area')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
@@ -57,7 +57,7 @@
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="totalShare" placeholder="Всего долей" tabindex="7" type="number" min="1"/>
+                <input matInput formControlName="totalShare" placeholder="Всего долей" tabindex="7" type="number" min="1" autocomplete="off"/>
                 <mat-error *ngIf="f('totalShare').invalid">{{e('totalShare')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>

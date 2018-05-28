@@ -18,14 +18,14 @@
               <mat-form-field class="fullwidth">
                 <span matPrefix>+7 &nbsp;</span>
                 <input matInput formControlName="phone" placeholder="Телефон" tabindex="1" (blur)="userPhoneBlur()"
-                       (keyup)="userPhoneKeyup()"/>
+                       (keyup)="userPhoneKeyup()" autocomplete="off"/>
                 <mat-error *ngIf="f('portalUser.phone').invalid">{{e('portalUser.phone')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="lastName" placeholder="Фамилия" tabindex="2"/>
+                <input matInput formControlName="lastName" placeholder="Фамилия" tabindex="2" autocomplete="off"/>
                 <mat-error *ngIf="f('portalUser.lastName').invalid">{{e('portalUser.lastName')}}
                 </mat-error>
               </mat-form-field>
@@ -33,14 +33,14 @@
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="email" placeholder="Эл. почта" tabindex="3"/>
+                <input matInput formControlName="email" placeholder="Эл. почта" tabindex="3" autocomplete="off"/>
                 <mat-error *ngIf="f('portalUser.email').invalid">{{e('portalUser.email')}}</mat-error>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="firstName" placeholder="Имя" tabindex="4"/>
+                <input matInput formControlName="firstName" placeholder="Имя" tabindex="4" autocomplete="off"/>
                 <mat-error *ngIf="f('portalUser.firstName').invalid">{{e('portalUser.firstName')}}
                 </mat-error>
               </mat-form-field>
@@ -50,7 +50,7 @@
 
             <mat-grid-tile>
               <mat-form-field class="fullwidth">
-                <input matInput formControlName="secondName" placeholder="Отчество" tabindex="5"/>
+                <input matInput formControlName="secondName" placeholder="Отчество" tabindex="5" autocomplete="off"/>
                 <mat-error *ngIf="f('portalUser.secondName').invalid">{{e('portalUser.secondName')}}
                 </mat-error>
               </mat-form-field>
@@ -65,7 +65,7 @@
           <mat-grid-tile>
             <mat-form-field class="fullwidth">
               <input matInput formControlName="certificateNumber" placeholder="№ свидетельства о праве соб-ти"
-                     tabindex="6"/>
+                     tabindex="6" autocomplete="off"/>
               <mat-error *ngIf="f('certificateNumber').invalid">{{e('certificateNumber')}}</mat-error>
             </mat-form-field>
           </mat-grid-tile>
@@ -73,7 +73,7 @@
           <mat-grid-tile>
             <mat-form-field class="fullwidth">
               <input matInput [matDatepicker]="picker" formControlName="certificateDate"
-                     placeholder="Дата свидетельства" tabindex="7"/>
+                     placeholder="Дата свидетельства" tabindex="7" autocomplete="off"/>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
               <mat-error *ngIf="f('certificateDate').invalid">{{e('certificateDate')}}</mat-error>
@@ -82,7 +82,7 @@
 
           <mat-grid-tile>
             <mat-form-field class="fullwidth">
-              <input matInput formControlName="shareAmount" placeholder="Часть доли" tabindex="8" type="number" min="1"/>
+              <input matInput formControlName="shareAmount" placeholder="Часть доли" tabindex="8" type="number" min="1" autocomplete="off"/>
               <mat-error *ngIf="f('shareAmount').invalid">{{e('shareAmount')}}</mat-error>
             </mat-form-field>
           </mat-grid-tile>
@@ -92,14 +92,14 @@
 
           <mat-grid-tile colspan="2">
             <mat-form-field class="fullwidth">
-              <input matInput formControlName="legalPerson" placeholder="Юридическое лицо" tabindex="9" (keyup)="updateLegalPersonCode()"/>
+              <input matInput formControlName="legalPerson" placeholder="Юридическое лицо" tabindex="9" (keyup)="updateLegalPersonCode()" autocomplete="off"/>
               <mat-error *ngIf="f('legalPerson').invalid">{{e('legalPerson')}}</mat-error>
             </mat-form-field>
           </mat-grid-tile>
 
           <mat-grid-tile>
             <mat-form-field class="fullwidth">
-              <input matInput formControlName="legalPersonCode" placeholder="ИНН или ОГРН" tabindex="10" maxlength="13"/>
+              <input matInput formControlName="legalPersonCode" placeholder="ИНН или ОГРН" tabindex="10" maxlength="13" autocomplete="off"/>
               <mat-error *ngIf="f('legalPersonCode').invalid">{{e('legalPersonCode')}}</mat-error>
             </mat-form-field>
           </mat-grid-tile>
@@ -133,7 +133,7 @@
 
           <mat-grid-tile colspan="4">
             <mat-form-field class="fullwidth">
-              <input matInput formControlName="comment" placeholder="Комментарий" tabindex="11"/>
+              <input matInput formControlName="comment" placeholder="Комментарий" tabindex="11" autocomplete="off"/>
               <mat-error *ngIf="f('comment').invalid">{{e('comment')}}</mat-error>
             </mat-form-field>
           </mat-grid-tile>
@@ -153,7 +153,7 @@
 
                 <mat-grid-tile>
                   <mat-form-field class="fullwidth">
-                    <input matInput formControlName="number" placeholder="Номер доверенности" tabindex="11"/>
+                    <input matInput formControlName="number" placeholder="Номер доверенности" tabindex="11" autocomplete="off"/>
                     <mat-error *ngIf="f('powerOfAttorney.number').invalid">
                       {{e('powerOfAttorney.number')}}
                     </mat-error>
@@ -163,7 +163,7 @@
                 <mat-grid-tile>
                   <mat-form-field class="fullwidth">
                     <input matInput [matDatepicker]="pickerBeginDate" formControlName="beginDate"
-                           placeholder="Дата начала действия" tabindex="12"/>
+                           placeholder="Дата начала действия" tabindex="12" autocomplete="off"/>
                     <mat-datepicker-toggle matSuffix [for]="pickerBeginDate"></mat-datepicker-toggle>
                     <mat-datepicker #pickerBeginDate></mat-datepicker>
                     <mat-error *ngIf="f('powerOfAttorney.beginDate').invalid">
@@ -175,7 +175,7 @@
                 <mat-grid-tile>
                   <mat-form-field class="fullwidth">
                     <input matInput [matDatepicker]="pickerEndDate" formControlName="endDate"
-                           placeholder="Дата окончания действия" tabindex="13"/>
+                           placeholder="Дата окончания действия" tabindex="13" autocomplete="off"/>
                     <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
                     <mat-datepicker #pickerEndDate></mat-datepicker>
                     <mat-error *ngIf="f('powerOfAttorney.endDate').invalid">
@@ -193,7 +193,7 @@
                     <mat-form-field class="fullwidth">
                       <span matPrefix>+7 &nbsp;</span>
                       <input matInput formControlName="phone" placeholder="Телефон" tabindex="14"
-                             (blur)="poaPhoneBlur()" (keyup)="poaPhoneKeyup()"/>
+                             (blur)="poaPhoneBlur()" (keyup)="poaPhoneKeyup()" autocomplete="off"/>
                       <mat-error *ngIf="f('powerOfAttorney.confidant.phone').invalid">
                         {{e('powerOfAttorney.confidant.phone')}}
                       </mat-error>
@@ -202,7 +202,7 @@
 
                   <mat-grid-tile>
                     <mat-form-field class="fullwidth">
-                      <input matInput formControlName="lastName" placeholder="Фамилия" tabindex="15"/>
+                      <input matInput formControlName="lastName" placeholder="Фамилия" tabindex="15" autocomplete="off"/>
                       <mat-error *ngIf="f('powerOfAttorney.confidant.lastName').invalid">
                         {{e('powerOfAttorney.confidant.lastName')}}
                       </mat-error>
@@ -211,7 +211,7 @@
 
                   <mat-grid-tile>
                     <mat-form-field class="fullwidth">
-                      <input matInput formControlName="email" placeholder="Эл. почта" tabindex="16"/>
+                      <input matInput formControlName="email" placeholder="Эл. почта" tabindex="16" autocomplete="off"/>
                       <mat-error *ngIf="f('powerOfAttorney.confidant.email').invalid">
                         {{e('powerOfAttorney.confidant.email')}}
                       </mat-error>
@@ -220,7 +220,7 @@
 
                   <mat-grid-tile>
                     <mat-form-field class="fullwidth">
-                      <input matInput formControlName="firstName" placeholder="Имя" tabindex="17"/>
+                      <input matInput formControlName="firstName" placeholder="Имя" tabindex="17" autocomplete="off"/>
                       <mat-error *ngIf="f('powerOfAttorney.confidant.firstName').invalid">
                         {{e('powerOfAttorney.confidant.firstName')}}
                       </mat-error>
@@ -231,7 +231,7 @@
 
                   <mat-grid-tile>
                     <mat-form-field class="fullwidth">
-                      <input matInput formControlName="secondName" placeholder="Отчество" tabindex="18"/>
+                      <input matInput formControlName="secondName" placeholder="Отчество" tabindex="18" autocomplete="off"/>
                       <mat-error *ngIf="f('powerOfAttorney.confidant.secondName').invalid">
                         {{e('powerOfAttorney.confidant.secondName')}}
                       </mat-error>

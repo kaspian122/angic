@@ -10,7 +10,7 @@
                 <mat-grid-list cols="1" rowHeight="4em">
                     <mat-grid-tile>
                         <mat-form-field class="fullwidth">
-                            <input matInput formControlName="name" placeholder="Название анкеты"/>
+                            <input matInput formControlName="name" placeholder="Название анкеты" autocomplete="off"/>
                             <mat-error *ngIf="f('name').invalid">{{e('name')}}</mat-error>
                         </mat-form-field>
                     </mat-grid-tile>
@@ -43,7 +43,7 @@
                                 <mat-icon style="float: right; cursor:pointer;" (click)="deleteQuestion(i)">clear</mat-icon>
 
                                 <mat-form-field class="fullwidth">
-                                    <input type="text" matInput formControlName="name" placeholder="Вопрос">
+                                    <input type="text" matInput formControlName="name" placeholder="Вопрос" autocomplete="off">
                                 </mat-form-field>
 
                                 <mat-grid-list cols="2" rowHeight="4em">
@@ -75,7 +75,7 @@
                                 <mat-grid-list *ngIf="f('questions.'+i+'.type').value == 'Single' || f('questions.'+i+'.type').value == 'Multiple'" cols="3" formArrayName="options" rowHeight="4em">
                                     <mat-grid-tile colspan="2" *ngFor="let option of options(i).controls; let j=index" [formGroupName]="j">
                                         <mat-form-field class="fullwidth">
-                                            <input type="text" matInput formControlName="option" [placeholder]="'Ответ №'+(j+1)">
+                                            <input type="text" matInput formControlName="option" [placeholder]="'Ответ №'+(j+1)" autocomplete="off">
                                             <mat-error *ngIf="f('questions.'+i+'.options.'+j+'.option').invalid">
                                                 {{e('questions.'+i+'.options.'+j+'.option')}}
                                             </mat-error>
