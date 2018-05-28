@@ -4,7 +4,7 @@ import {MeetingService} from '../../../services/meeting/meeting.service';
 import {Observable} from 'rxjs/Observable';
 import {SimpleObject} from '../../../models/simple-object';
 import {map, startWith} from 'rxjs/operators';
-import {MatAutocompleteSelectedEvent} from '@angular/material';
+import {MatAutocompleteSelectedEvent, MatDialog} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MkdService} from '../../../services/mkd/mkd.service';
 import {HolderService} from '../../../services/holder/holder.service';
@@ -20,6 +20,7 @@ import {MeetingQuestionInfo} from '../../../models/meeting/question/meeting-ques
 import {forkJoin} from 'rxjs/observable/forkJoin';
 import * as _moment from 'moment';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {DeleteDialogComponent} from '../../delete-dialog/delete-dialog.component';
 const moment = _moment;
 
 /**
@@ -64,6 +65,7 @@ export class MeetingEditComponent implements OnInit {
   @ViewChild('holderInput') holderInput: ElementRef;
   filteredHolderInitiators: Observable<SimpleObject[]>;
   separatorKeysCodes = [ENTER, COMMA];
+  @ViewChild('inputFile') inputFile: any;
 
   /**
    * ID дома
@@ -92,7 +94,8 @@ export class MeetingEditComponent implements OnInit {
     private meetingService: MeetingService,
     private fileService: FileService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {
     this.filteredHolderInitiators = this.holdersCtrl.valueChanges.pipe(
       startWith(''),
@@ -265,7 +268,8 @@ export class MeetingEditComponent implements OnInit {
                     }
                   });
                 }
-              } else if (question.orderNumber == this.form.value.questions.length) {
+              }
+              if (question.orderNumber == this.form.value.questions.length) {
                 this.router.navigate([`/meeting-list`]);
               }
             });
@@ -350,8 +354,19 @@ export class MeetingEditComponent implements OnInit {
   }
 
   deleteFile(question: AbstractControl, file: Attach) {
-    file.mode = 'del';
-    this.form.markAsDirty({});
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      height: '170px',
+      width: '350px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result) {
+        file.mode = 'del';
+        this.form.markAsDirty({});
+      }
+    });
+
   }
 
   /**************************** GET ****************************************/
@@ -407,6 +422,7 @@ export class MeetingEditComponent implements OnInit {
   fileSelect($event, question) {
     const files: FileList = $event.srcElement.files;
     Array.from(files).forEach(file => this.addFile(file, question));
+    this.inputFile.nativeElement.value = '';
   }
 
   updateBeginDateTime() {
