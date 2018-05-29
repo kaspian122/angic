@@ -11,6 +11,8 @@ import {MkdService} from "../../../../services/mkd/mkd.service";
 import {QuestionaryRights} from "../../../../models/questionary/questionary-rights";
 import {OptionInfo} from "../../../../models/questionary/question/option/option-info";
 import {MatSnackBar} from "@angular/material";
+import {HttpResponse} from "@angular/common/http";
+import {FileService} from "../../../../services/file/file.service";
 
 /**
  * Вкладка прохождения анкеты
@@ -33,6 +35,7 @@ export class QuestionaryVoteComponent implements OnInit {
   constructor(
     private questionaryService: QuestionaryService,
     private snackBar: MatSnackBar,
+    private fileService: FileService,
     private fb: FormBuilder
   ) { }
 
@@ -98,12 +101,34 @@ export class QuestionaryVoteComponent implements OnInit {
       file: null,
       name: name,
       mode: null,
-      thumbnail: ''
+      thumbnail: '',
+      loader: false
     });
   }
 
-  downloadFile(file) {
+  downloadFile(f: Attach) {
 
+    f.loader = true;
+
+    this.fileService.getFile(f.id, 'Questionary').subscribe(
+      (response: HttpResponse<Blob>) => {
+        let file = new File([response.body], f.name, {type: response.headers.get('mime-type')});
+
+        let url= window.URL.createObjectURL(file);
+        const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
+
+        a.href = url;
+        a.download = f.name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      },
+      null,
+      () => {
+        f.loader = false;
+      }
+    );
   }
 
   onSubmit() {

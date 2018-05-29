@@ -9,7 +9,8 @@
           <mat-grid-list cols="4" rowHeight="4em">
             <mat-grid-tile *ngFor="let file of files" style="cursor: pointer" (click)="downloadFile(file)">
               <div style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                <mat-icon style="vertical-align: middle">insert_drive_file</mat-icon> {{file.name}}
+                <mat-icon *ngIf="file.loader" style="vertical-align: middle" class="spinner">autorenew</mat-icon>
+                <mat-icon *ngIf="!file.loader" style="vertical-align: middle">insert_drive_file</mat-icon> {{file.name}}
               </div>
             </mat-grid-tile>
           </mat-grid-list>

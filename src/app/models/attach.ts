@@ -3,5 +3,6 @@ export interface Attach {
   file: File,
   name: string,
   mode: 'add'|'del'|'keep',
-  thumbnail: string
+  thumbnail: string,
+  loader?: boolean
 }

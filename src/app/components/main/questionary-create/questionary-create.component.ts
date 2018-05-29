@@ -89,18 +89,6 @@ export class QuestionaryCreateComponent implements OnInit {
   initEditForm(id: string) {
     this.questionaryService.getQuestionaryInfo(id).subscribe(
       info => {
-        // let requests = info.files.map(f => this.fileService.getFile(f.id, 'Questionary'));
-        // forkJoin(requests).subscribe(
-        //   results => {
-        //     results.forEach((response: HttpResponse<Blob>, i: number) => {
-        //       let file = new File([response.body], info.files[i].name, {type: response.headers.get('mime-type')});
-        //       this.addFile(file, 'keep', info.files[i].id);
-        //     });
-        //   },
-        //   null,
-        //   () => {
-        //   }
-        // );
         this.loadFormData(info);
         this.loader = false;
       }
@@ -252,14 +240,6 @@ export class QuestionaryCreateComponent implements OnInit {
       mode: mode,
       thumbnail: ''
     });
-
-    // let i = this._files.length-1;
-    //
-    // let reader = new FileReader();
-    // reader.onload = (e: any) => {
-    //   this._files[i].thumbnail = e.target.result;
-    // };
-    // reader.readAsDataURL(f);
   }
 
   get files() {
