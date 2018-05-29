@@ -17,32 +17,21 @@
         </mat-card-content>
       </div>
       <mat-card-content>
-        <!--<div class="voting-info">-->
-          <!--<mat-grid-list cols="1" rowHeight="6:1">-->
-            <!--<mat-grid-tile>-->
-              <!--<div>-->
-                <!--с 01.05.2017 с 20:00 по 05.05.2018 года 20:00 в доме проходит голосование.<br>-->
+        <mat-grid-list cols="1" rowHeight="9:1">
+          <mat-grid-tile *ngIf="mkdInfo.meeting">
+            <mat-card-content class="tile">
+              С {{mkdInfo.meeting.beginDate | date:'dd.MM.yyyy HH:mm'}} по {{mkdInfo.meeting.endDate | date:'dd.MM.yyyy HH:mm'}} в доме проходит голосование
+              <a routerLink="/meeting/{{mkdInfo.meeting.id}}">"{{mkdInfo.meeting.name}}"</a>.
+            </mat-card-content>
+          </mat-grid-tile>
 
-                <!--<a href="">Перейти в раздел голосования</a><br>-->
-
-                <!--До завершения осталось 3 дня-->
-              <!--</div>-->
-            <!--</mat-grid-tile>-->
-
-          <!--</mat-grid-list>-->
-        <!--</div>-->
-
-        <div *ngIf="mkdInfo.questionary">
-          <mat-grid-list cols="1" rowHeight="6:1">
-            <mat-grid-tile>
-              <div>
-                Пожалуйста, примите участие в опросе
-                <a routerLink="/questionary/{{mkdInfo.questionary.id}}">"{{mkdInfo.questionary.name}}"</a>
-              </div>
-            </mat-grid-tile>
-
-          </mat-grid-list>
-        </div>
+          <mat-grid-tile *ngIf="mkdInfo.questionary">
+            <mat-card-content class="tile">
+              Пожалуйста, примите участие в опросе
+              <a routerLink="/questionary/{{mkdInfo.questionary.id}}">"{{mkdInfo.questionary.name}}"</a>.
+            </mat-card-content>
+          </mat-grid-tile>
+        </mat-grid-list>
 
       </mat-card-content>
 
