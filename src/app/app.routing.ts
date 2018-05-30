@@ -21,6 +21,7 @@ import {MeetingListComponent} from "./components/main/meeting-list/meeting-list.
 import {MeetingEditComponent} from './components/main/meeting-edit/meeting-edit.component';
 import {MeetingVoteComponent} from './components/main/meeting/meeting-vote/meeting-vote.component';
 import {ForumComponent} from './components/forum/forum.component';
+import {LoginAdminComponent} from "./components/login-admin/login-admin.component";
 
 
 const routes: Routes = [
@@ -122,6 +123,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'login/admin',
+    component: LoginAdminComponent
   },
   {
     path: 'register',
