@@ -31,16 +31,29 @@ export class QuestionaryComponent implements OnInit {
   getQuestionaryInfo(): void {
     this.route.paramMap.switchMap(p => Observable.of(p)).subscribe(params => {
         this.questionaryId = params.get('id');
-        this.dataService.getQuestionaryInfo(this.questionaryId).subscribe(info => {
-            this.questionaryInfo = info;
-          }
-        );
-        this.dataService.getQuestionaryRights(this.questionaryId).subscribe(questionaryRights => {
-            this.questionaryRights = questionaryRights;
-          }
-        );
+        this.updateQuestionary();
+        this.updateRights();
       }
     );
+  }
+
+  updateRights() {
+    this.dataService.getQuestionaryRights(this.questionaryId).subscribe(questionaryRights => {
+        this.questionaryRights = questionaryRights;
+      }
+    );
+  }
+
+  updateQuestionary() {
+    this.dataService.getQuestionaryInfo(this.questionaryId).subscribe(info => {
+        this.questionaryInfo = info;
+      }
+    );
+  }
+
+  onVoted() {
+    this.updateRights();
+    this.updateQuestionary();
   }
 
 }

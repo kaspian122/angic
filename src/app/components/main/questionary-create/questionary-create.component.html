@@ -87,7 +87,10 @@
                                     </mat-grid-tile>
                                     <mat-grid-tile colspan="2">
                                         <div style="text-align: left; width: 100%;">
-                                            <a mat-raised-button (click)="addOption(i)">Добавить вариант ответа №{{options(i).controls.length+1}}</a>
+                                          <a mat-raised-button (click)="addOption(i)">Добавить вариант ответа №{{options(i).controls.length+1}}</a>
+                                          <div class="custom-error">
+                                            <mat-error *ngIf="f('questions.'+i+'.options').invalid">{{e('questions.'+i+'.options')}}</mat-error>
+                                          </div>
                                         </div>
                                     </mat-grid-tile>
                                 </mat-grid-list>

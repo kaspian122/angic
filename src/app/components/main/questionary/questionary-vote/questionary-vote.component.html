@@ -46,10 +46,11 @@
                 <textarea matInput rows="4" formControlName="freeAnswer" placeholder="Ваш ответ"></textarea>
               </mat-form-field>
 
-
-              <mat-error *ngIf="f('responses.'+i).invalid">
-                {{e('responses.'+i)}}
-              </mat-error>
+              <div class="custom-error">
+                <mat-error *ngIf="f('responses.'+i).invalid">
+                  {{e('responses.'+i)}}
+                </mat-error>
+              </div>
 
             </mat-card-content>
           </mat-card>

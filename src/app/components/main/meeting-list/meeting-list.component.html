@@ -58,11 +58,11 @@
       </ng-container>
       <ng-container matColumnDef="beginDate">
         <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'beginDate'">Дата начала</mat-header-cell>
-        <mat-cell *matCellDef="let element" [ngClass]="'beginDate'"> {{element.beginDate | date:'dd.MM.yyyy, HH:mm:ss'}} </mat-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'beginDate'"> {{element.beginDate | date:'dd.MM.yyyy, HH:mm'}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="endDate">
         <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'endDate'">Дата окончания</mat-header-cell>
-        <mat-cell *matCellDef="let element" [ngClass]="'endDate'"> {{element.endDate | date:'dd.MM.yyyy, HH:mm:ss'}} </mat-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'endDate'"> {{element.endDate | date:'dd.MM.yyyy, HH:mm'}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="loadDate">
         <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'loadDate'">Дата создания</mat-header-cell>

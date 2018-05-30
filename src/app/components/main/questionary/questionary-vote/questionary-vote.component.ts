@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {QuestionaryService} from "../../../../services/questionary/questionary.service";
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {Attach} from "../../../../models/attach";
@@ -6,8 +6,6 @@ import {QuestionInfo} from "../../../../models/questionary/question/question-inf
 import {QuestionaryInfo} from "../../../../models/questionary/questionary-info";
 import {QuestionResponse, QuestionResponses} from "../../../../models/questionary/question/question-responses";
 import {ErrorHandler} from "../../../../services/error-handler";
-import {forkJoin} from "rxjs/observable/forkJoin";
-import {MkdService} from "../../../../services/mkd/mkd.service";
 import {QuestionaryRights} from "../../../../models/questionary/questionary-rights";
 import {OptionInfo} from "../../../../models/questionary/question/option/option-info";
 import {MatSnackBar} from "@angular/material";
@@ -22,7 +20,7 @@ import {FileService} from "../../../../services/file/file.service";
   templateUrl: './questionary-vote.component.html',
   styleUrls: ['./questionary-vote.component.css']
 })
-export class QuestionaryVoteComponent implements OnInit {
+export class QuestionaryVoteComponent implements OnInit, OnChanges {
 
   @Input() questionary: QuestionaryInfo;
   @Input() questionaryRights: QuestionaryRights;
@@ -31,6 +29,8 @@ export class QuestionaryVoteComponent implements OnInit {
   loader: boolean = false;
 
   files: Attach[] = [];
+
+  @Output() voted = new EventEmitter<boolean>();
 
   constructor(
     private questionaryService: QuestionaryService,
@@ -57,10 +57,17 @@ export class QuestionaryVoteComponent implements OnInit {
   }
 
   checkVoteRights() {
+    if (!this.form) return;
     if (!this.questionaryRights.editVote) {
       this.form.disable();
     } else {
       this.form.enable();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['questionaryRights']) {
+      this.checkVoteRights();
     }
   }
 
@@ -69,7 +76,6 @@ export class QuestionaryVoteComponent implements OnInit {
   }
 
   addResponse(i: number, q: QuestionInfo) {
-
     let config = {
       questionId: [q.id]
     };
@@ -107,7 +113,6 @@ export class QuestionaryVoteComponent implements OnInit {
   }
 
   downloadFile(f: Attach) {
-
     f.loader = true;
 
     this.fileService.getFile(f.id, 'Questionary').subscribe(
@@ -140,17 +145,8 @@ export class QuestionaryVoteComponent implements OnInit {
         this.snackBar.open('Благодарим Вас за участие в опросе! Ваше мнение будет обязательно учтено!', '', {
           duration: 2000
         });
-
-        this.questionaryService.getQuestionaryRights(this.questionary.id).subscribe(
-          (rights) => {
-            this.questionaryRights = rights;
-            this.checkVoteRights();
-          },
-          null,
-          () => {
-            this.loader = false;
-          }
-        )
+        this.voted.emit();
+        this.loader = false;
       },
       (err) => {
         ErrorHandler.handleFormError(err, this.form);

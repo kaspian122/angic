@@ -4,10 +4,10 @@
 
   <mat-tab-group>
     <mat-tab label="Анкета" *ngIf="questionaryRights?.showVote">
-      <app-questionary-vote [questionary]="questionaryInfo" [questionaryRights]="questionaryRights"></app-questionary-vote>
+      <app-questionary-vote [questionary]="questionaryInfo" [questionaryRights]="questionaryRights" (voted)="onVoted($event)"></app-questionary-vote>
     </mat-tab>
-    <mat-tab label="Результаты">
-      <app-questionary-result [questionary]="questionaryInfo" *ngIf="questionaryRights?.showResult"></app-questionary-result>
+    <mat-tab label="Результаты" *ngIf="questionaryRights?.showResult">
+      <app-questionary-result [questionary]="questionaryInfo"></app-questionary-result>
     </mat-tab>
     <mat-tab label="Активность" *ngIf="questionaryRights?.showActivity">
       <app-questionary-activity [questionaryId]="questionaryId"></app-questionary-activity>
