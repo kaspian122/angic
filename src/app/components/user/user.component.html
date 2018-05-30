@@ -19,8 +19,9 @@
         </div>
         <a *ngIf="authService.hasRole('ROLE_ADMIN')" mat-button routerLink="/admin" style="margin-left: 10px;">Администратор</a>
         <span *ngIf="auth" style="margin-left: 10px; margin-right: 10px">{{(auth.user.lastName)}} {{(auth.user.firstName)}} {{(auth.user.secondName)}}</span>
+
         <a mat-icon-button (click)="logOut()">
-          <mat-icon>exit_to_app</mat-icon>
+            <i class="fa fa-sign-out fa-2x" aria-hidden="true"> </i>
         </a>
     </mat-toolbar>
     <router-outlet></router-outlet>
