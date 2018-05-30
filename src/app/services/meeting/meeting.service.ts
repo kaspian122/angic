@@ -105,6 +105,10 @@ export class MeetingService {
   public getMeetingEnums(): Observable<any> {
     return this.http.get(this.config.getEndpoint('meeting/enums'), {headers: this.authService.headers()});
   }
+  
+  public getExcelFileNoTakePart(meetingId: string) {
+    return this.http.get(this.config.getEndpoint(`meeting/${meetingId}/export/noTakePart`), {headers: this.authService.headers(), responseType: 'arraybuffer'});
+  }
 
   public firstNotify(meetingId): Observable<any> {
     return this.http.put(this.config.getEndpoint(`meeting/${meetingId}/notiff/first`), null, {headers: this.authService.headers()});

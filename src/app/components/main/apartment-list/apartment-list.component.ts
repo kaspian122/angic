@@ -19,6 +19,18 @@ export class ApartmentListComponent extends TableComponent<ApartmentRow> impleme
   mkdInfo: MkdInfo;
   currentMkd: MkdOwnersInfo;
 
+  /**
+   * процесс выгрузки в файл
+   * @type {boolean}
+     */
+  loadingFile: boolean = false;
+
+  /**
+   * процесс выгрузки объявления
+   * @type {boolean}
+     */
+  loadingAd: boolean = false;
+
   public displayedColumns = ['select', 'number', 'area', 'floor', 'porch', 'ownership', 'totalShare', 'utilization'];
 
   constructor(
@@ -75,13 +87,21 @@ export class ApartmentListComponent extends TableComponent<ApartmentRow> impleme
   }
 
   loadToExcel(){
+    this.loadingFile = true;
     this.holderService.getExcelFileWithHolders(this.currentMkd.mkdId).subscribe(
-        data=> this.downloadFile(data, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'Список собственников.xlsx'));
+        data=> {
+          this.downloadFile(data, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'Список собственников.xlsx');
+          this.loadingFile = false;
+        });
   }
 
   loadRegistryAd() {
+    this.loadingAd = true;
     this.mkdService.getRegistryAd(this.currentMkd.mkdId).subscribe(
-      data => this.downloadFile(data, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'Объявление о регистрации.docx'));
+        data => {
+          this.downloadFile(data, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'Объявление о регистрации.docx');
+          this.loadingAd = false;
+        });
   }
 
   private downloadFile(data, contentType: string, downloadTitle: string) {

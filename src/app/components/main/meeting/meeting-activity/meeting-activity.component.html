@@ -4,4 +4,7 @@
   Смотрели собрание = {{(activity?.view)}} чел.<br/>
   Не смотрели собрание = {{(activity?.none)}} чел.<br/>
   Участвовали в собрании = {{(activity?.takePart)}} чел.<br/>
+
+  <br/><br/>
+  <app-did-not-participate-holders [holders]="activity?.nonTakePart" [meetingId]="meetingId" *ngIf="activity?.nonTakePart != null"></app-did-not-participate-holders>
 </mat-card-content>

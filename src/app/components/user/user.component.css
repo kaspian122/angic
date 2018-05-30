@@ -1,6 +1,7 @@
 :host {
     display: flex;
 }
-.mat-select-value {
-  color: white;
+.menu-item {
+  margin-left: 10px;
+  margin-right: 10px;
 }

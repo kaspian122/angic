@@ -9,9 +9,11 @@
       Getting status
     </div>
     <mat-card *ngIf="auth && auth.status === 'NOT_AUTHENTICATED'" class="loginCard">
-      <mat-card-content class="primaryColor" style="text-align: center">
-        <img style="vertical-align: middle; " src="/assets/rq_white.png" alt="">
-      </mat-card-content>
+      <a href="{{websiteUrl}}">
+        <mat-card-content class="primaryColor" style="text-align: center">
+          <img style="vertical-align: middle; " src="/assets/rq_white.png" alt="">
+        </mat-card-content>
+      </a>
       <mat-card-title style="text-align: center">Вход</mat-card-title>
       <mat-divider></mat-divider>
       <mat-card-content>
@@ -24,7 +26,7 @@
             <input matInput type="password" id='password' name="password" [(ngModel)]="password" placeholder="Пароль">
           </mat-form-field>
           <div style="text-align: right">
-            <a mat-button (click)="register()">Зарегистрироваться</a>
+            <button mat-raised-button (click)="register()">Зарегистрироваться</button>
             <button mat-raised-button (click)="doLogin()">Войти</button>
           </div>
 

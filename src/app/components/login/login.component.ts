@@ -3,6 +3,7 @@ import {AuthService} from "../../services/auth/auth.service";
 import {Auth} from "../../services/auth/auth";
 import {LoginFailedError} from "../../services/auth/login.failed.error";
 import {ActivatedRoute, Router} from "@angular/router";
+import {environment} from 'environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
   public errorMessage?: string = null;
 
   public returnUrl = null;
+  private websiteUrl = environment.websiteUrl;
 
   constructor(private authService: AuthService,
               private router: Router,

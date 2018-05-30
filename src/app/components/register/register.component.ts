@@ -9,6 +9,7 @@ import "rxjs/add/observable/timer";
 import {Subscription} from "rxjs/Subscription";
 import "rxjs/add/operator/timeInterval";
 import "rxjs/add/operator/take";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-register',
@@ -24,6 +25,8 @@ export class RegisterComponent implements OnInit {
   timer: Subscription;
   timeLeft: number = 0;
   form: FormGroup;
+
+  private websiteUrl = environment.websiteUrl;
 
   constructor(
     private route: ActivatedRoute,
