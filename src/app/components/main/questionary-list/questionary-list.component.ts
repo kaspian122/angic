@@ -83,7 +83,7 @@ export class QuestionaryListComponent extends TableComponent<QuestionarySummary>
     let dialogRef = this.dialog.open(SimpleDialogComponent, {
       height: '170px',
       width: '350px',
-      data: { title: 'Перевести в архив все' },
+      data: { title: 'Завершить все' },
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -92,7 +92,7 @@ export class QuestionaryListComponent extends TableComponent<QuestionarySummary>
         if(questionaryIds.length > 0) {
           this.dataService.archiveQuestionaries(questionaryIds).subscribe(
             (data) => {
-              this.showBatchResult("Переведено в архив", data);
+              this.showBatchResult("Завершено", data);
               this.refreshTable();
             }
           );

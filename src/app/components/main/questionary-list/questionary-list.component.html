@@ -19,7 +19,7 @@
         <div class="tile-right">
           <mat-checkbox labelPosition="before" #checkBox [(ngModel)]="showArchived"
                         [indeterminate]="false"
-                        (change)="refreshTable()">Показывать архивные
+                        (change)="refreshTable()">Показывать завершенные
           </mat-checkbox>
         </div>
       </mat-grid-tile>
@@ -72,7 +72,7 @@
     <mat-card-actions *ngIf="createAllowed">
       <a routerLink="/questionary-create" mat-raised-button>Добавить</a>
       <a mat-raised-button (click)="openDeleteDialog()">Удалить</a>
-      <a mat-raised-button (click)="openArchiveDialog()">Перевести в архив</a>
+      <a mat-raised-button (click)="openArchiveDialog()">Завершить</a>
     </mat-card-actions>
   </mat-card-content>
 </mat-card>
