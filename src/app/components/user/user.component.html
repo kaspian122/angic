@@ -4,23 +4,25 @@
         <a routerLink="/" style="width: 302px;"><img style="vertical-align: middle; " src="/assets/rq_white.png" alt=""></a>
 
         <div style="-webkit-box-flex: 1;-ms-flex-positive: 1;flex-grow: 1;"></div>
-        <a mat-button routerLink="/forum" style="margin-right: 10px">Форум</a>
-        <mat-form-field *ngIf="mkd.length > 1">
+        <a mat-button routerLink="/forum" class="menu-item"><span class="menu-font">Форум</span></a>
+        <mat-form-field class="white-select" *ngIf="mkd.length > 1" style="width: 180px">
           <mat-select [(ngModel)]="currentMkdId" (change)="setCurrentMkd()">
             <mat-option *ngFor="let mkdItem of mkd" [value]="mkdItem.mkdId">
-              {{ mkdItem.adress }}
+              <span class="menu-font">{{ mkdItem.adress }}</span>
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div *ngIf="mkd.length == 1">
+        <div *ngIf="mkd.length == 1" class="menu-item">
             <div *ngFor="let mkdItem of mkd">
-              <span id="{{mkdItem.mkdId}}">{{ mkdItem.adress }}</span>
+              <span id="{{mkdItem.mkdId}}" class="menu-font">{{ mkdItem.adress }}</span>
             </div>
         </div>
-        <a *ngIf="authService.hasRole('ROLE_ADMIN')" mat-button routerLink="/admin" style="margin-left: 10px;">Администратор</a>
-        <span *ngIf="auth" style="margin-left: 10px; margin-right: 10px">{{(auth.user.lastName)}} {{(auth.user.firstName)}} {{(auth.user.secondName)}}</span>
+        <a *ngIf="authService.hasRole('ROLE_ADMIN')" mat-button routerLink="/admin" class="menu-font menu-item">Администратор</a>
+        <span *ngIf="auth" class="menu-font menu-item">
+          {{(auth.user.lastName)}} {{(auth.user.firstName)}} {{(auth.user.secondName)}}
+        </span>
         <a mat-icon-button (click)="logOut()">
-          <mat-icon>exit_to_app</mat-icon>
+          <mat-icon class="menu-font">exit_to_app</mat-icon>
         </a>
     </mat-toolbar>
     <router-outlet></router-outlet>

@@ -20,14 +20,14 @@
           </mat-form-field>
 
           <p style="width: 100%; text-align: right">
-            <a mat-button href="http://mkd.sibir.local">Отмена</a>
+            <button mat-raised-button routerLink="/login">Отмена</button>
 
-            <a *ngIf="f('key')" [disabled]="timeLeft > 0 || resendLoader" mat-button (click)="resendCode()">
+            <button mat-raised-button *ngIf="f('key')" [disabled]="timeLeft > 0 || resendLoader" (click)="resendCode()">
               Получить новый код
               <ng-container *ngIf="timeLeft > 0" class="small">({{timeLeft}})</ng-container>
-            </a>
+            </button>
 
-            <button mat-button [disabled]="form.status == 'INVALID' || loader ">
+            <button mat-raised-button [disabled]="form.status == 'INVALID' || loader ">
               <mat-icon *ngIf="loader" class="spinner">autorenew</mat-icon>
               {{submitLabel}}
             </button>
