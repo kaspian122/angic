@@ -15,8 +15,8 @@ export class ProfileComponent implements OnInit {
   public auth?: Auth = null;
   mkdInfo: MkdNewsInfo = null;
 
-  private ownerApartmentsStr: string;
-  private powerOfAttorneyApartmentsStr: string;
+  ownerApartmentsStr: string;
+  powerOfAttorneyApartmentsStr: string;
 
   constructor(
     private authService: AuthService,
@@ -43,5 +43,4 @@ export class ProfileComponent implements OnInit {
       );
     });
   }
-
 }

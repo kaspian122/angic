@@ -1,6 +1,6 @@
 import {Apartment} from "../apartment/apartment";
 import {SimpleQuestionaryInfo} from "../questionary/simple-questionary-info";
-import {MeetingInfo} from "../meeting/meeting-info";
+import {MeetingNewsInfo} from '../meeting/meeting-news-info';
 
 
 export interface UserMkdApartmentsInfo {
@@ -13,5 +13,5 @@ export interface MkdNewsInfo {
   ownerInfo?: UserMkdApartmentsInfo,
   powerOfAttorneyInfo?: UserMkdApartmentsInfo,
   questionary?: SimpleQuestionaryInfo,
-  meeting?: MeetingInfo
+  meetings?: MeetingNewsInfo[]
 }
