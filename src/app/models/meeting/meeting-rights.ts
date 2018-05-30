@@ -50,4 +50,9 @@ export interface MeetingRights {
    * Показывать кнопку 'Выгрузить ZIP' с документацией о начале ОСС
    */
   showStartZipBtn: boolean
+
+  /**
+   * Показывать кнопки для админа
+   */
+  showAdminBtn: boolean
 }

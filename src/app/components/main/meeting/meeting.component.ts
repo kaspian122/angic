@@ -9,7 +9,7 @@ import {MeetingInfo} from '../../../models/meeting/meeting-info';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorHandler} from '../../../services/error-handler';
 import {QuestionaryResultFreeAnswersComponent} from '../questionary/questionary-result/questionary-result-free-answers/questionary-result-free-answers.component';
-import {MatDialog, MatDialogConfig} from '@angular/material';
+import {MatDialog, MatDialogConfig, MatSnackBar} from '@angular/material';
 import {MeetingCorrectDialogComponent} from './meeting-correct-dialog/meeting-correct-dialog.component';
 
 /**
@@ -30,7 +30,8 @@ export class MeetingComponent implements OnInit {
     private route: ActivatedRoute,
     private meetingService: MeetingService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -94,6 +95,42 @@ export class MeetingComponent implements OnInit {
         URL.revokeObjectURL(url);
       }
     );
+  }
+
+  firstNotify(): void {
+    this.meetingService.firstNotify(this.meetingId).subscribe(data => {
+      this.openSnackBar('Уведомление отправлено', '');
+    });
+  }
+
+  secondNotify(): void {
+    this.meetingService.secondNotify(this.meetingId).subscribe(data => {
+      window.location.reload();
+    });
+  }
+
+  thirdNotify(): void {
+    this.meetingService.thirdNotify(this.meetingId).subscribe(data => {
+      this.openSnackBar('Уведомление отправлено', '');
+    });
+  }
+
+  fourNotify(): void {
+    this.meetingService.fourNotify(this.meetingId).subscribe(data => {
+      window.location.reload();
+    });
+  }
+
+  archiveMeeting(): void {
+    this.meetingService.archiveMeeting(this.meetingId).subscribe(data => {
+      window.location.reload();
+    });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
 }

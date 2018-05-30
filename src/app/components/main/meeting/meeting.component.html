@@ -28,6 +28,11 @@
     <a mat-raised-button *ngIf="meetingRights.showReadyBtn" (click)="goToProcess()">Запустить</a>
     <a mat-raised-button *ngIf="meetingRights.showCorrectBtn" (click)="goToCorrect()">На доработку</a>
     <a mat-raised-button *ngIf="meetingRights.showStartZipBtn" (click)="loadToZip()">Выгрузить пакет документов</a>
+    <a mat-raised-button *ngIf="meetingRights.showAdminBtn && meetingInfo?.state.id == 'Ready'" (click)="firstNotify()">Первое уведомление ОСС</a>
+    <a mat-raised-button *ngIf="meetingRights.showAdminBtn && meetingInfo?.state.id == 'Ready'" (click)="secondNotify()">Второе уведомление ОСС</a>
+    <a mat-raised-button *ngIf="meetingRights.showAdminBtn && meetingInfo?.state.id == 'Vote'" (click)="thirdNotify()">Третье уведомление ОСС</a>
+    <a mat-raised-button *ngIf="meetingRights.showAdminBtn && meetingInfo?.state.id == 'Vote'" (click)="fourNotify()">Четвертое уведомление ОСС</a>
+    <a mat-raised-button *ngIf="meetingRights.showAdminBtn && meetingInfo?.state.id == 'Complete'" (click)="archiveMeeting()">Архивировать</a>
   </mat-card-actions>
 
 </mat-card>

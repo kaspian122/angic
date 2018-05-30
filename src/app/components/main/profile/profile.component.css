@@ -1,8 +1,10 @@
 mat-grid-tile {
   background: #eeeeee;
+  display:table; width:100%;
 }
 .tile {
-  float: left;
+  text-align: center;
+  display:table-cell; vertical-align:middle;
   width: 100%;
 }
 

@@ -3,6 +3,7 @@ import { Mkd } from '../../../models/mkd/mkd';
 import { MkdService } from '../../../services/mkd/mkd.service';
 import { TableComponent } from "../../../classes/table-component";
 import {PaginationInfo} from "../../../models/pagination-info";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-admin-profile',
@@ -15,6 +16,7 @@ export class AdminProfileComponent extends TableComponent<Mkd> implements OnInit
 
   constructor(
     private dataService: MkdService,
+    private router: Router
   ) {
     super();
   }
@@ -34,6 +36,11 @@ export class AdminProfileComponent extends TableComponent<Mkd> implements OnInit
         throw err;
       }
     );
+  }
+
+  selectMkd(row: Mkd): void {
+    this.dataService.setCurrentMkd(row.id);
+    this.router.navigate(['/']);
   }
 
 }

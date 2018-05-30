@@ -19,7 +19,7 @@ import {Router} from '@angular/router';
 })
 export class MeetingListComponent extends TableComponent<SimpleMeetingInfo> implements OnInit {
 
-  displayedColumns = ['select', 'state', 'number', 'kind', 'initiator', 'beginDate', 'endDate', 'loadDate'];
+  displayedColumns = ['select', 'state', 'kind', 'initiators', 'beginDate', 'endDate', 'loadDate'];
   currentMkdId: string;
 
   showCompleted: boolean = false;

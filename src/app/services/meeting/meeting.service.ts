@@ -106,4 +106,23 @@ export class MeetingService {
     return this.http.get(this.config.getEndpoint('meeting/enums'), {headers: this.authService.headers()});
   }
 
+  public firstNotify(meetingId): Observable<any> {
+    return this.http.put(this.config.getEndpoint(`meeting/${meetingId}/notiff/first`), null, {headers: this.authService.headers()});
+  }
+
+  public secondNotify(meetingId): Observable<any> {
+    return this.http.put(this.config.getEndpoint(`meeting/${meetingId}/notiff/second`), null, {headers: this.authService.headers()});
+  }
+
+  public thirdNotify(meetingId): Observable<any> {
+    return this.http.put(this.config.getEndpoint(`meeting/${meetingId}/notiff/third`), null, {headers: this.authService.headers()});
+  }
+
+  public fourNotify(meetingId): Observable<any> {
+    return this.http.put(this.config.getEndpoint(`meeting/${meetingId}/notiff/four`), null, {headers: this.authService.headers()});
+  }
+
+  public archiveMeeting(meetingId): Observable<any> {
+    return this.http.put(this.config.getEndpoint(`meeting/${meetingId}/notiff/archive`), null, {headers: this.authService.headers()});
+  }
 }

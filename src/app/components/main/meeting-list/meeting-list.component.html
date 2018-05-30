@@ -52,9 +52,9 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'kind'">Вид</mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="'kind'"> {{element.kind}} </mat-cell>
       </ng-container>
-      <ng-container matColumnDef="initiator">
-        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'initiator'">Инициатор</mat-header-cell>
-        <mat-cell *matCellDef="let element" [ngClass]="'initiator'"> {{element.initiator}} </mat-cell>
+      <ng-container matColumnDef="initiators">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'initiators'">Инициаторы</mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'initiators'"> {{element.initiators}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="beginDate">
         <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'beginDate'">Дата начала</mat-header-cell>
