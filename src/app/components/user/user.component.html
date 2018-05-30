@@ -1,7 +1,7 @@
 <div class="main">
     <mat-toolbar color="primary" class="example-toolbar">
         <!--<button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>-->
-        <a routerLink="/" style="width: 302px;"><img style="vertical-align: middle; " src="/assets/rq.png" alt=""></a>
+        <a routerLink="/" style="width: 302px;"><img style="vertical-align: middle; " src="/assets/rq_white.png" alt=""></a>
 
         <div style="-webkit-box-flex: 1;-ms-flex-positive: 1;flex-grow: 1;"></div>
         <a mat-button routerLink="/forum" style="margin-right: 10px">Форум</a>
@@ -19,7 +19,9 @@
         </div>
         <a *ngIf="authService.hasRole('ROLE_ADMIN')" mat-button routerLink="/admin" style="margin-left: 10px;">Администратор</a>
         <span *ngIf="auth" style="margin-left: 10px; margin-right: 10px">{{(auth.user.lastName)}} {{(auth.user.firstName)}} {{(auth.user.secondName)}}</span>
-        <a mat-button (click)="logOut()">Выйти</a>
+        <a mat-icon-button (click)="logOut()">
+          <mat-icon>exit_to_app</mat-icon>
+        </a>
     </mat-toolbar>
     <router-outlet></router-outlet>
 </div>
