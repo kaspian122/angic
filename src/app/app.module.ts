@@ -87,6 +87,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { ForumComponent } from './components/forum/forum.component';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import { SafePipe } from '../safe.pipe';
+import { DidNotParticipateHoldersComponent } from './components/main/meeting/did-not-participate-holders/did-not-participate-holders.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -137,7 +138,8 @@ export const MY_FORMATS = {
     MeetingListComponent,
     MeetingEditComponent,
     ForumComponent,
-    SafePipe
+    SafePipe,
+    DidNotParticipateHoldersComponent
   ],
   imports: [
     BrowserModule,

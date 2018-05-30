@@ -1,3 +1,5 @@
+import {Holder} from '../holder/holder';
+
 /**
  * Активность собрания
  */
@@ -25,5 +27,10 @@ export interface MeetingActivity {
   /**
    * Не смотрели собрание (кол-во)
    */
-  none: number
+  none: number,
+
+  /**
+   * Список не учавствовавших
+   */
+  nonTakePart: Holder[]
 }

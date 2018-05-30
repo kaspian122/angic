@@ -106,4 +106,8 @@ export class MeetingService {
     return this.http.get(this.config.getEndpoint('meeting/enums'), {headers: this.authService.headers()});
   }
 
+  public getExcelFileNoTakePart(meetingId: string) {
+    return this.http.get(this.config.getEndpoint(`meeting/${meetingId}/export/noTakePart`), {headers: this.authService.headers(), responseType: 'arraybuffer'});
+  }
+
 }
