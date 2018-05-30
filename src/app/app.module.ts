@@ -142,7 +142,7 @@ export const MY_FORMATS = {
     MeetingEditComponent,
     ForumComponent,
     SafePipe,
-    DidNotParticipateHoldersComponent
+    DidNotParticipateHoldersComponent,
     MeetingCorrectDialogComponent,
     LoginAdminComponent
   ],
