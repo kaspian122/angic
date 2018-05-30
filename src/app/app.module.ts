@@ -87,6 +87,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { ForumComponent } from './components/forum/forum.component';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import { SafePipe } from '../safe.pipe';
+import { MeetingCorrectDialogComponent } from './components/main/meeting/meeting-correct-dialog/meeting-correct-dialog.component';
 import { LoginAdminComponent } from './components/login-admin/login-admin.component';
 
 export const MY_FORMATS = {
@@ -139,6 +140,7 @@ export const MY_FORMATS = {
     MeetingEditComponent,
     ForumComponent,
     SafePipe,
+    MeetingCorrectDialogComponent,
     LoginAdminComponent
   ],
   imports: [
@@ -214,7 +216,8 @@ export const MY_FORMATS = {
   entryComponents: [
     DeleteDialogComponent,
     SimpleDialogComponent,
-    QuestionaryResultFreeAnswersComponent
+    QuestionaryResultFreeAnswersComponent,
+    MeetingCorrectDialogComponent
   ]
 
 })
