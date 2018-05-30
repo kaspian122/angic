@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {QuestionaryInfo} from '../../../../models/questionary/questionary-info';
-import {MatDialog, MatDialogClose} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {QuestionaryResultFreeAnswersComponent} from './questionary-result-free-answers/questionary-result-free-answers.component';
 import {QuestionInfo} from '../../../../models/questionary/question/question-info';
 
