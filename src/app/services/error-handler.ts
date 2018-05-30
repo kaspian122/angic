@@ -11,10 +11,11 @@ export class ErrorHandler {
           let errors = err.error.errors;
           if (errors) {
             Object.keys(errors).forEach(field => {
-              if(group.get(field) == null) {
+              const f = field.replace(/\[(\d+)]/gi, '.$1');
+              if(group.get(f) == null) {
                 alert(errors[field][0]);
               } else {
-                group.get(field).setErrors({"server": errors[field][0]});
+                group.get(f).setErrors({"server": errors[field][0]});
               }
             });
           } else {
