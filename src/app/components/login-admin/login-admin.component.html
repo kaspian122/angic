@@ -19,14 +19,12 @@
       <mat-card-content>
         <form name="loginform">
           <mat-form-field class="fullwidth">
-            <span matPrefix>+7 &nbsp;</span>
-            <input matInput id='login' name="login" [(ngModel)]="login" placeholder="Номер телефона" mask='9999999999'>
+            <input matInput id='login' name="login" [(ngModel)]="login" placeholder="Логин">
           </mat-form-field>
           <mat-form-field class="fullwidth">
             <input matInput type="password" id='password' name="password" [(ngModel)]="password" placeholder="Пароль">
           </mat-form-field>
           <div style="text-align: right">
-            <button mat-raised-button (click)="register()">Зарегистрироваться</button>
             <button mat-raised-button (click)="doLogin()">Войти</button>
           </div>
 
@@ -39,5 +37,3 @@
     </mat-card>
   </div>
 </div>
-
-

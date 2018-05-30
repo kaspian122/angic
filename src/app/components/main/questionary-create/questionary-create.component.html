@@ -44,6 +44,9 @@
 
                                 <mat-form-field class="fullwidth">
                                     <input type="text" matInput formControlName="name" placeholder="Вопрос" autocomplete="off">
+                                    <mat-error *ngIf="f('questions.'+i+'.name').invalid">
+                                        {{e('questions.'+i+'.name')}}
+                                    </mat-error>
                                 </mat-form-field>
 
                                 <mat-grid-list cols="2" rowHeight="4em">

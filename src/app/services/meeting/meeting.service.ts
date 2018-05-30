@@ -98,8 +98,8 @@ export class MeetingService {
     return this.http.put(this.config.getEndpoint(`meeting/${meetingId}/state/ready`), null, {headers: this.authService.headers()});
   }
 
-  public goToCorrect(meetingId): Observable<any> {
-    return this.http.put(this.config.getEndpoint(`meeting/${meetingId}/state/correct`), null, {headers: this.authService.headers()});
+  public goToCorrect(meetingId, description): Observable<any> {
+    return this.http.put(this.config.getEndpoint(`meeting/${meetingId}/state/correct`), description, {headers: this.authService.headers()});
   }
 
   public getMeetingEnums(): Observable<any> {

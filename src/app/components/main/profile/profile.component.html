@@ -2,47 +2,77 @@
   <mat-card>
 
     <mat-card-title>Здравствуйте, {{(auth.user.firstName)}} {{(auth.user.secondName)}}!</mat-card-title>
+
     <div *ngIf="mkdInfo">
       <mat-divider></mat-divider>
+
       <div *ngIf="mkdInfo.ownerInfo">
         <mat-card-content>
           Вы являетесь собственником квартиры по адресу {{mkdInfo.ownerInfo.address}}, {{ownerApartmentsStr}}
           и владеете {{mkdInfo.ownerInfo.mkdPercent}}% голоса от общего числа собственников в доме.
         </mat-card-content>
       </div>
+
       <div *ngIf="mkdInfo.powerOfAttorneyInfo">
         <mat-card-content>
           Вы являетесь доверенным лицом квартиры по адресу {{mkdInfo.powerOfAttorneyInfo.address}}, {{powerOfAttorneyApartmentsStr}}
           и владеете {{mkdInfo.powerOfAttorneyInfo.mkdPercent}}% голоса от общего числа собственников в доме.
         </mat-card-content>
       </div>
+
       <mat-card-content>
-        <!--<div class="voting-info">-->
-          <!--<mat-grid-list cols="1" rowHeight="6:1">-->
-            <!--<mat-grid-tile>-->
-              <!--<div>-->
-                <!--с 01.05.2017 с 20:00 по 05.05.2018 года 20:00 в доме проходит голосование.<br>-->
+        <mat-grid-list cols="1" rowHeight="10em">
+          <div *ngIf="mkdInfo.meetings">
+            <mat-grid-tile *ngFor="let meetingInfo of mkdInfo.meetings">
+              <mat-card-content class="tile" *ngIf="meetingInfo.state.id == 'Project'">
+                В направленном от Вас Сообщении о проведении общего собрания собственников от {{meetingInfo.beginDate | date:'dd.MM.yyyy HH:mm:ss'}}г.
+                имеются замечания, которые необходимо оперативно устранить:<br>
+                {{meetingInfo.adminComment}}
+                <br><br>
+                Ознакомиться с Сообщением, повесткой дня собрания и прочей информацией можно <a routerLink="/meeting/{{meetingInfo.id}}">"в разделе «Общие собрания»"</a>.
+                Для получения подробной информации прошу связаться по телефону: {{meetingInfo.adminPhone}}
 
-                <!--<a href="">Перейти в раздел голосования</a><br>-->
+              </mat-card-content>
 
-                <!--До завершения осталось 3 дня-->
-              <!--</div>-->
-            <!--</mat-grid-tile>-->
+              <mat-card-content class="tile" *ngIf="meetingInfo.state.id == 'Review'">
+                В ваш адрес от {{meetingInfo.initiator}} направлено Сообщение о проведении общего собрания собственников от {{meetingInfo.beginDate | date:'dd.MM.yyyy HH:mm:ss'}}
+                в соответствии с частями 3 и 4 статьи 47.1 ЖК РФ.<br>
+                Ознакомиться с Сообщением, повесткой дня собрания и прочей информацией можно <a routerLink="/meeting/{{meetingInfo.id}}">"в разделе «Общие собрания»"</a>.<br>
+                При наличии вопросов, прошу оперативно связаться по телефону: {{meetingInfo.initiatorPhone}}<br>
+                При отсутствии вопросов, прошу разместить Сообщение в информационной системе Роскворум.рф не позднее чем за 10 дней до даты и времени начала проведения собрания.
+              </mat-card-content>
 
-          <!--</mat-grid-list>-->
-        <!--</div>-->
+              <mat-card-content class="tile" *ngIf="meetingInfo.state.id == 'Ready' && meetingInfo.isUserInitiator">
+                Ваше Сообщение о проведении общего собрания собственников от {{meetingInfo.beginDate | date:'dd.MM.yyyy HH:mm:ss'}} размещено в информационной системе Роскворум.рф.<br>
+                Ознакомиться с Сообщением, повесткой дня собрания и прочей информацией можно <a routerLink="/meeting/{{meetingInfo.id}}">"в разделе «Общие собрания»"</a>.
+              </mat-card-content>
 
-        <div *ngIf="mkdInfo.questionary">
-          <mat-grid-list cols="1" rowHeight="6:1">
-            <mat-grid-tile>
-              <div>
-                Пожалуйста, примите участие в опросе
-                <a routerLink="/questionary/{{mkdInfo.questionary.id}}">"{{mkdInfo.questionary.name}}"</a>
-              </div>
+              <mat-card-content class="tile" *ngIf="meetingInfo.state.id == 'Ready' && !meetingInfo.isUserInitiator">
+                {{meetingInfo.beginDate | date:'dd.MM.yyyy HH:mm:ss'}} начинается голосование по вопросам повестки дня общего собрания собственников от
+                {{meetingInfo.beginDate | date:'dd.MM.yyyy'}}г. Со всей информацией по собранию Вы можете ознакомиться
+                <a routerLink="/meeting/{{meetingInfo.id}}">"в разделе «Общие собрания»"</a>.
+              </mat-card-content>
+
+              <mat-card-content class="tile" *ngIf="meetingInfo.state.id == 'Vote'">
+                {{meetingInfo.beginDate | date:'dd.MM.yyyy HH:mm:ss'}} началось голосование по вопросам повестки дня общего собрания собственников от
+                {{meetingInfo.beginDate | date:'dd.MM.yyyy'}}г. Для голосования пройдите <a routerLink="/meeting/{{meetingInfo.id}}">"в разделе «Общие собрания»"</a>.<br>
+                Внимание! Голосование завершается {{meetingInfo.endDate | date:'dd.MM.yyyy HH:mm:ss'}}
+              </mat-card-content>
+
+              <mat-card-content class="tile" *ngIf="meetingInfo.state.id == 'Complete'">
+                {{meetingInfo.endDate | date:'dd.MM.yyyy HH:mm:ss'}} завершилось голосование по вопросам повестки дня общего собрания собственников от
+                {{meetingInfo.beginDate | date:'dd.MM.yyyy'}}г. Для ознакомления с результатом голосования пройдите <a routerLink="/meeting/{{meetingInfo.id}}">"в разделе «Общие собрания»"</a>.
+              </mat-card-content>
             </mat-grid-tile>
+          </div>
 
-          </mat-grid-list>
-        </div>
+          <mat-grid-tile *ngIf="mkdInfo.questionary">
+            <mat-card-content class="tile">
+              Пожалуйста, примите участие в опросе
+              <a routerLink="/questionary/{{mkdInfo.questionary.id}}">"{{mkdInfo.questionary.name}}"</a>.
+            </mat-card-content>
+          </mat-grid-tile>
+        </mat-grid-list>
 
       </mat-card-content>
 

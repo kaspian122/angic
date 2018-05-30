@@ -3,6 +3,20 @@
     flex-direction: column;
 }
 
+.radio-group-row {
+    display: inline-flex;
+    flex-direction: row;
+}
+
 .radio-button {
     margin: 5px;
 }
+
+.radio-group-row .radio-button {
+    margin-right: 30px;
+}
+
+.fullwidth {
+    width: 100%;
+}
+

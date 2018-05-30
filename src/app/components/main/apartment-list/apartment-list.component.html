@@ -102,8 +102,13 @@
     <mat-card-actions>
       <a mat-raised-button routerLink="/apartment">Добавить</a>
       <a mat-raised-button (click)="openDeleteDialog()">Удалить</a>
-      <a mat-raised-button (click)="loadRegistryAd()">Объявление о регистрации</a>
-      <a mat-raised-button (click)="loadToExcel()">Реестр собственников</a>
+      <a mat-raised-button (click)="loadRegistryAd()">
+        <mat-icon *ngIf="loadingAd" class="spinner">autorenew</mat-icon>
+        Объявление о регистрации</a>
+      <a mat-raised-button (click)="loadToExcel()">
+        <mat-icon *ngIf="loadingFile" class="spinner">autorenew</mat-icon>
+        Реестр собственников
+      </a>
     </mat-card-actions>
   </mat-card-content>
 </mat-card>

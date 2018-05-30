@@ -1,7 +1,12 @@
 <div class="containerlogin" *ngIf="form">
-  <div class="center-box" style="width: 500px;">
-    <mat-card>
-      <mat-card-title>Регистрация</mat-card-title>
+  <div class="center-box">
+    <mat-card class="loginCard">
+      <a href="{{websiteUrl}}">
+        <mat-card-content class="primaryColor" style="text-align: center">
+          <img style="vertical-align: middle; " src="/assets/rq_white.png" alt="">
+        </mat-card-content>
+      </a>
+      <mat-card-title style="text-align: center">Регистрация</mat-card-title>
       <mat-divider></mat-divider>
       <mat-card-content>
         <form name="registerform" #regForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" [formGroup]="form">
@@ -17,14 +22,14 @@
           </mat-form-field>
 
           <p style="width: 100%; text-align: right">
-            <a mat-button href="http://mkd.sibir.local">Отмена</a>
+            <button mat-raised-button routerLink="/login">Отмена</button>
 
-            <a *ngIf="f('key')" [disabled]="timeLeft > 0 || resendLoader" mat-button (click)="resendCode()">
+            <button mat-raised-button *ngIf="f('key')" [disabled]="timeLeft > 0 || resendLoader" (click)="resendCode()">
               Получить новый код
               <ng-container *ngIf="timeLeft > 0" class="small">({{timeLeft}})</ng-container>
-            </a>
+            </button>
 
-            <button mat-button [disabled]="form.status == 'INVALID' || loader ">
+            <button mat-raised-button [disabled]="form.status == 'INVALID' || loader ">
               <mat-icon *ngIf="loader" class="spinner">autorenew</mat-icon>
               {{submitLabel}}
             </button>

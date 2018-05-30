@@ -1,10 +1,10 @@
-<mat-card *ngIf="questionaryRights">
+<mat-card *ngIf="questionaryRights && questionaryInfo">
   <mat-card-title>{{(questionaryRights?.name)}}</mat-card-title>
   <mat-divider></mat-divider>
 
   <mat-tab-group>
     <mat-tab label="Анкета" *ngIf="questionaryRights?.showVote">
-      <app-questionary-vote [questionaryId]="questionaryId"></app-questionary-vote>
+      <app-questionary-vote [questionary]="questionaryInfo" [questionaryRights]="questionaryRights"></app-questionary-vote>
     </mat-tab>
     <mat-tab label="Результаты">
       <app-questionary-result [questionary]="questionaryInfo" *ngIf="questionaryRights?.showResult"></app-questionary-result>
