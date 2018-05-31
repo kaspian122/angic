@@ -26,6 +26,11 @@ export interface QuestionaryInfo {
   date: string,
 
   /**
+   * Отправлять письма собственникам при публикации анкеты
+   */
+  sendMail: boolean,
+
+  /**
    * Список вопросов
    */
   questions: QuestionInfo[],

@@ -69,7 +69,7 @@ export class QuestionaryCreateComponent implements OnInit {
       mkdId: [info ? null : this.currentMkd.mkdId],
       name: [info ? info.name : '', Validators.required],
       questions: this.fb.array([]),
-      sendMail: [false, Validators.required]
+      sendMail: [info ? info.sendMail : false, Validators.required]
     };
 
     if (info && info.id) {
