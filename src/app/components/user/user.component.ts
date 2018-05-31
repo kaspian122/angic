@@ -14,6 +14,7 @@ export class UserComponent implements OnInit {
 
   public mkd = [];
   currentMkdId: string;
+  currentMkdName: string;
   public auth?: Auth = null;
 
   constructor(
@@ -25,6 +26,7 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.dataService.currentMkd = new ReplaySubject<MkdOwnersInfo>(1);
     this.dataService.currentMkd.subscribe(mkd => {
+      this.currentMkdName = mkd.address;
       this.currentMkdId = mkd.mkdId;
     });
     this.authService.getAuth()

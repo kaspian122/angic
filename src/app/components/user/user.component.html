@@ -7,9 +7,10 @@
         <a mat-button routerLink="/forum" class="menu-item"><span class="menu-font">Форум</span></a>
         <mat-form-field class="white-select" *ngIf="mkd.length > 1" style="width: 220px;">
           <mat-select [(ngModel)]="currentMkdId"
-                      (change)="setCurrentMkd()">
+                      (change)="setCurrentMkd()"
+                      matTooltip="{{ currentMkdName }}" [matTooltipShowDelay]="300">
             <mat-option *ngFor="let mkdItem of mkd" [value]="mkdItem.mkdId">
-              <span class="menu-font" matTooltip="{{ mkdItem.adress }}" [matTooltipShowDelay]="300">{{ mkdItem.adress }}</span>
+              <span class="menu-font" matTooltip="{{ mkdItem.address }}" [matTooltipShowDelay]="300">{{ mkdItem.address }}</span>
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -17,9 +18,9 @@
             <div *ngFor="let mkdItem of mkd">
               <span id="{{mkdItem.mkdId}}"
                     class="menu-font"
-                    matTooltip="{{ mkdItem.adress }}"
+                    matTooltip="{{ mkdItem.address }}"
                     [matTooltipShowDelay]="300">
-                {{ mkdItem.adress }}
+                {{ mkdItem.address }}
               </span>
             </div>
         </div>
