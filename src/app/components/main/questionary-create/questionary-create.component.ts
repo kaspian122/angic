@@ -302,5 +302,9 @@ export class QuestionaryCreateComponent implements OnInit {
     return null;
   }
 
+  changeCountQuorum(question: AbstractControl) {
+    question.get("countQuorum").disable({emitEvent: !question.get("countQuorum").disabled});
+  }
+
 }
 
