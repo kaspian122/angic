@@ -25,7 +25,8 @@
           <div *ngIf="mkdInfo.meetings">
             <mat-grid-tile *ngFor="let meetingInfo of mkdInfo.meetings">
               <mat-card-content class="tile" *ngIf="meetingInfo.state.id == 'Project'">
-                Ознакомьтесь с замечаниями к Сообщению о проведении общего собрания собственников от {{meetingInfo.beginDate | date:'dd.MM.yyyy'}}г:
+                <a routerLink="/meeting/{{meetingInfo.id}}">Ознакомьтесь с замечаниями</a>
+                к Сообщению о проведении общего собрания собственников от {{meetingInfo.beginDate | date:'dd.MM.yyyy'}}г:
                 <br><br>
                 {{meetingInfo.adminComment}}
               </mat-card-content>
