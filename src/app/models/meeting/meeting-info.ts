@@ -55,4 +55,9 @@ export interface MeetingInfo {
    */
   questions: MeetingQuestionInfo[];
 
+  /**
+   * Собственников проголосовало, %
+   */
+  votedHoldersPercent: string;
+
 }
