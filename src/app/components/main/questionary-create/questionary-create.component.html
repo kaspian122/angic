@@ -57,7 +57,7 @@
                                                 <mat-checkbox formControlName="required">Обязательный вопрос</mat-checkbox>
                                             </div>
                                             <div>
-                                                <mat-checkbox formControlName="countQuorum">Считать кворум</mat-checkbox>
+                                                <mat-checkbox formControlName="countQuorum" [disabled]="!question.get('required').value">Считать % от числа проголосовавших</mat-checkbox>
                                             </div>
                                         </div>
                                     </mat-grid-tile>
