@@ -1,5 +1,5 @@
 {   "/api": {
-      "target": "http://mkd-portal.sibir.local/api",
+      "target": "http://portal.rosquorum.ru/api",
       "pathRewrite": {"^/api" : ""},
       "secure": false
      }
