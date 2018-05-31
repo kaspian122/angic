@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  forumUrl: 'http://todo',
-  websiteUrl: 'http://todo',
+  forumUrl: 'http://forum.rosquorum.ru',
+  websiteUrl: 'http://rosquorum.ru',
   apiUrl: '/api'
 };
