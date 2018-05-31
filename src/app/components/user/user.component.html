@@ -5,16 +5,22 @@
 
         <div style="-webkit-box-flex: 1;-ms-flex-positive: 1;flex-grow: 1;"></div>
         <a mat-button routerLink="/forum" class="menu-item"><span class="menu-font">Форум</span></a>
-        <mat-form-field class="white-select" *ngIf="mkd.length > 1" style="width: 180px">
-          <mat-select [(ngModel)]="currentMkdId" (change)="setCurrentMkd()">
+        <mat-form-field class="white-select" *ngIf="mkd.length > 1" style="width: 220px;">
+          <mat-select [(ngModel)]="currentMkdId"
+                      (change)="setCurrentMkd()">
             <mat-option *ngFor="let mkdItem of mkd" [value]="mkdItem.mkdId">
-              <span class="menu-font">{{ mkdItem.adress }}</span>
+              <span class="menu-font" matTooltip="{{ mkdItem.adress }}" [matTooltipShowDelay]="300">{{ mkdItem.adress }}</span>
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div *ngIf="mkd.length == 1" class="menu-item">
+        <div *ngIf="mkd.length == 1" class="menu-item long-text">
             <div *ngFor="let mkdItem of mkd">
-              <span id="{{mkdItem.mkdId}}" class="menu-font">{{ mkdItem.adress }}</span>
+              <span id="{{mkdItem.mkdId}}"
+                    class="menu-font"
+                    matTooltip="{{ mkdItem.adress }}"
+                    [matTooltipShowDelay]="300">
+                {{ mkdItem.adress }}
+              </span>
             </div>
         </div>
         <a *ngIf="authService.hasRole('ROLE_ADMIN')" mat-button routerLink="/admin" class="menu-font menu-item">Администратор</a>

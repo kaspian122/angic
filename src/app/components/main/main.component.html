@@ -5,7 +5,7 @@
         Новости
         <mat-divider></mat-divider>
       </a>
-      <a mat-list-item routerLink="/apartments-list" routerLinkActive="active" *ngIf="hasSuperPrivileges"><mat-icon>list</mat-icon>
+      <a mat-list-item *ngIf="hasSuperPrivileges" routerLink="/apartments-list" routerLinkActive="active"><mat-icon>list</mat-icon>
         Квартиры
         <mat-divider></mat-divider>
       </a>
