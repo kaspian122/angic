@@ -31,18 +31,21 @@ export class MainComponent implements OnInit {
     this.authService.getAuth(true)
       .then(it => {
         this.auth = it;
-        if(this.auth.mkdOwners && this.auth.mkdOwners.length > 0) {
-          let m = this.auth.mkdOwners[0];
-          if (this.auth.mkdOwners.length > 1) {
-            let m = this.auth.mkdOwners.find(e => e.byDefault == true);
+        this.mkdService.currentMkd.subscribe(
+          mkd => {
+            this.currentMkd = mkd;
+            this.checkPrivileges();
           }
-          this.hasSuperPrivileges = this.authService.checkRole(['CHAIRMAN', 'SYSTEM_ADMIN', 'BOARD_MEMBER'], m.authorities);
-          this.hasHolderPrivileges = this.authService.checkRole(['HOLDER'], m.authorities);
-        }
+        );
       });
-    this.mkdService.currentMkd.subscribe(
-      mkd => this.currentMkd = mkd
-    );
+  }
+
+  checkPrivileges() {
+    if(this.auth.mkdOwners && this.auth.mkdOwners.length > 0) {
+      let m = this.auth.mkdOwners.find(owner => owner.mkdId == this.currentMkd.mkdId);
+      this.hasSuperPrivileges = this.authService.checkRole(['CHAIRMAN', 'SYSTEM_ADMIN', 'BOARD_MEMBER'], m.authorities);
+      this.hasHolderPrivileges = this.authService.checkRole(['HOLDER'], m.authorities);
+    }
   }
 
   public callAllowedForAdmin () {
