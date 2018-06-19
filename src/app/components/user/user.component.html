@@ -5,7 +5,7 @@
 
         <div style="-webkit-box-flex: 1;-ms-flex-positive: 1;flex-grow: 1;"></div>
         <a mat-button routerLink="/forum" class="menu-item"><span class="menu-font">Форум</span></a>
-        <mat-form-field class="white-select" *ngIf="mkd.length > 1" style="width: 220px;">
+        <mat-form-field class="white-select" *ngIf="mkd.length > 1">
           <mat-select [(ngModel)]="currentMkdId"
                       (change)="setCurrentMkd()"
                       matTooltip="{{ currentMkdName }}" [matTooltipShowDelay]="300">
@@ -25,7 +25,7 @@
             </div>
         </div>
         <a *ngIf="authService.hasRole('ROLE_ADMIN')" mat-button routerLink="/admin" class="menu-font menu-item">Администратор</a>
-        <span *ngIf="auth" class="menu-font menu-item">
+        <span *ngIf="auth" class="menu-font menu-item user-name">
           {{(auth.user.lastName)}} {{(auth.user.firstName)}} {{(auth.user.secondName)}}
         </span>
         <a mat-icon-button (click)="logOut()">

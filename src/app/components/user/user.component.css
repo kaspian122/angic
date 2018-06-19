@@ -7,5 +7,9 @@
 }
 
 .long-text {
-  overflow:hidden; white-space:nowrap; text-overflow:ellipsis;
+  line-height:20px; white-space:normal; max-width:220px;
+}
+/* Правки на маленький экран */
+@media only screen and (max-width: 999px) {
+    .long-text {max-width:170px;}
 }

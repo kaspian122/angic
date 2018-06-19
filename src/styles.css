@@ -1,3 +1,4 @@
+body {min-width:1000px;}
 div.container {
     width: 100%;
     max-width: 1200px;
@@ -87,8 +88,10 @@ a {
 .menu-font {
   font-size: 16px;
 }
+.menu-font.user-name {max-width:200px; line-height:20px; white-space:normal;}
 
 /** ----Белый селект---- */
+.white-select {width:220px;}
 .white-select .mat-form-field-wrapper{
   margin: 7px 0 0;
 }
@@ -103,3 +106,12 @@ a {
   font-size: 16px;
 }
 /** -------------------- */
+
+/* Правки на маленький экран */
+@media only screen and (max-width: 999px) {
+    .mat-sidenav {width:220px;}
+    .mat-sidenav-content {margin-left:220px !important;}
+    .white-select,
+    .menu-font.user-name {max-width:170px;}
+    .mat-grid-list .mat-grid-tile {overflow:visible;}
+}
