@@ -110,7 +110,6 @@ a {
 /* Правки на маленький экран */
 @media only screen and (max-width: 999px) {
     .mat-sidenav {width:220px;}
-    .mat-sidenav-content {margin-left:220px !important;}
     .white-select,
     .menu-font.user-name {max-width:170px;}
     .mat-grid-list .mat-grid-tile {overflow:visible;}
