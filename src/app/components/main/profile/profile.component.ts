@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
         info => {
           this.mkdInfo = info;
           this.ownerApartmentsStr = this.mkdInfo.ownerInfo && this.mkdInfo.ownerInfo.apartments.map(it => `кв. ${it.number}(${it.area} кв.м.)`).join(", ") || '';
-          this.powerOfAttorneyApartmentsStr = this.mkdInfo.ownerInfo && this.mkdInfo.ownerInfo.apartments.map(it => `кв. ${it.number}(${it.area} кв.м.)`).join(", ") || '';
+          this.powerOfAttorneyApartmentsStr = this.mkdInfo.powerOfAttorneyInfo && this.mkdInfo.powerOfAttorneyInfo.apartments.map(it => `кв. ${it.number}(${it.area} кв.м.)`).join(", ") || '';
         }
       );
     });

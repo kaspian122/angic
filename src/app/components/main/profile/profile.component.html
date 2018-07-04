@@ -8,14 +8,14 @@
 
       <div *ngIf="mkdInfo.ownerInfo">
         <mat-card-content>
-          Вы являетесь собственником квартиры по адресу {{mkdInfo.ownerInfo.address}}, {{ownerApartmentsStr}}
+          Вы являетесь собственником по адресу {{mkdInfo.ownerInfo.address}}, {{ownerApartmentsStr}}
           и владеете {{mkdInfo.ownerInfo.mkdPercent}}% голоса от общего числа собственников в доме.
         </mat-card-content>
       </div>
 
       <div *ngIf="mkdInfo.powerOfAttorneyInfo">
         <mat-card-content>
-          Вы являетесь доверенным лицом квартиры по адресу {{mkdInfo.powerOfAttorneyInfo.address}}, {{powerOfAttorneyApartmentsStr}}
+          Вы являетесь доверенным лицом по адресу {{mkdInfo.powerOfAttorneyInfo.address}}, {{powerOfAttorneyApartmentsStr}}
           и владеете {{mkdInfo.powerOfAttorneyInfo.mkdPercent}}% голоса от общего числа собственников в доме.
         </mat-card-content>
       </div>
